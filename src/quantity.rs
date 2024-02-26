@@ -1,5 +1,5 @@
 use std::fmt::Debug;
-use std::ops::{Add, AddAssign, Deref, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use crate::errors::RuntimeUnitError;
 use crate::units_base::Unit;

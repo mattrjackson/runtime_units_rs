@@ -1,5 +1,3 @@
-use std::ops::{Deref, DerefMut};
-
 use quantity::Quantity;
 
 pub mod errors;

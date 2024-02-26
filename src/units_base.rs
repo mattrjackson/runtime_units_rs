@@ -194,6 +194,7 @@ impl DivAssign for UnitBase
 
 impl UnitBase
 {
+    #[allow(unused)]
     pub(crate) fn inverse(&self) -> Self
     {
         UnitBase::new().
@@ -205,26 +206,32 @@ impl UnitBase
         with_kelvin(-self.kelvin()).
         with_mole(-self.mole())
     }
+    #[allow(unused)]
     pub(crate) const fn new_length() -> Self
     {
         UnitBase::new().with_meter(1)
     }
+    #[allow(unused)]
     pub(crate) const fn new_mass() -> Self
     {
         UnitBase::new().with_kilogram(1)
     }
+    #[allow(unused)]
     pub(crate) const fn new_time() -> Self
     {
         UnitBase::new().with_second(1)
     }
+    #[allow(unused)]
     pub(crate) const fn new_current() -> Self
     {
         UnitBase::new().with_ampere(1)
     }
+    #[allow(unused)]
     pub(crate) const fn new_temperature() -> Self
     {
         UnitBase::new().with_kelvin(1)
     }
+    #[allow(unused)]
     pub(crate) const fn new_luminance() -> Self
     {
         UnitBase::new().with_candela(1)
@@ -323,6 +330,7 @@ impl MulAssign for Unit
 ///
 #[derive(Copy, Clone)]
 #[repr(i8)]
+#[allow(unused)]
 pub(crate) enum UOMDimensions
 {
     N5 = -5,

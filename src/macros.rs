@@ -319,8 +319,6 @@ macro_rules! system {
         use utoipa::ToSchema;
         use paste::paste;
         paste::paste!{$(            
-           #[macro_use]
-           #[allow(clippy::eq_op)]
            paste::paste!{#[cfg(any(feature = "" $quantity, feature="All"))]
            mod [<$quantity:snake>];
             }
@@ -333,7 +331,6 @@ macro_rules! system {
         {
             $(  
                 paste::paste!{
-                    #[macro_use]
                     #[allow(clippy::eq_op)]
                     #[cfg(any(feature = "" $quantity, feature="All"))]                    
                     pub use $crate::unit_definitions::[<$quantity:snake>]::[<$quantity Quantity>];           
