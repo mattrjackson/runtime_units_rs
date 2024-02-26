@@ -4,6 +4,7 @@ use bitfield_struct::bitfield;
 #[bitfield(u64)]
 #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(PartialEq, Eq, Hash)]
+#[doc="Storage of primitives used to define a given unit."]
 pub struct UnitBase
 {
     #[bits(8)]
@@ -25,6 +26,7 @@ pub struct UnitBase
 }
 impl UnitBase
 {   
+    /// A method to get the power of a given unit component.    
     fn get_element(&self, index: u8) -> i8
     {
         match index
@@ -39,6 +41,7 @@ impl UnitBase
             _ => panic!("Unsupported index {} provided to get_element", index)
         }
     }
+    /// Get unit name for a given index from the `get_element` method.
     fn unit_name(&self, index: u8) -> &'static str
     {
         match index
@@ -251,23 +254,27 @@ pub struct Unit
 impl Eq for Unit{}
 impl Unit
 {
-       
+    #[doc="Check whether this unit can be converted to a a given `unit`."]      
     pub fn is_convertible(&self, unit: Unit) -> bool
     {
         self.base == unit.base
     }
+    #[doc="Raise a unit to an integer power."]
     pub fn powi(&self, power: i8) -> Unit
     {
         Unit { base: self.base.powi(power), multiplier: self.multiplier.powi(power as i32) }
     }
+    #[doc="Retrieve multiplier that converts this unit to its base quantity."]
     pub fn multiplier(&self) -> f64
     {
         self.multiplier
     }
+    #[doc="Get the string representation of the base unit."]
     pub fn unit_string(&self) -> String
     {
         self.base.to_string()
     }
+    #[doc="Approximate equality for two units, given some relative error `rel_error`"]
     pub fn approx_eq(&self, other: Unit, rel_error: f64) -> bool
     {
         other.base == self.base && if self.multiplier == 0.0 { (self.multiplier-other.multiplier).abs()} else { (1.0-other.multiplier/self.multiplier).abs() } <= rel_error 

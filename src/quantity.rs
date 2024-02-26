@@ -62,7 +62,8 @@ impl Quantity
     }    
 
     #[inline] 
-    pub fn convert_unit(&self, unit: Unit) -> f64
+    /// Convert from one unit to another (no check is made to ensure destination unit is valid).
+    pub(crate) fn convert_unit(&self, unit: Unit) -> f64
     {
         if self.unit == unit
         {

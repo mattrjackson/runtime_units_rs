@@ -2,8 +2,12 @@
 name = "runtime_units"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license-file = "LICENSE.txt"
+keywords =  ["units", "measurement", "SI", "dimensional-analysis"]
+description = "A run-time Rust library for working with units of measurement and conversions between them."
+repository = "https://github.com/mattrjackson/runtime_units_rs"
+readme = "README.md"
+authors = ["Matt Jackson <mattrjackson@gmail.com>"]
 
 [dependencies]
 bitfield-struct = "0.6.0"

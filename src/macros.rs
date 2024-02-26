@@ -181,6 +181,7 @@ macro_rules! quantity {
         {
             impl From<[<$quantity Unit>]> for Unit
             {
+                #[inline]
                 fn from(value: [<$quantity Unit>]) -> Self 
                 {
                     paste::paste!{
@@ -280,9 +281,9 @@ macro_rules! quantity {
                     )+
                     
                     #[doc = "Convert [`" [<$quantity Quantity>] "`] to another unit of the same quantity."]                                        
-                    pub fn [<convert_ $quantity:snake>](&self, unit: Unit) -> Self
+                    pub fn [<convert_ $quantity:snake>](&self, unit: [<$quantity Unit>]) -> Self
                     {
-                        Self(Quantity { value: self.convert_unit(unit), unit })
+                        Self(Quantity { value: self.convert_unit(unit.into()), unit: unit.into() })
                     }
                 }      
             }
