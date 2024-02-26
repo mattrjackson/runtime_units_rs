@@ -1,8 +1,8 @@
 //! Angle (dimensionless quantity).
 
-#[cfg(feature = "std")]
-use super::ratio::Ratio;
-use crate::{prefix, quantity};
+use crate::quantity;
+
+#[cfg(feature="Angle")]
 quantity! {
     /// Angle (dimensionless quantity).
     quantity: Angle; "angle";
@@ -29,3 +29,56 @@ quantity! {
     }
 }
 
+#[cfg(feature="Angle")]
+impl AngleQuantity
+{
+    /// Computes the value of the cosine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn cos(self) -> f64 {
+        self.convert_unit(AngleUnit::get_radian()).cos()
+    }
+
+    /// Computes the value of the hyperbolic cosine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn cosh(self) -> f64 {
+        self.convert_unit(AngleUnit::get_radian()).cosh()  
+    }
+
+    /// Computes the value of the sine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn sin(self) -> f64 {
+        self.convert_unit(AngleUnit::get_radian()).sin() 
+    }
+
+    /// Computes the value of the hyperbolic sine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn sinh(self) -> f64 {
+        self.convert_unit(AngleUnit::get_radian()).sinh() 
+    }
+
+    /// Computes the value of both the sine and cosine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn sin_cos(self) -> (f64, f64) {
+        let (sin, cos) = self.convert_unit(AngleUnit::get_radian()).sin_cos();
+        (sin.into(), cos.into())
+    }
+
+    /// Computes the value of the tangent of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn tan(self) -> f64 {
+        self.convert_unit(AngleUnit::get_radian()).tan().into()
+    }
+
+    /// Computes the value of the hyperbolic tangent of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn tanh(self) -> f64 {
+        self.convert_unit(AngleUnit::get_radian()).tanh().into()
+    }
+}

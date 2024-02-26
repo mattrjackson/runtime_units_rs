@@ -68,56 +68,46 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::si::acceleration as a;
-//         use crate::si::length as l;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::tests::Test;
-//         use crate::num::One;
+#[cfg(test)]
+#[cfg(feature="Acceleration")]
+mod tests {
+    use crate::{quantities, unit_definitions::time::TimeUnit, units::{AccelerationUnit, LengthUnit}, units_base::{Unit, UnitBase}};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: Acceleration<V> = Length::new::<l::meter>(V::one()) /
-//                 (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one()));
-//         }
+    #[test]
+    fn check_dimension() {
+        assert_eq!(AccelerationUnit::get_unit_base(), UnitBase::new_length()/UnitBase::new_time().powi(2));
+    }
+    #[test]
+    fn check_units() {
+        test_unit(LengthUnit::yottameter, TimeUnit::second, AccelerationUnit::yottameter_per_second_squared);
+        test_unit(LengthUnit::zettameter, TimeUnit::second, AccelerationUnit::zettameter_per_second_squared);
+        test_unit(LengthUnit::exameter, TimeUnit::second, AccelerationUnit::exameter_per_second_squared);
+        test_unit(LengthUnit::petameter, TimeUnit::second, AccelerationUnit::petameter_per_second_squared);
+        test_unit(LengthUnit::terameter, TimeUnit::second, AccelerationUnit::terameter_per_second_squared);
+        test_unit(LengthUnit::gigameter, TimeUnit::second, AccelerationUnit::gigameter_per_second_squared);
+        test_unit(LengthUnit::megameter, TimeUnit::second, AccelerationUnit::megameter_per_second_squared);
+        test_unit(LengthUnit::kilometer, TimeUnit::second, AccelerationUnit::kilometer_per_second_squared);
+        test_unit(LengthUnit::hectometer, TimeUnit::second, AccelerationUnit::hectometer_per_second_squared);
+        test_unit(LengthUnit::decameter, TimeUnit::second, AccelerationUnit::decameter_per_second_squared);
+        test_unit(LengthUnit::meter, TimeUnit::second, AccelerationUnit::meter_per_second_squared);
+        test_unit(LengthUnit::decimeter, TimeUnit::second, AccelerationUnit::decimeter_per_second_squared);
+        test_unit(LengthUnit::centimeter, TimeUnit::second, AccelerationUnit::centimeter_per_second_squared);
+        test_unit(LengthUnit::millimeter, TimeUnit::second, AccelerationUnit::millimeter_per_second_squared);
+        test_unit(LengthUnit::micrometer, TimeUnit::second, AccelerationUnit::micrometer_per_second_squared);
+        test_unit(LengthUnit::nanometer, TimeUnit::second, AccelerationUnit::nanometer_per_second_squared);
+        test_unit(LengthUnit::picometer, TimeUnit::second, AccelerationUnit::picometer_per_second_squared);
+        test_unit(LengthUnit::femtometer, TimeUnit::second, AccelerationUnit::femtometer_per_second_squared);
+        test_unit(LengthUnit::attometer, TimeUnit::second, AccelerationUnit::attometer_per_second_squared);
+        test_unit(LengthUnit::zeptometer, TimeUnit::second, AccelerationUnit::zeptometer_per_second_squared);
+        test_unit(LengthUnit::yoctometer, TimeUnit::second, AccelerationUnit::yoctometer_per_second_squared);
 
-//         #[test]
-//         fn check_units() {
-//             test::<l::yottameter, t::second, a::yottameter_per_second_squared>();
-//             test::<l::zettameter, t::second, a::zettameter_per_second_squared>();
-//             test::<l::exameter, t::second, a::exameter_per_second_squared>();
-//             test::<l::petameter, t::second, a::petameter_per_second_squared>();
-//             test::<l::terameter, t::second, a::terameter_per_second_squared>();
-//             test::<l::gigameter, t::second, a::gigameter_per_second_squared>();
-//             test::<l::megameter, t::second, a::megameter_per_second_squared>();
-//             test::<l::kilometer, t::second, a::kilometer_per_second_squared>();
-//             test::<l::hectometer, t::second, a::hectometer_per_second_squared>();
-//             test::<l::decameter, t::second, a::decameter_per_second_squared>();
-//             test::<l::meter, t::second, a::meter_per_second_squared>();
-//             test::<l::decimeter, t::second, a::decimeter_per_second_squared>();
-//             test::<l::centimeter, t::second, a::centimeter_per_second_squared>();
-//             test::<l::millimeter, t::second, a::millimeter_per_second_squared>();
-//             test::<l::micrometer, t::second, a::micrometer_per_second_squared>();
-//             test::<l::nanometer, t::second, a::nanometer_per_second_squared>();
-//             test::<l::picometer, t::second, a::picometer_per_second_squared>();
-//             test::<l::femtometer, t::second, a::femtometer_per_second_squared>();
-//             test::<l::attometer, t::second, a::attometer_per_second_squared>();
-//             test::<l::zeptometer, t::second, a::zeptometer_per_second_squared>();
-//             test::<l::yoctometer, t::second, a::yoctometer_per_second_squared>();
-
-//             test::<l::foot, t::second, a::foot_per_second_squared>();
-//             test::<l::centimeter, t::second, a::galileo>();
-//             test::<l::inch, t::second, a::inch_per_second_squared>();
-//             test::<l::millimeter, t::minute, a::millimeter_per_minute_squared>();
-
-//             fn test<L: l::Conversion<V>, T: t::Conversion<V>, A: a::Conversion<V>>() {
-//                 Test::assert_eq(&Acceleration::new::<A>(V::one()),
-//                     &(Length::new::<L>(V::one()) /
-//                         (Time::new::<T>(V::one()) * Time::new::<T>(V::one()))));
-//             }
-//         }
-//     }
-// }
+        test_unit(LengthUnit::foot, TimeUnit::second, AccelerationUnit::foot_per_second_squared);
+        test_unit(LengthUnit::centimeter, TimeUnit::second, AccelerationUnit::galileo);
+        test_unit(LengthUnit::inch, TimeUnit::second, AccelerationUnit::inch_per_second_squared);
+        test_unit(LengthUnit::millimeter, TimeUnit::minute, AccelerationUnit::millimeter_per_minute_squared);        
+    }
+    fn test_unit(length: LengthUnit, time: TimeUnit, unit: AccelerationUnit) {
+        assert_eq!(Into::<Unit>::into(unit), Into::<Unit>::into(length)/ Into::<Unit>::into(time).powi(2));
+    }
+   
+}

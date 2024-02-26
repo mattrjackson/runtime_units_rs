@@ -1,9 +1,9 @@
 use std::fmt::Display;
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Clone, Debug)]
 pub enum RuntimeUnitError
 {
-    IncompatibleUnitConversion
+    IncompatibleUnitConversion(String)
 }
 
 impl Display for RuntimeUnitError

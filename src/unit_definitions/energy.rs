@@ -89,50 +89,39 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::area as a;
-//         use crate::si::energy as e;
-//         use crate::si::mass as m;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::tests::Test;
+#[cfg(test)]
+#[cfg(feature="Energy")]
+mod tests {
+    use crate::{quantities, units::{MassUnit, LengthUnit, EnergyUnit, TimeUnit}, units_base::{Unit, UnitBase}};
+    
+    #[test]
+    fn check_dimension() {
+        assert_eq!(EnergyUnit::get_unit_base(), MassUnit::get_unit_base()*LengthUnit::get_unit_base().powi(2) / TimeUnit::get_unit_base().powi(2));
+    }
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: Energy<V> = Area::new::<a::square_meter>(V::one())
-//                 * Mass::new::<m::kilogram>(V::one())
-//                 / (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one()));
-//         }
-
-//         #[test]
-//         fn check_units() {
-//             test::<m::yottagram, e::zettajoule>();
-//             test::<m::zettagram, e::exajoule>();
-//             test::<m::exagram, e::petajoule>();
-//             test::<m::petagram, e::terajoule>();
-//             test::<m::teragram, e::gigajoule>();
-//             test::<m::gigagram, e::megajoule>();
-//             test::<m::megagram, e::kilojoule>();
-//             test::<m::kilogram, e::joule>();
-//             test::<m::decagram, e::centijoule>();
-//             test::<m::gram, e::millijoule>();
-//             test::<m::milligram, e::microjoule>();
-//             test::<m::microgram, e::nanojoule>();
-//             test::<m::nanogram, e::picojoule>();
-//             test::<m::picogram, e::femtojoule>();
-//             test::<m::femtogram, e::attojoule>();
-//             test::<m::attogram, e::zeptojoule>();
-//             test::<m::zeptogram, e::yoctojoule>();
-
-//             fn test<M: m::Conversion<V>, E: e::Conversion<V>>() {
-//                 Test::assert_approx_eq(&Energy::new::<E>(V::one()),
-//                     &(Area::new::<a::square_meter>(V::one())
-//                         * Mass::new::<M>(V::one())
-//                         / (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one()))));
-//             }
-//         }
-//     }
-// }
+    #[test]
+    fn check_units() {
+        test_unit(MassUnit::yottagram, EnergyUnit::zettajoule);
+        test_unit(MassUnit::zettagram, EnergyUnit::exajoule);
+        test_unit(MassUnit::exagram, EnergyUnit::petajoule);
+        test_unit(MassUnit::petagram, EnergyUnit::terajoule);
+        test_unit(MassUnit::teragram, EnergyUnit::gigajoule);
+        test_unit(MassUnit::gigagram, EnergyUnit::megajoule);
+        test_unit(MassUnit::megagram, EnergyUnit::kilojoule);
+        test_unit(MassUnit::kilogram, EnergyUnit::joule);
+        test_unit(MassUnit::decagram, EnergyUnit::centijoule);
+        test_unit(MassUnit::gram, EnergyUnit::millijoule);
+        test_unit(MassUnit::milligram, EnergyUnit::microjoule);
+        test_unit(MassUnit::microgram, EnergyUnit::nanojoule);
+        test_unit(MassUnit::nanogram, EnergyUnit::picojoule);
+        test_unit(MassUnit::picogram, EnergyUnit::femtojoule);
+        test_unit(MassUnit::femtogram, EnergyUnit::attojoule);
+        test_unit(MassUnit::attogram, EnergyUnit::zeptojoule);
+        test_unit(MassUnit::zeptogram, EnergyUnit::yoctojoule);
+        
+    }
+    fn test_unit(mass: MassUnit, unit: EnergyUnit) {
+        assert!(Into::<Unit>::into(unit).approx_eq(Into::<Unit>::into(mass) * Into::<Unit>::into(LengthUnit::meter).powi(2) / Into::<Unit>::into(TimeUnit::second).powi(2), 1e-12));
+    }
+    
+}

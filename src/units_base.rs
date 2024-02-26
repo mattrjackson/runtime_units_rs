@@ -1,4 +1,4 @@
-use std:: ops::{Div, DivAssign, Mul, MulAssign};
+use std::{fmt::Display,  ops::{Div, DivAssign, Mul, MulAssign}};
 use bitfield_struct::bitfield;
 
 #[bitfield(u64)]
@@ -23,7 +23,114 @@ pub struct UnitBase
     #[bits(8)]
     _unused: i8,
 }
+impl UnitBase
+{   
+    fn get_element(&self, index: u8) -> i8
+    {
+        match index
+        {
+            0 => self.meter(),
+            1 => self.second(),
+            2 => self.kilogram(),
+            3 => self.ampere(),
+            4 => self.candela(),
+            5 => self.kelvin(),
+            6 => self.mole(),
+            _ => panic!("Unsupported index {} provided to get_element", index)
+        }
+    }
+    fn unit_name(&self, index: u8) -> &'static str
+    {
+        match index
+        {
+            0 => "m",
+            1 => "s",
+            2 => "kg",
+            3 => "A",
+            4 => "cd",
+            5 => "K",
+            6 => "mol",
+            _ => panic!("Unsupported index {} provided to get_element", index)
+        }
+    }
 
+    
+}
+impl Display for UnitBase
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result 
+    {
+        let numerator = (0..7).map(|i| 
+            {
+                let value =  self.get_element(i as u8);
+                if value.is_positive()
+                {
+                    if value > 1
+                    {
+                        format!("{}^{}", self.unit_name(i as u8), value).to_owned() 
+                    }
+                    else
+                    {
+                        format!("{}", self.unit_name(i as u8)).to_owned()
+                    }
+                }
+                else
+                {
+                    "".to_owned()
+                }
+            }).filter(|x|!x.is_empty()).collect::<Vec<String>>().join("*");
+            let denominator = (0..7).map(|i| 
+                {
+                    let value =  self.get_element(i as u8);
+                    if value.is_negative()
+                    {
+                        if value < -1
+                        {
+                            format!("{}^{}", self.unit_name(i as u8), -value).to_owned() 
+                        }
+                        else
+                        {
+                            format!("{}", self.unit_name(i as u8)).to_owned()
+                        }
+                    }
+                    else
+                    {
+                        "".to_owned()
+                    }
+                }).filter(|x|!x.is_empty()).collect::<Vec<String>>().join("*");
+                
+            let result = if numerator.is_empty() 
+            {
+                if denominator.is_empty()
+                {
+                    "dimensionless".to_owned()
+                }
+                else
+                {
+                    format!("1/{denominator}")
+                }            
+            }
+            else
+            {
+                if denominator.is_empty()
+                {
+                    numerator
+                }
+                else
+                {
+                    if denominator.contains("*")
+                    {
+                        format!("{numerator}/({denominator})")
+                    }
+                    else
+                    {
+                        format!("{numerator}/{denominator}")
+                    }
+                }
+            };
+            write!(f, "{result}")
+    }
+}
 
 impl Mul for UnitBase
 {
@@ -95,27 +202,27 @@ impl UnitBase
         with_kelvin(-self.kelvin()).
         with_mole(-self.mole())
     }
-    pub(crate) fn new_length() -> Self
+    pub(crate) const fn new_length() -> Self
     {
         UnitBase::new().with_meter(1)
     }
-    pub(crate) fn new_mass() -> Self
+    pub(crate) const fn new_mass() -> Self
     {
         UnitBase::new().with_kilogram(1)
     }
-    pub(crate) fn new_time() -> Self
+    pub(crate) const fn new_time() -> Self
     {
         UnitBase::new().with_second(1)
     }
-    pub(crate) fn new_current() -> Self
+    pub(crate) const fn new_current() -> Self
     {
         UnitBase::new().with_ampere(1)
     }
-    pub(crate) fn new_temperature() -> Self
+    pub(crate) const fn new_temperature() -> Self
     {
         UnitBase::new().with_kelvin(1)
     }
-    pub(crate) fn new_luminance() -> Self
+    pub(crate) const fn new_luminance() -> Self
     {
         UnitBase::new().with_candela(1)
     }
@@ -141,7 +248,7 @@ pub struct Unit
     pub base: UnitBase,
     pub multiplier: f64
 }
-
+impl Eq for Unit{}
 impl Unit
 {
        
@@ -156,6 +263,14 @@ impl Unit
     pub fn multiplier(&self) -> f64
     {
         self.multiplier
+    }
+    pub fn unit_string(&self) -> String
+    {
+        self.base.to_string()
+    }
+    pub fn approx_eq(&self, other: Unit, rel_error: f64) -> bool
+    {
+        other.base == self.base && if self.multiplier == 0.0 { (self.multiplier-other.multiplier).abs()} else { (1.0-other.multiplier/self.multiplier).abs() } <= rel_error 
     }
 }
 impl Mul<Unit> for Unit

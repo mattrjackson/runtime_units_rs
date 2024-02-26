@@ -27,32 +27,26 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::si::energy as e;
-//         use crate::si::action as act;
-//         use crate::tests::Test;
+#[cfg(test)]
+#[cfg(feature="Action")]
+mod test {
+   
+    use crate::{quantities, units::{ActionUnit, EnergyUnit, TimeUnit}, units_base::{Unit, UnitBase}};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: Action<V> = Energy::new::<e::joule>(V::one())
-//                 * Time::new::<t::second>(V::one());
-//         }
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ActionUnit::get_unit_base(), EnergyUnit::get_unit_base()*TimeUnit::get_unit_base());
+    }
 
-//         #[test]
-//         fn check_units() {
-//             test::<e::joule, t::second, act::joule_second>();
-//             test::<e::erg, t::second, act::erg_second>();
-//             test::<e::electronvolt, t::second, act::electronvolt_second>();
+    #[test]
+    fn check_units() {
+        test_unit(EnergyUnit::joule, TimeUnit::second, ActionUnit::joule_second);
+        test_unit(EnergyUnit::erg, TimeUnit::second, ActionUnit::erg_second);
+        test_unit(EnergyUnit::electronvolt, TimeUnit::second, ActionUnit::electronvolt_second);
 
-//             fn test<E: e::Conversion<V>, T: t::Conversion<V>, ACT: act::Conversion<V>>() {
-//                 Test::assert_approx_eq(&Action::new::<ACT>(V::one()),
-//                     &(Energy::new::<E>(V::one()) * Time::new::<T>(V::one())));
-//             }
-//         }
-//     }
-// }
+    }
+    fn test_unit(energy: EnergyUnit, time: TimeUnit, unit: ActionUnit) {
+        assert_eq!(Into::<Unit>::into(unit), Into::<Unit>::into(energy) * Into::<Unit>::into(time));
+    }
+}
+

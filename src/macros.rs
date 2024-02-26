@@ -53,6 +53,7 @@ macro_rules! quantity {
         use $crate::Quantity;
         use $crate::units_base::{Unit, UnitBase};
         paste::paste!{
+        $(#[$quantity_attr])*
         #[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
         #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
         #[derive(EnumIter)]
@@ -88,7 +89,8 @@ macro_rules! quantity {
                     Unit{ base: [<$quantity Unit>]::get_unit_base(), multiplier: $conversion }
                 })+
             }        
-            #[allow(clippy::eq_op)]
+            #[doc = "Multiplier of unit to its base quantity."]
+            #[allow(clippy::eq_op)]            
             pub fn multiplier(&self) -> f64
             {
                 match self
@@ -96,6 +98,7 @@ macro_rules! quantity {
                     $([<$quantity Unit>]::$unit => $conversion,)+
                 }
             }
+            #[doc = "Abbreviation of unit."]
             pub fn abbreviation(&self) -> &'static str
             {
                 match self
@@ -103,6 +106,7 @@ macro_rules! quantity {
                     $([<$quantity Unit>]::$unit => $abbreviation,)+
                 }
             }
+            #[doc = "Singular name of unit."]
             pub fn singular(&self) -> &'static str
             {
                 match self
@@ -110,6 +114,7 @@ macro_rules! quantity {
                     $([<$quantity Unit>]::$unit => $singular,)+
                 }
             }
+            #[doc = "Plural name of unit."]
             pub fn plural(&self) -> &'static str
             {
                 match self
@@ -117,6 +122,7 @@ macro_rules! quantity {
                     $([<$quantity Unit>]::$unit => $plural,)+
                 }
             }
+            #[doc = "Available units for this `[" [<$quantity Unit>] "`]."]
             pub fn units() -> &'static Vec<&'static str>
             {
                 use strum::IntoEnumIterator;
@@ -130,6 +136,7 @@ macro_rules! quantity {
         }
         paste::paste!
         {
+            $(#[$quantity_attr])*
             #[derive(Copy, Clone, Debug, PartialEq)]
             #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
             #[cfg_attr(feature="utoipa", derive(ToSchema))]
@@ -145,11 +152,13 @@ macro_rules! quantity {
                     Self {value, unit }
                 }
                 $(
+                    #[doc = "Create a new [`" [<$quantity>] "`] with units of [`" [<$quantity Unit>] "::" [<$unit>] "`]."] 
                     pub fn [<$unit:snake>](value: f64) -> Self
                     {
                         Self { value, unit: [<$quantity Unit>]::$unit.into() }
                     }
                 )+
+                #[doc = "Create a [`" [<Quantity>] "`] from this [`"[<$quantity>]"`]." ]
                 pub fn to_quantity(&self) -> Quantity
                 {
                     (*self).into()
@@ -241,10 +250,12 @@ macro_rules! quantity {
         }
         // now create Quantity element to enable conversions...        
         paste::paste!{
+            $(#[$quantity_attr])*
             #[derive(Copy, Clone, Debug)]
             pub struct [<$quantity Quantity>](Quantity);
             impl [<$quantity Quantity>]
             {
+                #[doc = "Create a new quantity with a given `value` and [`" [<$quantity Unit>]"`]."]   
                 pub fn new(value: f64, unit: [<$quantity Unit>]) -> Self
                 {
                     Self(Quantity { value, unit: unit.into() })
@@ -252,6 +263,7 @@ macro_rules! quantity {
                 paste::paste!
                 {
                     $(
+                        #[doc = "Convert to [`" [<$quantity Unit>] "::" [<$unit>] "`]."]                        
                         #[inline]
                         pub fn [<to_ $unit:snake>](&self) -> Self
                         {                     
@@ -259,12 +271,19 @@ macro_rules! quantity {
                         }
                     )+
                     $(
+                        #[doc = "Create a new [`" [<$quantity Quantity>] "`] with units of [`" [<$quantity Unit>] "::" [<$unit>] "`]."] 
                         pub fn [<$unit:snake>](value: f64) -> Self
                         {
                             Self(Quantity { value, unit: [<$quantity Unit>]::$unit.into() })
                         }
 
                     )+
+                    
+                    #[doc = "Convert [`" [<$quantity Quantity>] "`] to another unit of the same quantity."]                                        
+                    pub fn [<convert_ $quantity:snake>](&self, unit: Unit) -> Self
+                    {
+                        Self(Quantity { value: self.convert_unit(unit), unit })
+                    }
                 }      
             }
             impl Deref for [<$quantity Quantity>]

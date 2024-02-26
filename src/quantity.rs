@@ -5,9 +5,8 @@ use crate::errors::RuntimeUnitError;
 use crate::units_base::Unit;
 use crate::Units;
 
-#[derive(Copy, Clone, PartialEq)]
- 
-#[cfg_attr(feature="utoipa", derive(utoipa::ToSchema))]
+#[doc = "A quantity of a unit, supports converting from one unit to another." ]
+#[derive(Copy, Clone)]
 pub struct Quantity
 {
     pub value: f64,
@@ -15,6 +14,9 @@ pub struct Quantity
 }
 impl Quantity
 {
+    ///
+    /// Create a new instance of `Quantity` with a given `value` and `unit` 
+    ///
     pub fn new(value: f64, unit: Units) -> Self
     {        
         Self { value, unit: unit.into() }
@@ -37,7 +39,7 @@ impl Quantity
     }
 
     ///
-    /// Convert a quantity from one unit to another     
+    /// Convert a quantity from one unit to another
     ///
     #[inline]
     pub fn convert(&self, unit: Units) -> Result<Quantity, RuntimeUnitError>
@@ -54,7 +56,7 @@ impl Quantity
             }
             else
             {
-                Err(RuntimeUnitError::IncompatibleUnitConversion)
+                Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Could not convert from base units of {} to {}", self.unit.unit_string(), <crate::unit_definitions::Units as Into<Unit>>::into(unit).unit_string())))
             }
         }
     }    
@@ -71,7 +73,6 @@ impl Quantity
             self.value * self.unit.multiplier / unit.multiplier()
         }
     }
-
 
 }
 impl Debug for Quantity
@@ -169,5 +170,12 @@ impl PartialOrd<Quantity> for Quantity
 {
     fn partial_cmp(&self, other: &Quantity) -> Option<std::cmp::Ordering> {
         self.convert_unit(other.unit).partial_cmp(&other.value)
+    }
+}
+
+impl PartialEq for Quantity
+{
+    fn eq(&self, other: &Self) -> bool {
+        self.unit.base == other.unit.base && self.convert_unit(other.unit) == other.value
     }
 }
