@@ -35,6 +35,115 @@ macro_rules! prefix {
     (kibi) => { 1024.0 };
 }
 #[macro_export]
+macro_rules! impl_quantity_ops {   
+    ($quantity:ident) =>
+    {
+        use core::ops::{Mul, Div, Add, Sub, AddAssign, SubAssign, MulAssign, DivAssign};
+        use $crate::quantity::IsQuantity;
+        impl IsQuantity for $quantity
+        {        
+            fn value(&self) -> f64 {
+                self.0.value
+            }
+        
+            fn unit(&self) -> Unit {
+                self.0.unit
+            }
+        }
+        
+        impl Mul<f64> for $quantity
+        {
+            type Output = $quantity;
+
+            fn mul(self, rhs: f64) -> Self::Output {
+                Self(Quantity{ value: self.value*rhs, unit: self.unit })
+            }
+        }
+        impl Div<f64> for $quantity
+        {
+            type Output = $quantity;
+
+            fn div(self, rhs: f64) -> Self::Output {
+                Self(Quantity{ value: self.value/rhs, unit: self.unit })
+            }
+        }
+        impl PartialEq<Quantity> for $quantity
+        {
+            fn eq(&self, other: &Quantity) -> bool {
+                self.0 == *other
+            }
+        }
+        impl PartialEq<$quantity> for Quantity
+        {
+            fn eq(&self, other: &$quantity) -> bool {
+                other == self
+            }
+        }
+
+        impl<T:IsQuantity> Mul<T> for $quantity
+        {
+            type Output = Quantity;
+            fn mul(self, rhs: T) -> Quantity {
+                Quantity{ value: self.value*rhs.value(), unit: self.unit*rhs.unit() }
+            }
+        }
+        impl<T:IsQuantity> Div<T> for $quantity
+        {
+            type Output = Quantity;
+
+            fn div(self, rhs: T) -> Quantity {
+                Quantity{ value: self.value/rhs.value(), unit: self.unit/rhs.unit() }
+            }
+        }
+        impl<T:IsQuantity> Add<T> for $quantity
+        {
+            type Output=Quantity;
+
+            fn add(self, rhs: T) -> Quantity {
+               Quantity{ value: self.value + rhs.value(), unit: self.unit }
+            }
+        }
+        impl<T:IsQuantity> Sub<T> for $quantity
+        {
+            type Output=Quantity;
+            fn sub(self, rhs: T) -> Quantity {
+                Quantity{ value: self.value - rhs.value(), unit: self.unit }
+            }
+        }
+        impl<T:IsQuantity> AddAssign<T> for $quantity
+        {
+            fn add_assign(&mut self, rhs: T) {
+                self.value += rhs.value();
+            }
+        }
+
+        impl<T:IsQuantity>  SubAssign<T> for $quantity
+        {
+            fn sub_assign(&mut self, rhs: T) {
+                self.value -= rhs.value();
+            }
+        }
+
+        impl<T:IsQuantity>  MulAssign<T> for $quantity
+        {
+            fn mul_assign(&mut self, rhs: T) {
+                self.value *= rhs.value();
+                self.unit *= rhs.unit();
+            }
+        }
+
+        impl<T:IsQuantity> DivAssign<T> for $quantity
+        {
+            fn div_assign(&mut self, rhs: T) {
+                self.value /= rhs.value();
+                self.unit /= rhs.unit();
+            }
+        }
+
+    }
+}
+
+#[macro_export]
 macro_rules! quantity {
     (        
         $(#[$quantity_attr:meta])* quantity: $quantity:ident; $description:expr;
@@ -71,8 +180,7 @@ macro_rules! quantity {
             /// get the UnitBase for this type of unit
             pub(crate) fn get_unit_base() -> UnitBase
             {
-                static BASE: Lazy<UnitBase> = Lazy::new(|| { UnitBase::from(($($crate::units_base::UOMDimensions::$dimension,)+))});
-                *BASE
+                $crate::units_base::UOMDimensions::to_unit_base(($($crate::units_base::UOMDimensions::$dimension,)+))
             }
 
             /// Get the base unit for this unit type (for length, as an example, this would be `meter`)
@@ -176,6 +284,8 @@ macro_rules! quantity {
                     Self (Quantity{ value: quantity.value, unit: quantity.unit.into() })
                 }                
             }
+            use crate::impl_quantity_ops;
+            impl_quantity_ops!([<$quantity Quantity>]);
         }        
         paste::paste!
         {
@@ -377,7 +487,7 @@ macro_rules! system {
         }
         paste::paste!{
             #[derive(Copy, Clone, Debug, PartialEq)]
-#[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
+            #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
             #[cfg_attr(feature="utoipa", derive(ToSchema))]
             pub enum Quantities
             {

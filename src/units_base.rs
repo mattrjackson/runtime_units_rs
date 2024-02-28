@@ -195,18 +195,6 @@ impl DivAssign for UnitBase
 impl UnitBase
 {
     #[allow(unused)]
-    pub(crate) fn inverse(&self) -> Self
-    {
-        UnitBase::new().
-        with_meter(-self.meter()).
-        with_second(-self.second()).
-        with_kilogram(-self.kilogram()).
-        with_ampere(-self.ampere()).
-        with_candela(-self.candela()).
-        with_kelvin(-self.kelvin()).
-        with_mole(-self.mole())
-    }
-    #[allow(unused)]
     pub(crate) const fn new_length() -> Self
     {
         UnitBase::new().with_meter(1)
@@ -235,6 +223,12 @@ impl UnitBase
     pub(crate) const fn new_luminance() -> Self
     {
         UnitBase::new().with_candela(1)
+    }
+
+    #[allow(unused)]
+    pub(crate) const fn dimensionless() -> Self
+    {
+        UnitBase::new()
     }
     
     pub(crate) fn powi(&self, power: i8) -> Self
@@ -346,9 +340,11 @@ pub(crate) enum UOMDimensions
     P5 = 5
 }
 
-impl From<(UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions)> for UnitBase
+impl UOMDimensions
 {
-    fn from(value: (UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions)) -> Self {
+    #[inline(always)]
+    pub(crate) const fn to_unit_base(value: (UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions)) -> UnitBase
+    {
         UnitBase::new().
         with_meter(value.0 as i8).
         with_kilogram(value.1 as i8).

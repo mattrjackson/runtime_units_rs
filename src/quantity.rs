@@ -5,6 +5,12 @@ use crate::errors::RuntimeUnitError;
 use crate::units_base::Unit;
 use crate::Units;
 
+pub(crate) trait IsQuantity
+{
+    fn value(&self) -> f64;
+    fn unit(&self) -> Unit;
+}
+
 #[doc = "A quantity of a unit, supports converting from one unit to another." ]
 #[derive(Copy, Clone)]
 pub struct Quantity
