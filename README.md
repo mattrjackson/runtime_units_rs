@@ -1,4 +1,4 @@
-# runtime_units_rs
+# runtime_units
 The goal for this library is to serve as a run-time Rust library for working with units of measurement and conversions between them. Most robust units libraries for Rust are designed for compile-time constant analysis. If one of those crates meets your needs, you should probably use one of those instead.
 
 Much of the code (particularly the unit definitions) were adapted from the excellent uom library (https://github.com/iliekturtles/uom). This library was designed to support cases where compile time analysis isn't a great fit. This can presently handle conversions of everything supported by uom except temperature (temperature intervals are supported).  
@@ -33,7 +33,7 @@ fn main() {
     let length_quantity = LengthQuantity::meter(10.0);
     let time_quantity = TimeQuantity::second(1.0);
     let velocity_quantity = VelocityQuantity::meter_per_second(10.0).to_foot_per_second();
-    assert!(*length_quantity.to_foot() / *time_quantity == *velocity_quantity);
+    assert!(length_quantity.to_foot() / time_quantity == velocity_quantity);
 
     let quantity = *length_quantity;        
     assert!(quantity.convert(Units::Acceleration(crate::units::AccelerationUnit::centimeter_per_second_squared)).is_err());
