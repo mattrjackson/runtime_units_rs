@@ -347,8 +347,8 @@ macro_rules! quantity {
             }
         }
         paste::paste!{
-        impl std::fmt::Display for [<$quantity Unit>] {
-            fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        impl core::fmt::Display for [<$quantity Unit>] {
+            fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
                 match self
                 {
                     $(

@@ -1,4 +1,4 @@
-use std::{fmt::Display,  ops::{Div, DivAssign, Mul, MulAssign}};
+use core::{fmt::Display,  ops::{Div, DivAssign, Mul, MulAssign}};
 use bitfield_struct::bitfield;
 
 #[bitfield(u64)]
@@ -61,7 +61,7 @@ impl UnitBase
 }
 impl Display for UnitBase
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result 
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result 
     {
         let numerator = (0..7).map(|i| 
             {

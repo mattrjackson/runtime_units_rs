@@ -31,12 +31,12 @@ mod test
         let quantity = length_quantity*time_quantity;
         let velocity_quantity = crate::quantities::VelocityQuantity::meter_per_second(5.0).to_foot_per_second();
         assert!(length_quantity.to_foot() / time_quantity == velocity_quantity * 2.0);
-        let start = std::time::Instant::now();
+        let start = core::time::Instant::now();
         for _i in 0..1e9 as usize
         {
             let _quantity = length_quantity.to_foot();
         }
-        let ending = std::time::Instant::now();
+        let ending = core::time::Instant::now();
         println!("{}", ending.duration_since(start).as_nanos());
         let quantity = *length_quantity;        
         assert!(quantity.convert(Units::Acceleration(crate::units::AccelerationUnit::centimeter_per_second_squared)).is_err());

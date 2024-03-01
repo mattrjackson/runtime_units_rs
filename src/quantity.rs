@@ -1,5 +1,5 @@
-use std::fmt::Debug;
-use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+use core::fmt::Debug;
+use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use crate::errors::RuntimeUnitError;
 use crate::units_base::Unit;
@@ -84,7 +84,7 @@ impl Quantity
 }
 impl Debug for Quantity
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result 
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result 
     {
         write!(f, "{} {:?}", self.value(), self.unit())
     }
@@ -175,7 +175,7 @@ impl DivAssign for Quantity
 /// 
 impl PartialOrd<Quantity> for Quantity
 {
-    fn partial_cmp(&self, other: &Quantity) -> Option<std::cmp::Ordering> {
+    fn partial_cmp(&self, other: &Quantity) -> Option<core::cmp::Ordering> {
         self.convert_unit(other.unit).partial_cmp(&other.value)
     }
 }

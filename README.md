@@ -8,6 +8,7 @@ Much of the code (particularly the unit definitions) were adapted from the excel
 [dependencies]
 runtime_units = { version = "0.1.0", features = ["All", "serde"] }
 ```
+no_std is supported if the `std` feature flag is removed.
 
 Individual unit types are supported as features, allowing you to pare down the library to what you need. Serialization is optionally supported via the `serde` feature tag, and utoipa schemas can optionally be generated via the `utoipa` tag. By default, only the base SI units are enabled (https://en.wikipedia.org/wiki/SI_base_unit).
 

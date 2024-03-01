@@ -1,6 +1,5 @@
 //! Angle (dimensionless quantity).
 
-#[cfg(feature = "std")]
 use super::ratio::Ratio;
 use crate::{prefix, quantity};
 quantity! {
