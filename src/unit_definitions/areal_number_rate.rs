@@ -39,44 +39,34 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::areal_number_rate as anr;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::si::area as a;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod test {
+    use crate::{unit_definitions::{areal_number_rate::ArealNumberRateUnit, time::TimeUnit}, units::{AreaUnit, LengthUnit}, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ArealNumberRate<V> = (V::one()
-//                 / Time::new::<t::second>(V::one())
-//                 / Area::new::<a::square_meter>(V::one())).into();
-//         }
+   
 
-//         #[test]
-//         fn check_units() {
-//             test::<anr::per_square_meter_second, a::square_meter, t::second>();
-//             test::<anr::per_square_centimeter_second, a::square_centimeter, t::second>();
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ArealNumberRateUnit::unit(),  LengthUnit::unit().powi(-2) / TimeUnit::unit());
+    }
 
-//             test::<anr::per_acre_second, a::acre, t::second>();
-//             test::<anr::per_are_second, a::are, t::second>();
-//             test::<anr::per_barn_second, a::barn, t::second>();
-//             test::<anr::per_circular_mil_second, a::circular_mil, t::second>();
-//             test::<anr::per_hectare_second, a::hectare, t::second>();
-//             test::<anr::per_square_foot_second, a::square_foot, t::second>();
-//             test::<anr::per_square_inch_second, a::square_inch, t::second>();
-//             test::<anr::per_square_mile_second, a::square_mile, t::second>();
-//             test::<anr::per_square_yard_second, a::square_yard, t::second>();
+    #[test]
+    fn check_units() {
+        test_unit(ArealNumberRateUnit::per_square_meter_second, AreaUnit::square_meter, TimeUnit::second);
+        test_unit(ArealNumberRateUnit::per_square_centimeter_second, AreaUnit::square_centimeter, TimeUnit::second);
 
-//             fn test<ANR: anr::Conversion<V>, A: a::Conversion<V>, T: t::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ArealNumberRate::new::<ANR>(V::one()),
-//                     &(V::one()
-//                         / Time::new::<T>(V::one())
-//                         / Area::new::<A>(V::one())).into());
-//             }
-//         }
-//     }
-// }
+        test_unit(ArealNumberRateUnit::per_acre_second, AreaUnit::acre, TimeUnit::second);
+        test_unit(ArealNumberRateUnit::per_are_second, AreaUnit::are, TimeUnit::second);
+        test_unit(ArealNumberRateUnit::per_barn_second, AreaUnit::barn, TimeUnit::second);
+        test_unit(ArealNumberRateUnit::per_circular_mil_second, AreaUnit::circular_mil, TimeUnit::second);
+        test_unit(ArealNumberRateUnit::per_hectare_second, AreaUnit::hectare, TimeUnit::second);
+        test_unit(ArealNumberRateUnit::per_square_foot_second, AreaUnit::square_foot, TimeUnit::second);
+        test_unit(ArealNumberRateUnit::per_square_inch_second, AreaUnit::square_inch, TimeUnit::second);
+        test_unit(ArealNumberRateUnit::per_square_mile_second, AreaUnit::square_mile, TimeUnit::second);
+        test_unit(ArealNumberRateUnit::per_square_yard_second, AreaUnit::square_yard, TimeUnit::second);
+
+        fn test_unit(value: ArealNumberRateUnit, area: AreaUnit, time: TimeUnit) {
+            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(area).powi(-1) / Into::<Unit>::into(time) , 1e-12));
+        }
+    }
+}

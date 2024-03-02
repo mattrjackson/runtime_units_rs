@@ -1,5 +1,5 @@
 //! Angular acceleration (base unit radian per second squared, s⁻²).
-use crate::{prefix, quantity};
+use crate::quantity;
 quantity! {
     /// Angular acceleration (base unit radian per second squared, s⁻²).
     quantity: AngularAcceleration; "angular acceleration";
@@ -22,27 +22,22 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::si::angle as a;
-//         use crate::si::angular_acceleration as aa;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::tests::Test;
-//         use crate::num::One;
+#[cfg(test)]
+mod tests {
+    use crate::{units::{AngleUnit, AngularAccelerationUnit, TimeUnit}, units_base::Unit};
+    
+    #[test]
+    fn check_dimension() {
+        assert_eq!(AngularAccelerationUnit::unit(), AngleUnit::unit() / TimeUnit::unit().powi(2));
+    }
 
-//         #[test]
-//         fn check_units() {
-//             test::<a::radian, t::second, aa::radian_per_second_squared>();
-//             test::<a::degree, t::second, aa::degree_per_second_squared>();
+    #[test]
+    fn check_units() {
+        test_unit(AngularAccelerationUnit::radian_per_second_squared, TimeUnit::second, AngleUnit::radian);
+        test_unit(AngularAccelerationUnit::degree_per_second_squared, TimeUnit::second, AngleUnit::degree);
 
-//             fn test<A: a::Conversion<V>, T: t::Conversion<V>, R: aa::Conversion<V>>() {
-//                 let square_second = Time::new::<T>(V::one()) * Time::new::<T>(V::one());
-
-//                 Test::assert_approx_eq(&AngularAcceleration::new::<R>(V::one()),
-//                     &(Angle::new::<A>(V::one()) / square_second).into());
-//             }
-//         }
-//     }
-// }
+    }
+    fn test_unit(value: AngularAccelerationUnit, time: TimeUnit, angle: AngleUnit) {
+        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(angle) / Into::<Unit>::into(time).powi(2));
+    }
+}

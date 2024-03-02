@@ -68,57 +68,43 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::lib::any::TypeId;
-//         use crate::num::One;
-//         use crate::si::area as a;
-//         use crate::si::length as l;
-//         use crate::si::quantities::*;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{units::{AreaUnit, LengthUnit}, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: Area<V> = Length::new::<l::meter>(V::one()) * Length::new::<l::meter>(V::one());
-//         }
 
-//         #[test]
-//         fn check_units() {
-//             // Values too large for f32.
-//             if TypeId::of::<f64>() == TypeId::of::<V>() {
-//                 test::<l::yottameter, a::square_yottameter>();
-//                 test::<l::zettameter, a::square_zettameter>();
-//             }
+    #[test]
+    fn check_dimension() {
+        assert_eq!(AreaUnit::unit(),  LengthUnit::unit().powi(2));
+    }
 
-//             test::<l::exameter, a::square_exameter>();
-//             test::<l::petameter, a::square_petameter>();
-//             test::<l::terameter, a::square_terameter>();
-//             test::<l::gigameter, a::square_gigameter>();
-//             test::<l::megameter, a::square_megameter>();
-//             test::<l::kilometer, a::square_kilometer>();
-//             test::<l::hectometer, a::square_hectometer>();
-//             test::<l::decameter, a::square_decameter>();
-//             test::<l::meter, a::square_meter>();
-//             test::<l::decimeter, a::square_decimeter>();
-//             test::<l::centimeter, a::square_centimeter>();
-//             test::<l::millimeter, a::square_millimeter>();
-//             test::<l::micrometer, a::square_micrometer>();
-//             test::<l::nanometer, a::square_nanometer>();
-//             test::<l::picometer, a::square_picometer>();
-//             test::<l::femtometer, a::square_femtometer>();
-//             test::<l::attometer, a::square_attometer>();
-//             test::<l::zeptometer, a::square_zeptometer>();
+    #[test]
+    fn check_units() {
+        test_unit(LengthUnit::yottameter, AreaUnit::square_yottameter);
+        test_unit(LengthUnit::zettameter, AreaUnit::square_zettameter);
 
-//             // Values too small for f32.
-//             if TypeId::of::<f64>() == TypeId::of::<V>() {
-//                 test::<l::yoctometer, a::square_yoctometer>();
-//             }
+        test_unit(LengthUnit::exameter, AreaUnit::square_exameter);
+        test_unit(LengthUnit::petameter, AreaUnit::square_petameter);
+        test_unit(LengthUnit::terameter, AreaUnit::square_terameter);
+        test_unit(LengthUnit::gigameter, AreaUnit::square_gigameter);
+        test_unit(LengthUnit::megameter, AreaUnit::square_megameter);
+        test_unit(LengthUnit::kilometer, AreaUnit::square_kilometer);
+        test_unit(LengthUnit::hectometer, AreaUnit::square_hectometer);
+        test_unit(LengthUnit::decameter, AreaUnit::square_decameter);
+        test_unit(LengthUnit::meter, AreaUnit::square_meter);
+        test_unit(LengthUnit::decimeter, AreaUnit::square_decimeter);
+        test_unit(LengthUnit::centimeter, AreaUnit::square_centimeter);
+        test_unit(LengthUnit::millimeter, AreaUnit::square_millimeter);
+        test_unit(LengthUnit::micrometer, AreaUnit::square_micrometer);
+        test_unit(LengthUnit::nanometer, AreaUnit::square_nanometer);
+        test_unit(LengthUnit::picometer, AreaUnit::square_picometer);
+        test_unit(LengthUnit::femtometer, AreaUnit::square_femtometer);
+        test_unit(LengthUnit::attometer, AreaUnit::square_attometer);
+        test_unit(LengthUnit::zeptometer, AreaUnit::square_zeptometer);
+      
+    }
+    fn test_unit(length: LengthUnit, value: AreaUnit) {
+        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(length).powi(2));
+    }
+}
 
-//             fn test<L: l::Conversion<V>, A: a::Conversion<V>>() {
-//                 Test::assert_eq(&Area::new::<A>(V::one()),
-//                     &(Length::new::<L>(V::one()) * Length::new::<L>(V::one())));
-//             }
-//         }
-//     }
-// }

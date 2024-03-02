@@ -84,51 +84,43 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::available_energy as v;
-//         use crate::si::energy as e;
-//         use crate::si::mass as m;
-//         use crate::si::quantities::*;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{unit_definitions::energy::EnergyUnit, units::{AvailableEnergyUnit, MassUnit}, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: AvailableEnergy<V> = Energy::new::<e::joule>(V::one())
-//                 / Mass::new::<m::kilogram>(V::one());
-//         }
+    #[test]
+    fn check_dimension() {
+        assert_eq!(AvailableEnergyUnit::unit(),  EnergyUnit::unit() / MassUnit::unit());
+    }
 
-//         #[test]
-//         fn check_units() {
-//             test::<e::yottajoule, m::kilogram, v::yottajoule_per_kilogram>();
-//             test::<e::exajoule, m::kilogram, v::exajoule_per_kilogram>();
-//             test::<e::terajoule, m::kilogram, v::terajoule_per_kilogram>();
-//             test::<e::megajoule, m::kilogram, v::megajoule_per_kilogram>();
-//             test::<e::joule, m::kilogram, v::joule_per_kilogram>();
-//             test::<e::microjoule, m::kilogram, v::microjoule_per_kilogram>();
-//             test::<e::picojoule, m::kilogram, v::picojoule_per_kilogram>();
-//             test::<e::attojoule, m::kilogram, v::attojoule_per_kilogram>();
-//             test::<e::yoctojoule, m::kilogram, v::yoctojoule_per_kilogram>();
+    #[test]
+    fn check_units() {
+        test_unit(EnergyUnit::yottajoule, MassUnit::kilogram, AvailableEnergyUnit::yottajoule_per_kilogram);
+        test_unit(EnergyUnit::exajoule, MassUnit::kilogram, AvailableEnergyUnit::exajoule_per_kilogram);
+        test_unit(EnergyUnit::terajoule, MassUnit::kilogram, AvailableEnergyUnit::terajoule_per_kilogram);
+        test_unit(EnergyUnit::megajoule, MassUnit::kilogram, AvailableEnergyUnit::megajoule_per_kilogram);
+        test_unit(EnergyUnit::joule, MassUnit::kilogram, AvailableEnergyUnit::joule_per_kilogram);
+        test_unit(EnergyUnit::microjoule, MassUnit::kilogram, AvailableEnergyUnit::microjoule_per_kilogram);
+        test_unit(EnergyUnit::picojoule, MassUnit::kilogram, AvailableEnergyUnit::picojoule_per_kilogram);
+        test_unit(EnergyUnit::attojoule, MassUnit::kilogram, AvailableEnergyUnit::attojoule_per_kilogram);
+        test_unit(EnergyUnit::yoctojoule, MassUnit::kilogram, AvailableEnergyUnit::yoctojoule_per_kilogram);
 
-//             test::<e::joule, m::zeptogram, v::joule_per_zeptogram>();
-//             test::<e::joule, m::femtogram, v::joule_per_femtogram>();
-//             test::<e::joule, m::nanogram, v::joule_per_nanogram>();
-//             test::<e::joule, m::milligram, v::joule_per_milligram>();
-//             test::<e::joule, m::gigagram, v::joule_per_gigagram>();
-//             test::<e::joule, m::petagram, v::joule_per_petagram>();
-//             test::<e::joule, m::zettagram, v::joule_per_zettagram>();
+        test_unit(EnergyUnit::joule, MassUnit::zeptogram, AvailableEnergyUnit::joule_per_zeptogram);
+        test_unit(EnergyUnit::joule, MassUnit::femtogram, AvailableEnergyUnit::joule_per_femtogram);
+        test_unit(EnergyUnit::joule, MassUnit::nanogram, AvailableEnergyUnit::joule_per_nanogram);
+        test_unit(EnergyUnit::joule, MassUnit::milligram, AvailableEnergyUnit::joule_per_milligram);
+        test_unit(EnergyUnit::joule, MassUnit::gigagram, AvailableEnergyUnit::joule_per_gigagram);
+        test_unit(EnergyUnit::joule, MassUnit::petagram, AvailableEnergyUnit::joule_per_petagram);
+        test_unit(EnergyUnit::joule, MassUnit::zettagram, AvailableEnergyUnit::joule_per_zettagram);
 
-//             test::<e::btu_it, m::pound, v::btu_it_per_pound>();
-//             test::<e::btu, m::pound, v::btu_per_pound>();
-//             test::<e::calorie_it, m::gram, v::calorie_it_per_gram>();
-//             test::<e::calorie, m::gram, v::calorie_per_gram>();
+        test_unit(EnergyUnit::btu_it, MassUnit::pound, AvailableEnergyUnit::btu_it_per_pound);
+        test_unit(EnergyUnit::btu, MassUnit::pound, AvailableEnergyUnit::btu_per_pound);
+        test_unit(EnergyUnit::calorie_it, MassUnit::gram, AvailableEnergyUnit::calorie_it_per_gram);
+        test_unit(EnergyUnit::calorie, MassUnit::gram, AvailableEnergyUnit::calorie_per_gram);
 
-//             fn test<E: e::Conversion<V>, M: m::Conversion<V>, A: v::Conversion<V>>() {
-//                 Test::assert_approx_eq(&AvailableEnergy::new::<A>(V::one()),
-//                     &(Energy::new::<E>(V::one()) / Mass::new::<M>(V::one())));
-//             }
-//         }
-//     }
-// }
+        fn test_unit(energy: EnergyUnit, mass: MassUnit, value: AvailableEnergyUnit) {
+            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(mass).powi(-1) * Into::<Unit>::into(energy) , 1e-12));
+        }
+    }
+    
+}

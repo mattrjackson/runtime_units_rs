@@ -15,8 +15,8 @@ pub(crate) trait IsQuantity
 #[derive(Copy, Clone)]
 pub struct Quantity
 {
-    pub value: f64,
-    pub unit: Unit
+    pub(crate) value: f64,
+    pub(crate) unit: Unit
 }
 impl Quantity
 {
@@ -31,6 +31,7 @@ impl Quantity
     ///
     /// Amount of unit stored in quantity
     /// 
+    #[inline]
     pub fn value(&self) -> f64
     {
         self.value
@@ -39,6 +40,7 @@ impl Quantity
     ///
     /// Retrieve a unit with a corresponding multiplier
     /// 
+    #[inline]
     pub fn unit(&self) -> Unit
     {
         self.unit
@@ -50,26 +52,31 @@ impl Quantity
     #[inline]
     pub fn convert(&self, unit: Units) -> Result<Quantity, RuntimeUnitError>
     {
-        if self.unit == unit.into()
+        self.convert_unit(unit.into())
+    }    
+    #[inline]
+    pub fn convert_unit(&self, unit: Unit) -> Result<Quantity, RuntimeUnitError>
+    {
+        if self.unit == unit
         {
             Ok(*self)
         }
         else
         {
-            if self.unit.is_convertible(unit.into())
+            if self.unit.is_convertible(unit)
             {
-                Ok(Self { value: self.value * self.unit.multiplier / unit.multiplier(), unit: unit.into() })
+                Ok(Self { value: self.value * self.unit.multiplier / unit.multiplier(), unit })
             }
             else
             {
-                Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Could not convert from base units of {} to {}", self.unit.unit_string(), <crate::unit_definitions::Units as Into<Unit>>::into(unit).unit_string())))
+                Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Could not convert from base units of {} to {}", self.unit.unit_string(), unit.unit_string())))
             }
         }
-    }    
+    }   
 
     #[inline] 
     /// Convert from one unit to another (no check is made to ensure destination unit is valid).
-    pub(crate) fn convert_unit(&self, unit: Unit) -> f64
+    pub(crate) fn convert_unit_unchecked(&self, unit: Unit) -> f64
     {
         if self.unit == unit
         {
@@ -176,13 +183,13 @@ impl DivAssign for Quantity
 impl PartialOrd<Quantity> for Quantity
 {
     fn partial_cmp(&self, other: &Quantity) -> Option<core::cmp::Ordering> {
-        self.convert_unit(other.unit).partial_cmp(&other.value)
+        self.convert_unit_unchecked(other.unit).partial_cmp(&other.value)
     }
 }
 
 impl PartialEq for Quantity
 {
     fn eq(&self, other: &Self) -> bool {
-        self.unit.base == other.unit.base && self.convert_unit(other.unit) == other.value
+        self.unit.base == other.unit.base && self.convert_unit_unchecked(other.unit) == other.value
     }
 }

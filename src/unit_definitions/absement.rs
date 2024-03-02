@@ -70,9 +70,9 @@ use crate::{units::{AbsementUnit, LengthUnit, TimeUnit}, units_base::{Unit, Unit
 
 #[test]
 fn check_dimension() {
-println!("{:?}", AbsementUnit::get_unit_base());
+println!("{:?}", AbsementUnit::unit());
 println!("{:?}",UnitBase::new_length()*UnitBase::new_time());
-assert!(AbsementUnit::get_unit_base() == UnitBase::new_length()*UnitBase::new_time());
+assert!(AbsementUnit::unit() == UnitBase::new_length()*UnitBase::new_time());
 }
 
 #[test]

@@ -25,35 +25,23 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::areal_density_of_states as ados;
-//         use crate::si::energy as e;
-//         use crate::si::quantities::*;
-//         use crate::si::area as a;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{units::{MassUnit, ArealDensityOfStatesUnit, EnergyUnit, TimeUnit, LengthUnit}, units_base::Unit};
+    
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ArealDensityOfStatesUnit::unit(),  MassUnit::unit().powi(-1) * TimeUnit::unit().powi(2) / LengthUnit::unit().powi(4));
+    }
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ArealDensityOfStates<V> = (V::one()
-//                 / Energy::new::<e::joule>(V::one())
-//                 / Area::new::<a::square_meter>(V::one())).into();
-//         }
+   #[test]
+    fn check_units() {
+        test_unit(ArealDensityOfStatesUnit::state_per_square_meter_joule, LengthUnit::meter, EnergyUnit::joule);
+        test_unit(ArealDensityOfStatesUnit::state_per_square_centimeter_joule, LengthUnit::centimeter, EnergyUnit::joule);
+        test_unit(ArealDensityOfStatesUnit::state_per_square_centimeter_electronvolt, LengthUnit::centimeter, EnergyUnit::electronvolt);
 
-//         #[test]
-//         fn check_units() {
-//             test::<a::square_meter, e::joule, ados::state_per_square_meter_joule>();
-//             test::<a::square_centimeter, e::joule, ados::state_per_square_centimeter_joule>();
-//             test::<a::square_centimeter, e::electronvolt, ados::state_per_square_centimeter_electronvolt>();
-
-//             fn test<A: a::Conversion<V>, E: e::Conversion<V>, ADOS: ados::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ArealDensityOfStates::new::<ADOS>(V::one()),
-//                     &(V::one()
-//                         / Energy::new::<E>(V::one())
-//                         / Area::new::<A>(V::one())).into());
-//             }
-//         }
-//     }
-// }
+    }
+    fn test_unit(value: ArealDensityOfStatesUnit, length: LengthUnit, energy: EnergyUnit) {
+        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(length).powi(-2) / Into::<Unit>::into(energy));
+    }
+}

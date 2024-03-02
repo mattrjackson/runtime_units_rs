@@ -25,34 +25,24 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::mass as m;
-//         use crate::si::areal_mass_density as d;
-//         use crate::si::quantities::*;
-//         use crate::si::area as a;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{units::{MassUnit, ArealMassDensityUnit, LengthUnit}, units_base::Unit};
+    
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ArealMassDensityUnit::unit(),  MassUnit::unit() / LengthUnit::unit().powi(2));
+    }
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ArealMassDensity<V> = Mass::new::<m::kilogram>(V::one())
-//                 / Area::new::<a::square_meter>(V::one());
-//         }
+   #[test]
+    fn check_units() {
+        test_unit(ArealMassDensityUnit::kilogram_per_square_meter, LengthUnit::meter, MassUnit::kilogram);
+        test_unit(ArealMassDensityUnit::gram_per_square_meter, LengthUnit::meter, MassUnit::gram);
+        test_unit(ArealMassDensityUnit::gram_per_square_centimeter, LengthUnit::centimeter, MassUnit::gram);
+        test_unit(ArealMassDensityUnit::ounce_per_square_foot, LengthUnit::foot, MassUnit::ounce);
 
-//         #[test]
-//         fn check_units() {
-//             test::<m::kilogram, a::square_meter, d::kilogram_per_square_meter>();
-//             test::<m::gram, a::square_meter, d::gram_per_square_meter>();
-//             test::<m::gram, a::square_centimeter, d::gram_per_square_centimeter>();
-
-//             test::<m::ounce, a::square_foot, d::ounce_per_square_foot>();
-
-//             fn test<M: m::Conversion<V>, A: a::Conversion<V>, D: d::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ArealMassDensity::new::<D>(V::one()),
-//                     &(Mass::new::<M>(V::one()) / Area::new::<A>(V::one())));
-//             }
-//         }
-//     }
-// }
+    }
+    fn test_unit(value: ArealMassDensityUnit, length: LengthUnit, mass: MassUnit) {
+        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(mass) / Into::<Unit>::into(length).powi(2));
+    }
+}

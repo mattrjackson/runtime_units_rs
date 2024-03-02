@@ -46,6 +46,6 @@ quantity! {
             "atomic unit of charge per second", "atomic units of charge per second";
         @abampere: 1.0_E1; "abA", "abampere", "abamperes";
         @gilbert: 7.957_747_E-1; "Gi", "gilbert", "gilberts";
-        @statampere: 3.335_641_E-10; "statA", "statampere", "statamperes";
+        @statampere: 3.33564095198152E-10; "statA", "statampere", "statamperes";
     }
 }

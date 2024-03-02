@@ -75,7 +75,7 @@ mod tests {
 
     #[test]
     fn check_dimension() {
-        assert_eq!(AccelerationUnit::get_unit_base(), UnitBase::new_length()/UnitBase::new_time().powi(2));
+        assert_eq!(AccelerationUnit::unit(), UnitBase::new_length()/UnitBase::new_time().powi(2));
     }
     #[test]
     fn check_units() {

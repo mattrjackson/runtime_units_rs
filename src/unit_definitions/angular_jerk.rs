@@ -1,5 +1,5 @@
 //! Angular jerk (base unit radian per second cubed, s⁻³).
-use crate::{prefix, quantity};
+use crate::quantity;
 quantity! {
     /// Angular jerk (base unit radian per second cubed, s⁻³).
     quantity: AngularJerk; "angular jerk";
@@ -21,30 +21,22 @@ quantity! {
             "degree per second cubed", "degrees per second cubed";
     }
 }
+#[cfg(test)]
+mod tests {
+    use crate::{units::{AngleUnit, AngularJerkUnit, TimeUnit}, units_base::Unit};
+    
+    #[test]
+    fn check_dimension() {
+        assert_eq!(AngularJerkUnit::unit(), AngleUnit::unit() / TimeUnit::unit().powi(3));
+    }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::angle as a;
-//         use crate::si::angular_jerk as aj;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::tests::Test;
+    #[test]
+    fn check_units() {
+        test_unit(AngularJerkUnit::radian_per_second_cubed, TimeUnit::second, AngleUnit::radian);
+        test_unit(AngularJerkUnit::degree_per_second_cubed, TimeUnit::second, AngleUnit::degree);
 
-//         #[test]
-//         fn check_units() {
-//             test::<a::radian, t::second, aj::radian_per_second_cubed>();
-//             test::<a::degree, t::second, aj::degree_per_second_cubed>();
-
-//             fn test<A: a::Conversion<V>, T: t::Conversion<V>, R: aj::Conversion<V>>() {
-//                 let cubic_second = Time::new::<T>(V::one()) *
-//                                    Time::new::<T>(V::one()) *
-//                                    Time::new::<T>(V::one());
-
-//                 Test::assert_approx_eq(&AngularJerk::new::<R>(V::one()),
-//                     &(Angle::new::<A>(V::one()) / cubic_second).into());
-//             }
-//         }
-//     }
-// }
+    }
+    fn test_unit(value: AngularJerkUnit, time: TimeUnit, angle: AngleUnit) {
+        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(angle) / Into::<Unit>::into(time).powi(3));
+    }
+}

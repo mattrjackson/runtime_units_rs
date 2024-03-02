@@ -1,5 +1,5 @@
 //! Angular velocity (base unit radian per second, s⁻¹).
-use crate::{prefix, quantity};
+use crate::quantity;
 quantity! {
     /// Angular velocity (base unit radian per second, s⁻¹).
     quantity: AngularVelocity; "angular velocity";
@@ -26,29 +26,24 @@ quantity! {
             "revolutions per hour";
     }
 }
+#[cfg(test)]
+mod tests {
+    use crate::{units::{AngleUnit, AngularVelocityUnit, TimeUnit}, units_base::Unit};
+    
+    #[test]
+    fn check_dimension() {
+        assert_eq!(AngularVelocityUnit::unit(), AngleUnit::unit() / TimeUnit::unit());
+    }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::angle as a;
-//         use crate::si::angular_velocity as v;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::tests::Test;
+    #[test]
+    fn check_units() {
+        test_unit(AngularVelocityUnit::radian_per_second, TimeUnit::second, AngleUnit::radian);
+        test_unit(AngularVelocityUnit::revolution_per_second, TimeUnit::second, AngleUnit::revolution);
+        test_unit(AngularVelocityUnit::revolution_per_minute, TimeUnit::minute, AngleUnit::revolution);
+        test_unit(AngularVelocityUnit::revolution_per_hour, TimeUnit::hour, AngleUnit::revolution);
 
-//         #[test]
-//         fn check_units() {
-//             test::<a::radian, t::second, v::radian_per_second>();
-//             test::<a::degree, t::second, v::degree_per_second>();
-//             test::<a::revolution, t::second, v::revolution_per_second>();
-//             test::<a::revolution, t::minute, v::revolution_per_minute>();
-//             test::<a::revolution, t::hour, v::revolution_per_hour>();
-
-//             fn test<A: a::Conversion<V>, T: t::Conversion<V>, R: v::Conversion<V>>() {
-//                 Test::assert_approx_eq(&AngularVelocity::new::<R>(V::one()),
-//                     &(Angle::new::<A>(V::one()) / Time::new::<T>(V::one())).into());
-//             }
-//         }
-//     }
-// }
+    }
+    fn test_unit(value: AngularVelocityUnit, time: TimeUnit, angle: AngleUnit) {
+        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(angle) / Into::<Unit>::into(time));
+    }
+}

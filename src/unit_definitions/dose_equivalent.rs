@@ -60,7 +60,7 @@ mod tests {
     use crate::{DoseEquivalent, units::DoseEquivalentUnit};
     #[test]
     fn check_dimension() {
-        assert_eq!(DoseEquivalentUnit::get_unit_base(), UnitBase::new_length().powi(2) / UnitBase::new_time().powi(2));
+        assert_eq!(DoseEquivalentUnit::unit(), UnitBase::new_length().powi(2) / UnitBase::new_time().powi(2));
     }
     #[test]
     fn check_units() {

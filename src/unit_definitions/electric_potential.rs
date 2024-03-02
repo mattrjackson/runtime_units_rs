@@ -37,62 +37,46 @@ quantity! {
         @yoctovolt: prefix!(yocto); "yV", "yoctovolt", "yoctovolts";
 
         @abvolt: 1.0_E-8; "abV", "abvolt", "abvolts";
-        @statvolt: 2.997_925_E2; "statV", "statvolt", "statvolts";
+        @statvolt: 2.99792458E+02; "statV", "statvolt", "statvolts";
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::area as a;
-//         use crate::si::electric_current as i;
-//         use crate::si::electric_potential as v;
-//         use crate::si::mass as m;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{unit_definitions::{electric_current::ElectricCurrentUnit, electric_potential::ElectricPotentialUnit, time::TimeUnit}, units::{LengthUnit, MassUnit}, units_base::Unit};
+    
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricPotentialUnit::unit(),  LengthUnit::unit().powi(2) * MassUnit::unit() / ElectricCurrentUnit::unit() / TimeUnit::unit().powi(3));
+    }
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricPotential<V> = Area::new::<a::square_meter>(V::one())
-//                 * Mass::new::<m::kilogram>(V::one())
-//                 / (ElectricCurrent::new::<i::ampere>(V::one())
-//                     * (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one())
-//                         * Time::new::<t::second>(V::one())));
-//         }
+    #[test]
+    fn check_units() {
+        test_unit(ElectricCurrentUnit::yottaampere, ElectricPotentialUnit::yoctovolt);
+        test_unit(ElectricCurrentUnit::zettaampere, ElectricPotentialUnit::zeptovolt);
+        test_unit(ElectricCurrentUnit::exaampere, ElectricPotentialUnit::attovolt);
+        test_unit(ElectricCurrentUnit::petaampere, ElectricPotentialUnit::femtovolt);
+        test_unit(ElectricCurrentUnit::teraampere, ElectricPotentialUnit::picovolt);
+        test_unit(ElectricCurrentUnit::gigaampere, ElectricPotentialUnit::nanovolt);
+        test_unit(ElectricCurrentUnit::megaampere, ElectricPotentialUnit::microvolt);
+        test_unit(ElectricCurrentUnit::kiloampere, ElectricPotentialUnit::millivolt);
+        test_unit(ElectricCurrentUnit::hectoampere, ElectricPotentialUnit::centivolt);
+        test_unit(ElectricCurrentUnit::decaampere, ElectricPotentialUnit::decivolt);
+        test_unit(ElectricCurrentUnit::ampere, ElectricPotentialUnit::volt);
+        test_unit(ElectricCurrentUnit::deciampere, ElectricPotentialUnit::decavolt);
+        test_unit(ElectricCurrentUnit::centiampere, ElectricPotentialUnit::hectovolt);
+        test_unit(ElectricCurrentUnit::milliampere, ElectricPotentialUnit::kilovolt);
+        test_unit(ElectricCurrentUnit::microampere, ElectricPotentialUnit::megavolt);
+        test_unit(ElectricCurrentUnit::nanoampere, ElectricPotentialUnit::gigavolt);
+        test_unit(ElectricCurrentUnit::picoampere, ElectricPotentialUnit::teravolt);
+        test_unit(ElectricCurrentUnit::femtoampere, ElectricPotentialUnit::petavolt);
+        test_unit(ElectricCurrentUnit::attoampere, ElectricPotentialUnit::exavolt);
+        test_unit(ElectricCurrentUnit::zeptoampere, ElectricPotentialUnit::zettavolt);
+        test_unit(ElectricCurrentUnit::yoctoampere, ElectricPotentialUnit::yottavolt);
 
-//         #[test]
-//         fn check_units() {
-//             test::<i::yottaampere, v::yoctovolt>();
-//             test::<i::zettaampere, v::zeptovolt>();
-//             test::<i::exaampere, v::attovolt>();
-//             test::<i::petaampere, v::femtovolt>();
-//             test::<i::teraampere, v::picovolt>();
-//             test::<i::gigaampere, v::nanovolt>();
-//             test::<i::megaampere, v::microvolt>();
-//             test::<i::kiloampere, v::millivolt>();
-//             test::<i::hectoampere, v::centivolt>();
-//             test::<i::decaampere, v::decivolt>();
-//             test::<i::ampere, v::volt>();
-//             test::<i::deciampere, v::decavolt>();
-//             test::<i::centiampere, v::hectovolt>();
-//             test::<i::milliampere, v::kilovolt>();
-//             test::<i::microampere, v::megavolt>();
-//             test::<i::nanoampere, v::gigavolt>();
-//             test::<i::picoampere, v::teravolt>();
-//             test::<i::femtoampere, v::petavolt>();
-//             test::<i::attoampere, v::exavolt>();
-//             test::<i::zeptoampere, v::zettavolt>();
-//             test::<i::yoctoampere, v::yottavolt>();
-
-//             fn test<I: i::Conversion<V>, E: v::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricPotential::new::<E>(V::one()),
-//                     &(Area::new::<a::square_meter>(V::one()) * Mass::new::<m::kilogram>(V::one())
-//                         / (ElectricCurrent::new::<I>(V::one())
-//                             * (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one())
-//                                 * Time::new::<t::second>(V::one())))));
-//             }
-//         }
-//     }
-// }
+        fn test_unit(current: ElectricCurrentUnit, value: ElectricPotentialUnit) {
+            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(LengthUnit::meter).powi(2) * MassUnit::kilogram.into() / Into::<Unit>::into(TimeUnit::second).powi(3) /  Into::<Unit>::into(current), 1e-12));
+        }
+    }
+    
+}

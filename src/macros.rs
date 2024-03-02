@@ -168,7 +168,7 @@ macro_rules! quantity {
         #[derive(EnumIter)]
         #[allow(non_camel_case_types)]         
         #[allow(clippy::eq_op)]
-        #[cfg_attr(feature="utoipa", derive(ToSchema))]
+        #[cfg_attr(feature="utoipa", derive(ToSchema))]        
         pub enum [<$quantity Unit>]
         {
             $($unit,)+
@@ -178,7 +178,7 @@ macro_rules! quantity {
         impl [<$quantity Unit>] 
         {
             /// get the UnitBase for this type of unit
-            pub(crate) fn get_unit_base() -> UnitBase
+            pub(crate) fn unit() -> UnitBase
             {
                 $crate::units_base::UOMDimensions::to_unit_base(($($crate::units_base::UOMDimensions::$dimension,)+))
             }
@@ -194,7 +194,7 @@ macro_rules! quantity {
                 #[allow(clippy::eq_op)]
                 pub fn [<get_$unit:snake>]() -> Unit
                 {
-                    Unit{ base: [<$quantity Unit>]::get_unit_base(), multiplier: $conversion }
+                    Unit{ base: [<$quantity Unit>]::unit(), multiplier: $conversion }
                 })+
             }        
             #[doc = "Multiplier of unit to its base quantity."]
@@ -393,7 +393,7 @@ macro_rules! quantity {
                     #[doc = "Convert [`" [<$quantity Quantity>] "`] to another unit of the same quantity."]                                        
                     pub fn [<convert_ $quantity:snake>](&self, unit: [<$quantity Unit>]) -> Self
                     {
-                        Self(Quantity { value: self.convert_unit(unit.into()), unit: unit.into() })
+                        Self(Quantity { value: self.convert_unit_unchecked(unit.into()), unit: unit.into() })
                     }
                 }      
             }
@@ -504,7 +504,7 @@ macro_rules! system {
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            Quantities::$quantity(x)=>Quantity { value: x.value, unit: Unit{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::get_unit_base()} },
+                            Quantities::$quantity(x)=>Quantity { value: x.value, unit: Unit{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit()} },
                         )+
                     }
                 }
@@ -530,7 +530,7 @@ macro_rules! system {
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]     
-                            Units::$quantity(x)=> Unit{multiplier: x.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::get_unit_base()},
+                            Units::$quantity(x)=> Unit{multiplier: x.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit()},
                         )+
                     }
                 }
@@ -560,7 +560,7 @@ macro_rules! system {
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            Units::$quantity(_)=>[<$quantity:snake>]::[<$quantity Unit>]::get_unit_base(),
+                            Units::$quantity(_)=>[<$quantity:snake>]::[<$quantity Unit>]::unit(),
                         )+
                     }
                 }                

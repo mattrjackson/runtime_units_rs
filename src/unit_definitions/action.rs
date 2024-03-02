@@ -35,7 +35,7 @@ mod test {
 
     #[test]
     fn check_dimension() {
-        assert_eq!(ActionUnit::get_unit_base(), EnergyUnit::get_unit_base()*TimeUnit::get_unit_base());
+        assert_eq!(ActionUnit::unit(), EnergyUnit::unit()*TimeUnit::unit());
     }
 
     #[test]

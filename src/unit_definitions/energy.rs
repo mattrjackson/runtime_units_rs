@@ -96,7 +96,7 @@ mod tests {
     
     #[test]
     fn check_dimension() {
-        assert_eq!(EnergyUnit::get_unit_base(), MassUnit::get_unit_base()*LengthUnit::get_unit_base().powi(2) / TimeUnit::get_unit_base().powi(2));
+        assert_eq!(EnergyUnit::unit(), MassUnit::unit()*LengthUnit::unit().powi(2) / TimeUnit::unit().powi(2));
     }
 
     #[test]

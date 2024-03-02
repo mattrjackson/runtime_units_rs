@@ -42,44 +42,38 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::area as a;
-//         use crate::si::areal_number_density as n;
-//         use crate::si::quantities::*;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod test {
+    use crate::{unit_definitions::areal_number_density::ArealNumberDensityUnit, units::{AreaUnit, LengthUnit}, units_base::Unit};
+   
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ArealNumberDensity<V> = (V::one()
-//                 / Area::new::<a::square_meter>(V::one())).into();
-//         }
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ArealNumberDensityUnit::unit(),  LengthUnit::unit().powi(-2));
+    }
 
-//         #[test]
-//         fn check_units() {
-//             test::<n::per_square_kilometer, a::square_kilometer>();
-//             test::<n::per_square_meter, a::square_meter>();
-//             test::<n::per_square_decimeter, a::square_decimeter>();
-//             test::<n::per_square_centimeter, a::square_centimeter>();
-//             test::<n::per_square_millimeter, a::square_millimeter>();
-//             test::<n::per_square_micrometer, a::square_micrometer>();
+    #[test]
+    fn check_units() {
+        test_unit(ArealNumberDensityUnit::per_square_kilometer, AreaUnit::square_kilometer);
+        test_unit(ArealNumberDensityUnit::per_square_meter, AreaUnit::square_meter);
+        test_unit(ArealNumberDensityUnit::per_square_decimeter, AreaUnit::square_decimeter);
+        test_unit(ArealNumberDensityUnit::per_square_centimeter, AreaUnit::square_centimeter);
+        test_unit(ArealNumberDensityUnit::per_square_millimeter, AreaUnit::square_millimeter);
+        test_unit(ArealNumberDensityUnit::per_square_micrometer, AreaUnit::square_micrometer);
 
-//             test::<n::per_acre, a::acre>();
-//             test::<n::per_are, a::are>();
-//             test::<n::per_barn, a::barn>();
-//             test::<n::per_circular_mil, a::circular_mil>();
-//             test::<n::per_hectare, a::hectare>();
-//             test::<n::per_square_foot, a::square_foot>();
-//             test::<n::per_square_inch, a::square_inch>();
-//             test::<n::per_square_mile, a::square_mile>();
-//             test::<n::per_square_yard, a::square_yard>();
+        test_unit(ArealNumberDensityUnit::per_acre, AreaUnit::acre);
+        test_unit(ArealNumberDensityUnit::per_are, AreaUnit::are);
+        test_unit(ArealNumberDensityUnit::per_barn, AreaUnit::barn);
+        test_unit(ArealNumberDensityUnit::per_circular_mil, AreaUnit::circular_mil);
+        test_unit(ArealNumberDensityUnit::per_hectare, AreaUnit::hectare);
+        test_unit(ArealNumberDensityUnit::per_square_foot, AreaUnit::square_foot);
+        test_unit(ArealNumberDensityUnit::per_square_inch, AreaUnit::square_inch);
+        test_unit(ArealNumberDensityUnit::per_square_mile, AreaUnit::square_mile);
+        test_unit(ArealNumberDensityUnit::per_square_yard, AreaUnit::square_yard);
 
-//             fn test<N: n::Conversion<V>, A: a::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ArealNumberDensity::new::<N>(V::one()),
-//                     &(V::one() / Area::new::<A>(V::one())).into());
-//             }
-//         }
-//     }
-// }
+        fn test_unit(value: ArealNumberDensityUnit, area: AreaUnit) {
+            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(area).powi(-1), 1e-12));
+        }
+    }
+    
+}

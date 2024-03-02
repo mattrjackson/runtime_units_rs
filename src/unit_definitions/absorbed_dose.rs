@@ -46,7 +46,12 @@ quantity! {
 #[cfg(test)]
 #[cfg(feature="AbsorbedDose")]
 mod tests {
-    
+    use crate::{unit_definitions::absorbed_dose::AbsorbedDoseUnit, units_base::UnitBase};
+
+    #[test]
+    fn check_dimension() {
+        assert_eq!(AbsorbedDoseUnit::unit(), UnitBase::new_length().powi(2)/UnitBase::new_time().powi(2));
+    }
     #[test]
     fn check_units() {
         use crate::AbsorbedDose;

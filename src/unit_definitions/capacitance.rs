@@ -37,61 +37,51 @@ quantity! {
         @yoctofarad: prefix!(yocto); "yF", "yoctofarad", "yoctofarads";
 
         @abfarad: 1.0_E9; "abF", "abfarad", "abfarads";
-        @statfarad: 1.112_650_E-12; "statF", "statfarad", "statfarads";
+        @statfarad: 1.11265005605362E-12; "statF", "statfarad", "statfarads";
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::capacitance as c;
-//         use crate::si::electric_current as i;
-//         use crate::si::electric_potential as v;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{unit_definitions::{capacitance::CapacitanceUnit, electric_current::ElectricCurrentUnit, electric_potential::ElectricPotentialUnit, time::TimeUnit}, units_base::Unit, ElectricPotential};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: Capacitance<V> = ElectricCurrent::new::<i::ampere>(V::one())
-//                 * Time::new::<t::second>(V::one())
-//                 / ElectricPotential::new::<v::volt>(V::one());
-//         }
 
-//         #[test]
-//         fn check_units() {
-//             test::<i::yottaampere, v::volt, c::yottafarad>();
-//             test::<i::zettaampere, v::volt, c::zettafarad>();
-//             test::<i::exaampere, v::volt, c::exafarad>();
-//             test::<i::petaampere, v::volt, c::petafarad>();
-//             test::<i::teraampere, v::volt, c::terafarad>();
-//             test::<i::gigaampere, v::volt, c::gigafarad>();
-//             test::<i::megaampere, v::volt, c::megafarad>();
-//             test::<i::kiloampere, v::volt, c::kilofarad>();
-//             test::<i::hectoampere, v::volt, c::hectofarad>();
-//             test::<i::decaampere, v::volt, c::decafarad>();
-//             test::<i::ampere, v::volt, c::farad>();
-//             test::<i::deciampere, v::volt, c::decifarad>();
-//             test::<i::centiampere, v::volt, c::centifarad>();
-//             test::<i::milliampere, v::volt, c::millifarad>();
-//             test::<i::microampere, v::volt, c::microfarad>();
-//             test::<i::nanoampere, v::volt, c::nanofarad>();
-//             test::<i::picoampere, v::volt, c::picofarad>();
-//             test::<i::femtoampere, v::volt, c::femtofarad>();
-//             test::<i::attoampere, v::volt, c::attofarad>();
-//             test::<i::zeptoampere, v::volt, c::zeptofarad>();
-//             test::<i::yoctoampere, v::volt, c::yoctofarad>();
+    #[test]
+    fn check_dimension() {
+        assert_eq!(CapacitanceUnit::unit(),  ElectricCurrentUnit::unit() * TimeUnit::unit() / ElectricPotentialUnit::unit());       
+    }
 
-//             test::<i::statampere, v::statvolt, c::statfarad>();
-//             test::<i::abampere, v::abvolt, c::abfarad>();
+    #[test]
+    fn check_units() {
+       test_unit(ElectricCurrentUnit::yottaampere, ElectricPotentialUnit::volt, CapacitanceUnit::yottafarad);
+       test_unit(ElectricCurrentUnit::zettaampere, ElectricPotentialUnit::volt, CapacitanceUnit::zettafarad);
+       test_unit(ElectricCurrentUnit::exaampere, ElectricPotentialUnit::volt, CapacitanceUnit::exafarad);
+       test_unit(ElectricCurrentUnit::petaampere, ElectricPotentialUnit::volt, CapacitanceUnit::petafarad);
+       test_unit(ElectricCurrentUnit::teraampere, ElectricPotentialUnit::volt, CapacitanceUnit::terafarad);
+       test_unit(ElectricCurrentUnit::gigaampere, ElectricPotentialUnit::volt, CapacitanceUnit::gigafarad);
+       test_unit(ElectricCurrentUnit::megaampere, ElectricPotentialUnit::volt, CapacitanceUnit::megafarad);
+       test_unit(ElectricCurrentUnit::kiloampere, ElectricPotentialUnit::volt, CapacitanceUnit::kilofarad);
+       test_unit(ElectricCurrentUnit::hectoampere, ElectricPotentialUnit::volt, CapacitanceUnit::hectofarad);
+       test_unit(ElectricCurrentUnit::decaampere, ElectricPotentialUnit::volt, CapacitanceUnit::decafarad);
+       test_unit(ElectricCurrentUnit::ampere, ElectricPotentialUnit::volt, CapacitanceUnit::farad);
+       test_unit(ElectricCurrentUnit::deciampere, ElectricPotentialUnit::volt, CapacitanceUnit::decifarad);
+       test_unit(ElectricCurrentUnit::centiampere, ElectricPotentialUnit::volt, CapacitanceUnit::centifarad);
+       test_unit(ElectricCurrentUnit::milliampere, ElectricPotentialUnit::volt, CapacitanceUnit::millifarad);
+       test_unit(ElectricCurrentUnit::microampere, ElectricPotentialUnit::volt, CapacitanceUnit::microfarad);
+       test_unit(ElectricCurrentUnit::nanoampere, ElectricPotentialUnit::volt, CapacitanceUnit::nanofarad);
+       test_unit(ElectricCurrentUnit::picoampere, ElectricPotentialUnit::volt, CapacitanceUnit::picofarad);
+       test_unit(ElectricCurrentUnit::femtoampere, ElectricPotentialUnit::volt, CapacitanceUnit::femtofarad);
+       test_unit(ElectricCurrentUnit::attoampere, ElectricPotentialUnit::volt, CapacitanceUnit::attofarad);
+       test_unit(ElectricCurrentUnit::zeptoampere, ElectricPotentialUnit::volt, CapacitanceUnit::zeptofarad);
+       test_unit(ElectricCurrentUnit::yoctoampere, ElectricPotentialUnit::volt, CapacitanceUnit::yoctofarad);
 
-//             fn test<I: i::Conversion<V>, U: v::Conversion<V>, C: c::Conversion<V>>() {
-//                 Test::assert_approx_eq(&Capacitance::new::<C>(V::one()),
-//                     &(ElectricCurrent::new::<I>(V::one())
-//                         * Time::new::<t::second>(V::one())
-//                         / ElectricPotential::new::<U>(V::one())));
-//             }
-//         }
-//     }
-// }
+       test_unit(ElectricCurrentUnit::statampere, ElectricPotentialUnit::statvolt, CapacitanceUnit::statfarad);
+       test_unit(ElectricCurrentUnit::abampere, ElectricPotentialUnit::abvolt, CapacitanceUnit::abfarad);
+
+        fn test_unit(current: ElectricCurrentUnit, potential: ElectricPotentialUnit, value: CapacitanceUnit) {
+            println!("{value}: left: {:?}, right: {:?}", Into::<Unit>::into(value), Into::<Unit>::into(current) / Into::<Unit>::into(potential) * Into::<Unit>::into(TimeUnit::second));
+            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(current) / Into::<Unit>::into(potential) * Into::<Unit>::into(TimeUnit::second), 1e-12));
+        }
+    }
+}
+
