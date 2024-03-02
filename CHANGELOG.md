@@ -9,6 +9,17 @@
 ### Removed
 ### Fixed
 -->
+
+## [0.1.4] — 2024-03-02
+
+### Security
+### Added
+### Changed
+The constructor for `Quantity` now takes `Unit` rather than `Units`.
+### Deprecated
+### Removed
+Removed duplica
+
 ## [0.1.3] — 2024-03-02
 
 ### Security

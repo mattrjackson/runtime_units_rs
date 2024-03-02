@@ -23,9 +23,9 @@ impl Quantity
     ///
     /// Create a new instance of `Quantity` with a given `value` and `unit` 
     ///
-    pub fn new(value: f64, unit: Units) -> Self
+    pub fn new(value: f64, unit: Unit) -> Self
     {        
-        Self { value, unit: unit.into() }
+        Self { value, unit }
     }
 
     ///
