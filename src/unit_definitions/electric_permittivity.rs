@@ -20,31 +20,22 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::capacitance as c;
-//         use crate::si::electric_permittivity as ep;
-//         use crate::si::length as l;
-//         use crate::si::quantities::*;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod test {
+    use crate::{unit_definitions::{capacitance::CapacitanceUnit, electric_permittivity::ElectricPermittivityUnit}, units::LengthUnit, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricPermittivity<V> = Capacitance::new::<c::farad>(V::one())
-//                 / Length::new::<l::meter>(V::one());
-//         }
 
-//         #[test]
-//         fn check_units() {
-//             test::<ep::farad_per_meter, c::farad, l::meter>();
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricPermittivityUnit::unit_base(), CapacitanceUnit::unit_base() / LengthUnit::unit_base());
+    }
 
-//             fn test<EP: ep::Conversion<V>, C: c::Conversion<V>, L: l::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricPermittivity::new::<EP>(V::one()),
-//                     &(Capacitance::new::<C>(V::one())
-//                         / Length::new::<L>(V::one())));
-//             }
-//         }
-//     }
-// }
+    #[test]
+    fn check_units() {
+        test(ElectricPermittivityUnit::farad_per_meter, CapacitanceUnit::farad, LengthUnit::meter);
+
+        fn test(value: ElectricPermittivityUnit, capacitance: CapacitanceUnit, length: LengthUnit) {
+            assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(capacitance) / Into::<Unit>::into(length));
+        }
+    }
+}

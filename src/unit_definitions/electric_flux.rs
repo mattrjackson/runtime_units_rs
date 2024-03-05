@@ -19,32 +19,23 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::electric_flux as ef;
-//         use crate::si::quantities::*;
-//         use crate::si::electric_potential as ep;
-//         use crate::si::length as l;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod test {
+    use crate::{unit_definitions::{electric_flux::ElectricFluxUnit, electric_potential::ElectricPotentialUnit}, units::LengthUnit, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricFlux<V> = ElectricPotential::new::<ep::volt>(V::one())
-//                 * Length::new::<l::meter>(V::one());
-//         }
 
-//         #[test]
-//         fn check_units() {
-//             test::<ef::volt_meter, l::meter, ep::volt>();
-//             test::<ef::volt_centimeter, l::centimeter, ep::volt>();
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricFluxUnit::unit_base(), ElectricPotentialUnit::unit_base() * LengthUnit::unit_base());
+    }
 
-//             fn test<EF: ef::Conversion<V>, L: l::Conversion<V>, EP: ep::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricFlux::new::<EF>(V::one()),
-//                     &(ElectricPotential::new::<EP>(V::one())
-//                         * Length::new::<L>(V::one())));
-//             }
-//         }
-//     }
-// }
+    #[test]
+    fn check_units() {
+        test_unit(ElectricFluxUnit::volt_meter, LengthUnit::meter, ElectricPotentialUnit::volt);
+        test_unit(ElectricFluxUnit::volt_centimeter, LengthUnit::centimeter, ElectricPotentialUnit::volt);
+    }
+    fn test_unit(ef: ElectricFluxUnit, length: LengthUnit, potential: ElectricPotentialUnit)
+    {
+        assert_eq!(Into::<Unit>::into(ef), Into::<Unit>::into(potential) * Into::<Unit>::into(length));
+    }
+}

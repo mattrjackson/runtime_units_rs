@@ -24,34 +24,25 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::angle as a;
-//         use crate::si::curvature as c;
-//         use crate::si::length as l;
-//         use crate::si::quantities::*;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{unit_definitions::{angle::AngleUnit, curvature::CurvatureUnit}, units::LengthUnit, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: Curvature<V> =
-//                 (Angle::new::<a::radian>(V::one())
-//                     / Length::new::<l::meter>(V::one())).into();
-//         }
 
-//         #[test]
-//         fn check_units() {
-//             test::<a::radian, l::meter, c::radian_per_meter>();
-//             test::<a::degree, l::meter, c::degree_per_meter>();
-//             test::<a::radian, l::millimeter, c::radian_per_millimeter>();
-//             test::<a::degree, l::millimeter, c::degree_per_millimeter>();
+    #[test]
+    fn check_dimension() {
+        assert_eq!(CurvatureUnit::unit_base(), AngleUnit::unit_base() / LengthUnit::unit_base());
+    }
 
-//             fn test<A: a::Conversion<V>, L: l::Conversion<V>, C: c::Conversion<V>>() {
-//                 Test::assert_approx_eq(&Curvature::new::<C>(V::one()),
-//                     &(Angle::new::<A>(V::one()) / Length::new::<L>(V::one())).into());
-//             }
-//         }
-//     }
-// }
+    #[test]
+    fn check_units() {
+        test_unit(AngleUnit::radian, LengthUnit::meter, CurvatureUnit::radian_per_meter);
+        test_unit(AngleUnit::degree, LengthUnit::meter, CurvatureUnit::degree_per_meter);
+        test_unit(AngleUnit::radian, LengthUnit::millimeter, CurvatureUnit::radian_per_millimeter);
+        test_unit(AngleUnit::degree, LengthUnit::millimeter, CurvatureUnit::degree_per_millimeter);
+    }
+    fn test_unit(angle: AngleUnit, length: LengthUnit, value: CurvatureUnit) {
+        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(angle) / Into::<Unit>::into(length));
+    }
+
+}

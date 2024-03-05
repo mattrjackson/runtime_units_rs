@@ -47,7 +47,7 @@ mod test {
 
     #[test]
     fn check_dimension() {
-        assert_eq!(ArealNumberRateUnit::unit(),  LengthUnit::unit().powi(-2) / TimeUnit::unit());
+        assert_eq!(ArealNumberRateUnit::unit_base(),  LengthUnit::unit_base().powi(-2) / TimeUnit::unit_base());
     }
 
     #[test]

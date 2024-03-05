@@ -1,4 +1,4 @@
-//! Catalytic activity concentration (base unit katal per cubic meter, mol · s⁻¹ · m⁻³).
+ //! Catalytic activity concentration (base unit katal per cubic meter, mol · s⁻¹ · m⁻³).
 use crate::{prefix, quantity};
 quantity! {
     /// Catalytic activity concentration (base unit katal per cubic meter, mol · s⁻¹ · m⁻³).
@@ -280,144 +280,136 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::catalytic_activity as ca;
-//         use crate::si::catalytic_activity_concentration as c;
-//         use crate::si::quantities::*;
-//         use crate::si::volume as v;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod test {
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: CatalyticActivityConcentration<V> =
-//                 (CatalyticActivity::new::<ca::katal>(V::one())
-//                     / Volume::new::<v::cubic_meter>(V::one())).into();
-//         }
+    use crate::{unit_definitions::time::TimeUnit, units::{AmountOfSubstanceUnit, CatalyticActivityUnit, LengthUnit, VolumeUnit}, units_base::Unit};
 
-//         #[test]
-//         fn check_units() {
-//             test::<ca::yottakatal, v::cubic_meter, c::yottakatal_per_cubic_meter>();
-//             test::<ca::zettakatal, v::cubic_meter, c::zettakatal_per_cubic_meter>();
-//             test::<ca::exakatal, v::cubic_meter, c::exakatal_per_cubic_meter>();
-//             test::<ca::petakatal, v::cubic_meter, c::petakatal_per_cubic_meter>();
-//             test::<ca::terakatal, v::cubic_meter, c::terakatal_per_cubic_meter>();
-//             test::<ca::gigakatal, v::cubic_meter, c::gigakatal_per_cubic_meter>();
-//             test::<ca::megakatal, v::cubic_meter, c::megakatal_per_cubic_meter>();
-//             test::<ca::kilokatal, v::cubic_meter, c::kilokatal_per_cubic_meter>();
-//             test::<ca::hectokatal, v::cubic_meter, c::hectokatal_per_cubic_meter>();
-//             test::<ca::decakatal, v::cubic_meter, c::decakatal_per_cubic_meter>();
-//             test::<ca::katal, v::cubic_meter, c::katal_per_cubic_meter>();
-//             test::<ca::decikatal, v::cubic_meter, c::decikatal_per_cubic_meter>();
-//             test::<ca::centikatal, v::cubic_meter, c::centikatal_per_cubic_meter>();
-//             test::<ca::millikatal, v::cubic_meter, c::millikatal_per_cubic_meter>();
-//             test::<ca::microkatal, v::cubic_meter, c::microkatal_per_cubic_meter>();
-//             test::<ca::nanokatal, v::cubic_meter, c::nanokatal_per_cubic_meter>();
-//             test::<ca::picokatal, v::cubic_meter, c::picokatal_per_cubic_meter>();
-//             test::<ca::femtokatal, v::cubic_meter, c::femtokatal_per_cubic_meter>();
-//             test::<ca::attokatal, v::cubic_meter, c::attokatal_per_cubic_meter>();
-//             test::<ca::zeptokatal, v::cubic_meter, c::zeptokatal_per_cubic_meter>();
-//             test::<ca::yoctokatal, v::cubic_meter, c::yoctokatal_per_cubic_meter>();
+    use super::CatalyticActivityConcentrationUnit;
 
-//             test::<ca::kilokatal, v::cubic_decimeter, c::kilokatal_per_cubic_decimeter>();
-//             test::<ca::kilokatal, v::liter, c::kilokatal_per_liter>();
-//             test::<ca::katal, v::cubic_decimeter, c::katal_per_cubic_decimeter>();
-//             test::<ca::katal, v::liter, c::katal_per_liter>();
-//             test::<ca::millikatal, v::cubic_decimeter, c::millikatal_per_cubic_decimeter>();
-//             test::<ca::millikatal, v::liter, c::millikatal_per_liter>();
-//             test::<ca::microkatal, v::cubic_decimeter, c::microkatal_per_cubic_decimeter>();
-//             test::<ca::microkatal, v::liter, c::microkatal_per_liter>();
-//             test::<ca::nanokatal, v::cubic_decimeter, c::nanokatal_per_cubic_decimeter>();
-//             test::<ca::nanokatal, v::liter, c::nanokatal_per_liter>();
-//             test::<ca::picokatal, v::cubic_decimeter, c::picokatal_per_cubic_decimeter>();
-//             test::<ca::picokatal, v::liter, c::picokatal_per_liter>();
-//             test::<ca::femtokatal, v::cubic_decimeter, c::femtokatal_per_cubic_decimeter>();
-//             test::<ca::femtokatal, v::liter, c::femtokatal_per_liter>();
+    #[test]
+    fn check_dimension() {
+        assert_eq!(CatalyticActivityConcentrationUnit::unit_base(),  AmountOfSubstanceUnit::unit_base() / TimeUnit::unit_base() / LengthUnit::unit_base().powi(3));
+    }
 
-//             test::<ca::kilokatal, v::deciliter, c::kilokatal_per_deciliter>();
-//             test::<ca::katal, v::deciliter, c::katal_per_deciliter>();
-//             test::<ca::millikatal, v::deciliter, c::millikatal_per_deciliter>();
-//             test::<ca::microkatal, v::deciliter, c::microkatal_per_deciliter>();
-//             test::<ca::nanokatal, v::deciliter, c::nanokatal_per_deciliter>();
-//             test::<ca::picokatal, v::deciliter, c::picokatal_per_deciliter>();
-//             test::<ca::femtokatal, v::deciliter, c::femtokatal_per_deciliter>();
+    #[test]
+    fn check_units() {
+        test_unit(CatalyticActivityUnit::yottakatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::yottakatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::zettakatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::zettakatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::exakatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::exakatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::petakatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::petakatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::terakatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::terakatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::gigakatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::gigakatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::megakatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::megakatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::kilokatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::kilokatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::hectokatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::hectokatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::decakatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::decakatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::katal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::katal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::decikatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::decikatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::centikatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::centikatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::millikatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::millikatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::microkatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::microkatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::nanokatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::nanokatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::picokatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::picokatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::femtokatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::femtokatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::attokatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::attokatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::zeptokatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::zeptokatal_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::yoctokatal, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::yoctokatal_per_cubic_meter);
 
-//             test::<ca::kilokatal, v::milliliter, c::kilokatal_per_milliliter>();
-//             test::<ca::katal, v::milliliter, c::katal_per_milliliter>();
-//             test::<ca::millikatal, v::milliliter, c::millikatal_per_milliliter>();
-//             test::<ca::microkatal, v::milliliter, c::microkatal_per_milliliter>();
-//             test::<ca::nanokatal, v::milliliter, c::nanokatal_per_milliliter>();
-//             test::<ca::picokatal, v::milliliter, c::picokatal_per_milliliter>();
-//             test::<ca::femtokatal, v::milliliter, c::femtokatal_per_milliliter>();
+        test_unit(CatalyticActivityUnit::kilokatal, VolumeUnit::cubic_decimeter, CatalyticActivityConcentrationUnit::kilokatal_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::kilokatal, VolumeUnit::liter, CatalyticActivityConcentrationUnit::kilokatal_per_liter);
+        test_unit(CatalyticActivityUnit::katal, VolumeUnit::cubic_decimeter, CatalyticActivityConcentrationUnit::katal_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::katal, VolumeUnit::liter, CatalyticActivityConcentrationUnit::katal_per_liter);
+        test_unit(CatalyticActivityUnit::millikatal, VolumeUnit::cubic_decimeter, CatalyticActivityConcentrationUnit::millikatal_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::millikatal, VolumeUnit::liter, CatalyticActivityConcentrationUnit::millikatal_per_liter);
+        test_unit(CatalyticActivityUnit::microkatal, VolumeUnit::cubic_decimeter, CatalyticActivityConcentrationUnit::microkatal_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::microkatal, VolumeUnit::liter, CatalyticActivityConcentrationUnit::microkatal_per_liter);
+        test_unit(CatalyticActivityUnit::nanokatal, VolumeUnit::cubic_decimeter, CatalyticActivityConcentrationUnit::nanokatal_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::nanokatal, VolumeUnit::liter, CatalyticActivityConcentrationUnit::nanokatal_per_liter);
+        test_unit(CatalyticActivityUnit::picokatal, VolumeUnit::cubic_decimeter, CatalyticActivityConcentrationUnit::picokatal_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::picokatal, VolumeUnit::liter, CatalyticActivityConcentrationUnit::picokatal_per_liter);
+        test_unit(CatalyticActivityUnit::femtokatal, VolumeUnit::cubic_decimeter, CatalyticActivityConcentrationUnit::femtokatal_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::femtokatal, VolumeUnit::liter, CatalyticActivityConcentrationUnit::femtokatal_per_liter);
 
-//             test::<ca::yotta_enzyme_unit, v::cubic_meter, c::yotta_enzyme_unit_per_cubic_meter>();
-//             test::<ca::zetta_enzyme_unit, v::cubic_meter, c::zetta_enzyme_unit_per_cubic_meter>();
-//             test::<ca::exa_enzyme_unit, v::cubic_meter, c::exa_enzyme_unit_per_cubic_meter>();
-//             test::<ca::peta_enzyme_unit, v::cubic_meter, c::peta_enzyme_unit_per_cubic_meter>();
-//             test::<ca::tera_enzyme_unit, v::cubic_meter, c::tera_enzyme_unit_per_cubic_meter>();
-//             test::<ca::giga_enzyme_unit, v::cubic_meter, c::giga_enzyme_unit_per_cubic_meter>();
-//             test::<ca::mega_enzyme_unit, v::cubic_meter, c::mega_enzyme_unit_per_cubic_meter>();
-//             test::<ca::kilo_enzyme_unit, v::cubic_meter, c::kilo_enzyme_unit_per_cubic_meter>();
-//             test::<ca::hecto_enzyme_unit, v::cubic_meter, c::hecto_enzyme_unit_per_cubic_meter>();
-//             test::<ca::deca_enzyme_unit, v::cubic_meter, c::deca_enzyme_unit_per_cubic_meter>();
-//             test::<ca::enzyme_unit, v::cubic_meter, c::enzyme_unit_per_cubic_meter>();
-//             test::<ca::deci_enzyme_unit, v::cubic_meter, c::deci_enzyme_unit_per_cubic_meter>();
-//             test::<ca::centi_enzyme_unit, v::cubic_meter, c::centi_enzyme_unit_per_cubic_meter>();
-//             test::<ca::milli_enzyme_unit, v::cubic_meter, c::milli_enzyme_unit_per_cubic_meter>();
-//             test::<ca::micro_enzyme_unit, v::cubic_meter, c::micro_enzyme_unit_per_cubic_meter>();
-//             test::<ca::nano_enzyme_unit, v::cubic_meter, c::nano_enzyme_unit_per_cubic_meter>();
-//             test::<ca::pico_enzyme_unit, v::cubic_meter, c::pico_enzyme_unit_per_cubic_meter>();
-//             test::<ca::femto_enzyme_unit, v::cubic_meter, c::femto_enzyme_unit_per_cubic_meter>();
-//             test::<ca::atto_enzyme_unit, v::cubic_meter, c::atto_enzyme_unit_per_cubic_meter>();
-//             test::<ca::zepto_enzyme_unit, v::cubic_meter, c::zepto_enzyme_unit_per_cubic_meter>();
-//             test::<ca::yocto_enzyme_unit, v::cubic_meter, c::yocto_enzyme_unit_per_cubic_meter>();
+        test_unit(CatalyticActivityUnit::kilokatal, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::kilokatal_per_deciliter);
+        test_unit(CatalyticActivityUnit::katal, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::katal_per_deciliter);
+        test_unit(CatalyticActivityUnit::millikatal, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::millikatal_per_deciliter);
+        test_unit(CatalyticActivityUnit::microkatal, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::microkatal_per_deciliter);
+        test_unit(CatalyticActivityUnit::nanokatal, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::nanokatal_per_deciliter);
+        test_unit(CatalyticActivityUnit::picokatal, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::picokatal_per_deciliter);
+        test_unit(CatalyticActivityUnit::femtokatal, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::femtokatal_per_deciliter);
 
-//             test::<ca::kilo_enzyme_unit, v::cubic_decimeter,
-//                 c::kilo_enzyme_unit_per_cubic_decimeter>();
-//             test::<ca::kilo_enzyme_unit, v::liter, c::kilo_enzyme_unit_per_liter>();
-//             test::<ca::enzyme_unit, v::cubic_decimeter,
-//                 c::enzyme_unit_per_cubic_decimeter>();
-//             test::<ca::enzyme_unit, v::liter, c::enzyme_unit_per_liter>();
-//             test::<ca::milli_enzyme_unit, v::cubic_decimeter,
-//                 c::milli_enzyme_unit_per_cubic_decimeter>();
-//             test::<ca::milli_enzyme_unit, v::liter, c::milli_enzyme_unit_per_liter>();
-//             test::<ca::micro_enzyme_unit, v::cubic_decimeter,
-//                 c::micro_enzyme_unit_per_cubic_decimeter>();
-//             test::<ca::micro_enzyme_unit, v::liter, c::micro_enzyme_unit_per_liter>();
-//             test::<ca::nano_enzyme_unit, v::cubic_decimeter,
-//                 c::nano_enzyme_unit_per_cubic_decimeter>();
-//             test::<ca::nano_enzyme_unit, v::liter, c::nano_enzyme_unit_per_liter>();
-//             test::<ca::pico_enzyme_unit, v::cubic_decimeter,
-//                 c::pico_enzyme_unit_per_cubic_decimeter>();
-//             test::<ca::pico_enzyme_unit, v::liter, c::pico_enzyme_unit_per_liter>();
-//             test::<ca::femto_enzyme_unit, v::cubic_decimeter,
-//                 c::femto_enzyme_unit_per_cubic_decimeter>();
-//             test::<ca::femto_enzyme_unit, v::liter, c::femto_enzyme_unit_per_liter>();
+        test_unit(CatalyticActivityUnit::kilokatal, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::kilokatal_per_milliliter);
+        test_unit(CatalyticActivityUnit::katal, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::katal_per_milliliter);
+        test_unit(CatalyticActivityUnit::millikatal, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::millikatal_per_milliliter);
+        test_unit(CatalyticActivityUnit::microkatal, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::microkatal_per_milliliter);
+        test_unit(CatalyticActivityUnit::nanokatal, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::nanokatal_per_milliliter);
+        test_unit(CatalyticActivityUnit::picokatal, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::picokatal_per_milliliter);
+        test_unit(CatalyticActivityUnit::femtokatal, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::femtokatal_per_milliliter);
 
-//             test::<ca::kilo_enzyme_unit, v::deciliter, c::kilo_enzyme_unit_per_deciliter>();
-//             test::<ca::enzyme_unit, v::deciliter, c::enzyme_unit_per_deciliter>();
-//             test::<ca::milli_enzyme_unit, v::deciliter, c::milli_enzyme_unit_per_deciliter>();
-//             test::<ca::micro_enzyme_unit, v::deciliter, c::micro_enzyme_unit_per_deciliter>();
-//             test::<ca::nano_enzyme_unit, v::deciliter, c::nano_enzyme_unit_per_deciliter>();
-//             test::<ca::pico_enzyme_unit, v::deciliter, c::pico_enzyme_unit_per_deciliter>();
-//             test::<ca::femto_enzyme_unit, v::deciliter, c::femto_enzyme_unit_per_deciliter>();
+        test_unit(CatalyticActivityUnit::yotta_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::yotta_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::zetta_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::zetta_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::exa_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::exa_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::peta_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::peta_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::tera_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::tera_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::giga_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::giga_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::mega_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::mega_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::kilo_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::kilo_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::hecto_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::hecto_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::deca_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::deca_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::deci_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::deci_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::centi_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::centi_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::milli_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::milli_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::micro_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::micro_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::nano_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::nano_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::pico_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::pico_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::femto_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::femto_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::atto_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::atto_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::zepto_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::zepto_enzyme_unit_per_cubic_meter);
+        test_unit(CatalyticActivityUnit::yocto_enzyme_unit, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::yocto_enzyme_unit_per_cubic_meter);
 
-//             test::<ca::kilo_enzyme_unit, v::milliliter, c::kilo_enzyme_unit_per_milliliter>();
-//             test::<ca::enzyme_unit, v::milliliter, c::enzyme_unit_per_milliliter>();
-//             test::<ca::milli_enzyme_unit, v::milliliter, c::milli_enzyme_unit_per_milliliter>();
-//             test::<ca::micro_enzyme_unit, v::milliliter, c::micro_enzyme_unit_per_milliliter>();
-//             test::<ca::nano_enzyme_unit, v::milliliter, c::nano_enzyme_unit_per_milliliter>();
-//             test::<ca::pico_enzyme_unit, v::milliliter, c::pico_enzyme_unit_per_milliliter>();
-//             test::<ca::femto_enzyme_unit, v::milliliter, c::femto_enzyme_unit_per_milliliter>();
+        test_unit(CatalyticActivityUnit::kilo_enzyme_unit, VolumeUnit::cubic_decimeter,
+            CatalyticActivityConcentrationUnit::kilo_enzyme_unit_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::kilo_enzyme_unit, VolumeUnit::liter, CatalyticActivityConcentrationUnit::kilo_enzyme_unit_per_liter);
+        test_unit(CatalyticActivityUnit::enzyme_unit, VolumeUnit::cubic_decimeter,
+            CatalyticActivityConcentrationUnit::enzyme_unit_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::enzyme_unit, VolumeUnit::liter, CatalyticActivityConcentrationUnit::enzyme_unit_per_liter);
+        test_unit(CatalyticActivityUnit::milli_enzyme_unit, VolumeUnit::cubic_decimeter,
+            CatalyticActivityConcentrationUnit::milli_enzyme_unit_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::milli_enzyme_unit, VolumeUnit::liter, CatalyticActivityConcentrationUnit::milli_enzyme_unit_per_liter);
+        test_unit(CatalyticActivityUnit::micro_enzyme_unit, VolumeUnit::cubic_decimeter,
+            CatalyticActivityConcentrationUnit::micro_enzyme_unit_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::micro_enzyme_unit, VolumeUnit::liter, CatalyticActivityConcentrationUnit::micro_enzyme_unit_per_liter);
+        test_unit(CatalyticActivityUnit::nano_enzyme_unit, VolumeUnit::cubic_decimeter,
+            CatalyticActivityConcentrationUnit::nano_enzyme_unit_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::nano_enzyme_unit, VolumeUnit::liter, CatalyticActivityConcentrationUnit::nano_enzyme_unit_per_liter);
+        test_unit(CatalyticActivityUnit::pico_enzyme_unit, VolumeUnit::cubic_decimeter,
+            CatalyticActivityConcentrationUnit::pico_enzyme_unit_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::pico_enzyme_unit, VolumeUnit::liter, CatalyticActivityConcentrationUnit::pico_enzyme_unit_per_liter);
+        test_unit(CatalyticActivityUnit::femto_enzyme_unit, VolumeUnit::cubic_decimeter,
+            CatalyticActivityConcentrationUnit::femto_enzyme_unit_per_cubic_decimeter);
+        test_unit(CatalyticActivityUnit::femto_enzyme_unit, VolumeUnit::liter, CatalyticActivityConcentrationUnit::femto_enzyme_unit_per_liter);
 
-//             test::<ca::particle_per_second, v::cubic_meter, c::particle_per_second_cubic_meter>();
+        test_unit(CatalyticActivityUnit::kilo_enzyme_unit, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::kilo_enzyme_unit_per_deciliter);
+        test_unit(CatalyticActivityUnit::enzyme_unit, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::enzyme_unit_per_deciliter);
+        test_unit(CatalyticActivityUnit::milli_enzyme_unit, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::milli_enzyme_unit_per_deciliter);
+        test_unit(CatalyticActivityUnit::micro_enzyme_unit, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::micro_enzyme_unit_per_deciliter);
+        test_unit(CatalyticActivityUnit::nano_enzyme_unit, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::nano_enzyme_unit_per_deciliter);
+        test_unit(CatalyticActivityUnit::pico_enzyme_unit, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::pico_enzyme_unit_per_deciliter);
+        test_unit(CatalyticActivityUnit::femto_enzyme_unit, VolumeUnit::deciliter, CatalyticActivityConcentrationUnit::femto_enzyme_unit_per_deciliter);
 
-//             fn test<CA: ca::Conversion<V>, U: v::Conversion<V>, C: c::Conversion<V>>() {
-//                 Test::assert_approx_eq(&CatalyticActivityConcentration::new::<C>(V::one()),
-//                     &(CatalyticActivity::new::<CA>(V::one()) / Volume::new::<U>(V::one())).into());
-//             }
-//         }
-//     }
-// }
+        test_unit(CatalyticActivityUnit::kilo_enzyme_unit, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::kilo_enzyme_unit_per_milliliter);
+        test_unit(CatalyticActivityUnit::enzyme_unit, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::enzyme_unit_per_milliliter);
+        test_unit(CatalyticActivityUnit::milli_enzyme_unit, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::milli_enzyme_unit_per_milliliter);
+        test_unit(CatalyticActivityUnit::micro_enzyme_unit, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::micro_enzyme_unit_per_milliliter);
+        test_unit(CatalyticActivityUnit::nano_enzyme_unit, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::nano_enzyme_unit_per_milliliter);
+        test_unit(CatalyticActivityUnit::pico_enzyme_unit, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::pico_enzyme_unit_per_milliliter);
+        test_unit(CatalyticActivityUnit::femto_enzyme_unit, VolumeUnit::milliliter, CatalyticActivityConcentrationUnit::femto_enzyme_unit_per_milliliter);
+
+        test_unit(CatalyticActivityUnit::particle_per_second, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::particle_per_second_cubic_meter);
+    }
+    fn test_unit(activity: CatalyticActivityUnit, volume: VolumeUnit, value: CatalyticActivityConcentrationUnit) {
+        assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(activity) / Into::<Unit>::into(volume), 1e-12));
+    }
+}

@@ -75,7 +75,7 @@ mod tests {
 
     #[test]
     fn check_dimension() {
-        assert_eq!(AreaUnit::unit(),  LengthUnit::unit().powi(2));
+        assert_eq!(AreaUnit::unit_base(),  LengthUnit::unit_base().powi(2));
     }
 
     #[test]

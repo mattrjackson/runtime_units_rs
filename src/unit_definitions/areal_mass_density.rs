@@ -31,7 +31,7 @@ mod tests {
     
     #[test]
     fn check_dimension() {
-        assert_eq!(ArealMassDensityUnit::unit(),  MassUnit::unit() / LengthUnit::unit().powi(2));
+        assert_eq!(ArealMassDensityUnit::unit_base(),  MassUnit::unit_base() / LengthUnit::unit_base().powi(2));
     }
 
    #[test]

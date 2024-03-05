@@ -21,31 +21,22 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::electric_charge as q;
-//         use crate::si::electric_charge_linear_density as ecld;
-//         use crate::si::quantities::*;
-//         use crate::si::length as l;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_charge_linear_density::ElectricChargeLinearDensityUnit}, units::LengthUnit, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricChargeLinearDensity<V> = (ElectricCharge::new::<q::coulomb>(V::one())
-//                 / Length::new::<l::meter>(V::one())).into();
-//         }
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricChargeLinearDensityUnit::unit_base(), ElectricChargeUnit::unit_base() / LengthUnit::unit_base());
+    }
 
-//         #[test]
-//         fn check_units() {
-//             test::<q::coulomb, l::meter, ecld::coulomb_per_meter>();
-//             test::<q::coulomb, l::centimeter, ecld::coulomb_per_centimeter>();
-
-//             fn test<Q: q::Conversion<V>, L: l::Conversion<V>, ECLD: ecld::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricChargeLinearDensity::new::<ECLD>(V::one()),
-//                     &(ElectricCharge::new::<Q>(V::one()) / Length::new::<L>(V::one())).into());
-//             }
-//         }
-//     }
-// }
+    #[test]
+    fn check_units() {
+        test_unit(ElectricChargeUnit::coulomb, LengthUnit::meter, ElectricChargeLinearDensityUnit::coulomb_per_meter);
+        test_unit(ElectricChargeUnit::coulomb, LengthUnit::centimeter, ElectricChargeLinearDensityUnit::coulomb_per_centimeter);
+    }
+    fn test_unit(charge: ElectricChargeUnit, length: LengthUnit, value: ElectricChargeLinearDensityUnit)
+    {
+        assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(charge) / Into::<Unit>::into(length)));
+    }
+}

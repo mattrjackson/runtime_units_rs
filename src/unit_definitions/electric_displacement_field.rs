@@ -21,31 +21,24 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::electric_charge as q;
-//         use crate::si::electric_displacement_field as d;
-//         use crate::si::quantities::*;
-//         use crate::si::area as a;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{unit_definitions::{area::AreaUnit, electric_charge::ElectricChargeUnit, electric_displacement_field::ElectricDisplacementFieldUnit}, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricDisplacementField<V> = ElectricCharge::new::<q::coulomb>(V::one())
-//                 / Area::new::<a::square_meter>(V::one());
-//         }
 
-//         #[test]
-//         fn check_units() {
-//             test::<q::coulomb, a::square_meter, d::coulomb_per_square_meter>();
-//             test::<q::coulomb, a::square_centimeter, d::coulomb_per_square_centimeter>();
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricDisplacementFieldUnit::unit_base(), ElectricChargeUnit::unit_base() / AreaUnit::unit_base());
+    }
 
-//             fn test<Q: q::Conversion<V>, A: a::Conversion<V>, D: d::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricDisplacementField::new::<D>(V::one()),
-//                     &(ElectricCharge::new::<Q>(V::one()) / Area::new::<A>(V::one())));
-//             }
-//         }
-//     }
-// }
+    #[test]
+    fn check_units() {
+        test_unit(ElectricChargeUnit::coulomb, AreaUnit::square_meter, ElectricDisplacementFieldUnit::coulomb_per_square_meter);
+        test_unit(ElectricChargeUnit::coulomb, AreaUnit::square_centimeter, ElectricDisplacementFieldUnit::coulomb_per_square_centimeter);
+
+    }
+    fn test_unit(charge: ElectricChargeUnit, area: AreaUnit, value: ElectricDisplacementFieldUnit)
+    {
+         assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(charge) / Into::<Unit>::into(area)));
+    }
+}

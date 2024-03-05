@@ -23,32 +23,24 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::area as a;
-//         use crate::si::electric_current as i;
-//         use crate::si::electric_current_density as ecd;
-//         use crate::si::quantities::*;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{unit_definitions::{electric_current::ElectricCurrentUnit, electric_current_density::ElectricCurrentDensityUnit}, units::AreaUnit, units_base::Unit, ElectricCurrentDensity};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricCurrentDensity<V> = (ElectricCurrent::new::<i::ampere>(V::one())
-//                 / Area::new::<a::square_meter>(V::one())).into();
-//         }
+    
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricCurrentDensityUnit::unit_base(), ElectricCurrentUnit::unit_base() / AreaUnit::unit_base());
+    }
 
-//         #[test]
-//         fn check_units() {
-//             test::<ecd::ampere_per_square_meter, i::ampere, a::square_meter>();
-//             test::<ecd::ampere_per_square_centimeter, i::ampere, a::square_centimeter>();
-//             test::<ecd::ampere_per_square_millimeter, i::ampere, a::square_millimeter>();
-
-//             fn test<ECD: ecd::Conversion<V>, I: i::Conversion<V>, A: a::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricCurrentDensity::new::<ECD>(V::one()),
-//                     &(ElectricCurrent::new::<I>(V::one()) / Area::new::<A>(V::one())).into());
-//             }
-//         }
-//     }
-// }
+    #[test]
+    fn check_units() {
+        test_unit(ElectricCurrentDensityUnit::ampere_per_square_meter, ElectricCurrentUnit::ampere, AreaUnit::square_meter);
+        test_unit(ElectricCurrentDensityUnit::ampere_per_square_centimeter, ElectricCurrentUnit::ampere, AreaUnit::square_centimeter);
+        test_unit(ElectricCurrentDensityUnit::ampere_per_square_millimeter, ElectricCurrentUnit::ampere, AreaUnit::square_millimeter);
+    }
+    fn test_unit(value: ElectricCurrentDensityUnit, current: ElectricCurrentUnit, area: AreaUnit)
+    {
+        assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(current) / Into::<Unit>::into(area)));
+    }
+}

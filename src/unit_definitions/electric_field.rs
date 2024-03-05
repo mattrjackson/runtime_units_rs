@@ -34,56 +34,40 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::electric_field as ef;
-//         use crate::si::quantities::*;
-//         use crate::si::electric_potential as ep;
-//         use crate::si::energy as en;
-//         use crate::si::electric_charge as ec;
-//         use crate::si::length as l;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod test {
+    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_field::ElectricFieldUnit, electric_potential::ElectricPotentialUnit, energy::EnergyUnit}, units::LengthUnit, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricField<V> = ElectricPotential::new::<ep::volt>(V::one())
-//                 / Length::new::<l::meter>(V::one());
-//         }
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricFieldUnit::unit_base(), ElectricPotentialUnit::unit_base() / LengthUnit::unit_base());
+    }
 
-//         #[test]
-//         fn check_units() {
-//             test::<ep::volt, l::meter, ef::volt_per_meter>();
-//             test::<ep::volt, l::centimeter, ef::volt_per_centimeter>();
-//             test::<ep::volt, l::millimeter, ef::volt_per_millimeter>();
-//             test::<ep::volt, l::micrometer, ef::volt_per_micrometer>();
-//             test::<ep::kilovolt, l::millimeter, ef::kilovolt_per_millimeter>();
-//             test::<ep::megavolt, l::centimeter, ef::megavolt_per_centimeter>();
-//             test::<ep::megavolt, l::meter, ef::megavolt_per_meter>();
-//             test::<ep::volt, l::mil, ef::volt_per_mil>();
+    #[test]
+    fn check_units() {
+        test_unit(ElectricPotentialUnit::volt, LengthUnit::meter, ElectricFieldUnit::volt_per_meter);
+        test_unit(ElectricPotentialUnit::volt, LengthUnit::centimeter, ElectricFieldUnit::volt_per_centimeter);
+        test_unit(ElectricPotentialUnit::volt, LengthUnit::millimeter, ElectricFieldUnit::volt_per_millimeter);
+        test_unit(ElectricPotentialUnit::volt, LengthUnit::micrometer, ElectricFieldUnit::volt_per_micrometer);
+        test_unit(ElectricPotentialUnit::kilovolt, LengthUnit::millimeter, ElectricFieldUnit::kilovolt_per_millimeter);
+        test_unit(ElectricPotentialUnit::megavolt, LengthUnit::centimeter, ElectricFieldUnit::megavolt_per_centimeter);
+        test_unit(ElectricPotentialUnit::megavolt, LengthUnit::meter, ElectricFieldUnit::megavolt_per_meter);
+        test_unit(ElectricPotentialUnit::volt, LengthUnit::mil, ElectricFieldUnit::volt_per_mil);        
+    }
+    fn test_unit(potential: ElectricPotentialUnit, length: LengthUnit, value: ElectricFieldUnit)
+    {
+         assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(potential) / Into::<Unit>::into(length)));
+    }
 
-//             fn test<EP: ep::Conversion<V>, L: l::Conversion<V>, EF: ef::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricField::new::<EF>(V::one()),
-//                     &(ElectricPotential::new::<EP>(V::one())
-//                         / Length::new::<L>(V::one())));
-//             }
-//         }
+    #[test]
+    fn check_units_eql() {
+        test(EnergyUnit::joule, ElectricChargeUnit::coulomb, LengthUnit::meter, ElectricFieldUnit::volt_per_meter);
+        test(EnergyUnit::hartree, ElectricChargeUnit::elementary_charge, LengthUnit::bohr_radius, 
+        ElectricFieldUnit::atomic_unit_of_electric_field);
 
-//         #[test]
-//         fn check_units_eql() {
-//             test::<en::joule, ec::coulomb, l::meter, ef::volt_per_meter>();
-//             test::<en::hartree, ec::elementary_charge, l::bohr_radius,
-//                 ef::atomic_unit_of_electric_field>();
-
-//             fn test<EN: en::Conversion<V>, Q: ec::Conversion<V>, L: l::Conversion<V>,
-//                 EF: ef::Conversion<V>>()
-//             {
-//                 Test::assert_approx_eq(&ElectricField::new::<EF>(V::one()),
-//                     &(Energy::new::<EN>(V::one())
-//                         / ElectricCharge::new::<Q>(V::one())
-//                         / Length::new::<L>(V::one())));
-//             }
-//         }
-//     }
-// }
+        fn test(energy: EnergyUnit, charge: ElectricChargeUnit, length: LengthUnit, efield: ElectricFieldUnit)
+        {
+            assert_eq!(Into::<Unit>::into(efield), Into::<Unit>::into(energy) / Into::<Unit>::into(charge) / Into::<Unit>::into(length));
+        }
+    }
+}

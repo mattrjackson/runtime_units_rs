@@ -22,31 +22,24 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::electric_charge as q;
-//         use crate::si::electric_charge_areal_density as ecad;
-//         use crate::si::quantities::*;
-//         use crate::si::area as a;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{unit_definitions::{area::AreaUnit, electric_charge::ElectricChargeUnit}, units::ElectricChargeArealDensityUnit, units_base::Unit, ElectricChargeArealDensity};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricChargeArealDensity<V> = (ElectricCharge::new::<q::coulomb>(V::one())
-//                 / Area::new::<a::square_meter>(V::one())).into();
-//         }
 
-//         #[test]
-//         fn check_units() {
-//             test::<q::coulomb, a::square_meter, ecad::coulomb_per_square_meter>();
-//             test::<q::coulomb, a::square_centimeter, ecad::coulomb_per_square_centimeter>();
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricChargeArealDensityUnit::unit_base(), ElectricChargeUnit::unit_base() / AreaUnit::unit_base());
+    }
 
-//             fn test<Q: q::Conversion<V>, A: a::Conversion<V>, ECAD: ecad::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricChargeArealDensity::new::<ECAD>(V::one()),
-//                     &(ElectricCharge::new::<Q>(V::one()) / Area::new::<A>(V::one())).into());
-//             }
-//         }
-//     }
-// }
+    #[test]
+    fn check_units() {
+        test_unit(ElectricChargeUnit::coulomb, AreaUnit::square_meter, ElectricChargeArealDensityUnit::coulomb_per_square_meter);
+        test_unit(ElectricChargeUnit::coulomb, AreaUnit::square_centimeter, ElectricChargeArealDensityUnit::coulomb_per_square_centimeter);        
+    }
+    fn test_unit(charge: ElectricChargeUnit, area: AreaUnit, value: ElectricChargeArealDensityUnit)
+    {
+        assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(charge) / Into::<Unit>::into(area)));
+    }
+    
+}

@@ -23,31 +23,23 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::electric_charge as q;
-//         use crate::si::electric_charge_volumetric_density as ecvd;
-//         use crate::si::quantities::*;
-//         use crate::si::volume as v;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests 
+{
+    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_charge_volumetric_density::ElectricChargeVolumetricDensityUnit, volume::VolumeUnit}, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricChargeVolumetricDensity<V> = (ElectricCharge::new::<q::coulomb>(V::one())
-//                 / Volume::new::<v::cubic_meter>(V::one())).into();
-//         }
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricChargeVolumetricDensityUnit::unit_base(), ElectricChargeUnit::unit_base() / VolumeUnit::unit_base());
+    }
 
-//         #[test]
-//         fn check_units() {
-//             test::<q::coulomb, v::cubic_meter, ecvd::coulomb_per_cubic_meter>();
-//             test::<q::coulomb, v::cubic_centimeter, ecvd::coulomb_per_cubic_centimeter>();
-
-//             fn test<Q: q::Conversion<V>, VOL: v::Conversion<V>, ECVD: ecvd::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricChargeVolumetricDensity::new::<ECVD>(V::one()),
-//                     &(ElectricCharge::new::<Q>(V::one()) / Volume::new::<VOL>(V::one())).into());
-//             }
-//         }
-//     }
-// }
+    #[test]
+    fn check_units() {
+        test_unit(ElectricChargeUnit::coulomb, VolumeUnit::cubic_meter, ElectricChargeVolumetricDensityUnit::coulomb_per_cubic_meter);
+        test_unit(ElectricChargeUnit::coulomb, VolumeUnit::cubic_centimeter, ElectricChargeVolumetricDensityUnit::coulomb_per_cubic_centimeter);
+    }
+    fn test_unit(charge: ElectricChargeUnit, volume: VolumeUnit, value: ElectricChargeVolumetricDensityUnit)
+    {
+        assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(charge) / Into::<Unit>::into(volume), 1e-12));
+    }
+}

@@ -92,80 +92,65 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::amount_of_substance as aos;
-//         use crate::si::catalytic_activity as ca;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{unit_definitions::time::TimeUnit, units::{AmountOfSubstanceUnit, CatalyticActivityUnit}, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: Time<V> = AmountOfSubstance::new::<aos::mole>(V::one())
-//                 / CatalyticActivity::new::<ca::katal>(V::one());
-//             let _: CatalyticActivity<V> = AmountOfSubstance::new::<aos::mole>(V::one())
-//                 / Time::new::<t::second>(V::one());
-//         }
+    #[test]
+    fn check_dimension() {
+        assert_eq!(CatalyticActivityUnit::unit_base(),  AmountOfSubstanceUnit::unit_base() / TimeUnit::unit_base());
+    }
 
-//         #[test]
-//         fn check_units() {
-//             test::<aos::yottamole, t::second, ca::yottakatal>();
-//             test::<aos::zettamole, t::second, ca::zettakatal>();
-//             test::<aos::examole, t::second, ca::exakatal>();
-//             test::<aos::petamole, t::second, ca::petakatal>();
-//             test::<aos::teramole, t::second, ca::terakatal>();
-//             test::<aos::gigamole, t::second, ca::gigakatal>();
-//             test::<aos::megamole, t::second, ca::megakatal>();
-//             test::<aos::kilomole, t::second, ca::kilokatal>();
-//             test::<aos::hectomole, t::second, ca::hectokatal>();
-//             test::<aos::decamole, t::second, ca::decakatal>();
-//             test::<aos::mole, t::second, ca::katal>();
-//             test::<aos::decimole, t::second, ca::decikatal>();
-//             test::<aos::centimole, t::second, ca::centikatal>();
-//             test::<aos::millimole, t::second, ca::millikatal>();
-//             test::<aos::micromole, t::second, ca::microkatal>();
-//             test::<aos::nanomole, t::second, ca::nanokatal>();
-//             test::<aos::picomole, t::second, ca::picokatal>();
-//             test::<aos::femtomole, t::second, ca::femtokatal>();
-//             test::<aos::attomole, t::second, ca::attokatal>();
-//             test::<aos::zeptomole, t::second, ca::zeptokatal>();
-//             test::<aos::yoctomole, t::second, ca::yoctokatal>();
 
-//             test::<aos::examole, t::minute, ca::yotta_enzyme_unit>();
-//             test::<aos::petamole, t::minute, ca::zetta_enzyme_unit>();
-//             test::<aos::teramole, t::minute, ca::exa_enzyme_unit>();
-//             test::<aos::gigamole, t::minute, ca::peta_enzyme_unit>();
-//             test::<aos::megamole, t::minute, ca::tera_enzyme_unit>();
-//             test::<aos::kilomole, t::minute, ca::giga_enzyme_unit>();
-//             test::<aos::mole, t::minute, ca::mega_enzyme_unit>();
-//             test::<aos::millimole, t::minute, ca::kilo_enzyme_unit>();
-//             test::<aos::micromole, t::minute, ca::enzyme_unit>();
-//             test::<aos::nanomole, t::minute, ca::milli_enzyme_unit>();
-//             test::<aos::picomole, t::minute, ca::micro_enzyme_unit>();
-//             test::<aos::femtomole, t::minute, ca::nano_enzyme_unit>();
-//             test::<aos::attomole, t::minute, ca::pico_enzyme_unit>();
-//             test::<aos::zeptomole, t::minute, ca::femto_enzyme_unit>();
-//             test::<aos::yoctomole, t::minute, ca::atto_enzyme_unit>();
+    #[test]
+    fn check_units() {
+        test_unit(AmountOfSubstanceUnit::yottamole, TimeUnit::second, CatalyticActivityUnit::yottakatal);
+        test_unit(AmountOfSubstanceUnit::zettamole, TimeUnit::second, CatalyticActivityUnit::zettakatal);
+        test_unit(AmountOfSubstanceUnit::examole, TimeUnit::second, CatalyticActivityUnit::exakatal);
+        test_unit(AmountOfSubstanceUnit::petamole, TimeUnit::second, CatalyticActivityUnit::petakatal);
+        test_unit(AmountOfSubstanceUnit::teramole, TimeUnit::second, CatalyticActivityUnit::terakatal);
+        test_unit(AmountOfSubstanceUnit::gigamole, TimeUnit::second, CatalyticActivityUnit::gigakatal);
+        test_unit(AmountOfSubstanceUnit::megamole, TimeUnit::second, CatalyticActivityUnit::megakatal);
+        test_unit(AmountOfSubstanceUnit::kilomole, TimeUnit::second, CatalyticActivityUnit::kilokatal);
+        test_unit(AmountOfSubstanceUnit::hectomole, TimeUnit::second, CatalyticActivityUnit::hectokatal);
+        test_unit(AmountOfSubstanceUnit::decamole, TimeUnit::second, CatalyticActivityUnit::decakatal);
+        test_unit(AmountOfSubstanceUnit::mole, TimeUnit::second, CatalyticActivityUnit::katal);
+        test_unit(AmountOfSubstanceUnit::decimole, TimeUnit::second, CatalyticActivityUnit::decikatal);
+        test_unit(AmountOfSubstanceUnit::centimole, TimeUnit::second, CatalyticActivityUnit::centikatal);
+        test_unit(AmountOfSubstanceUnit::millimole, TimeUnit::second, CatalyticActivityUnit::millikatal);
+        test_unit(AmountOfSubstanceUnit::micromole, TimeUnit::second, CatalyticActivityUnit::microkatal);
+        test_unit(AmountOfSubstanceUnit::nanomole, TimeUnit::second, CatalyticActivityUnit::nanokatal);
+        test_unit(AmountOfSubstanceUnit::picomole, TimeUnit::second, CatalyticActivityUnit::picokatal);
+        test_unit(AmountOfSubstanceUnit::femtomole, TimeUnit::second, CatalyticActivityUnit::femtokatal);
+        test_unit(AmountOfSubstanceUnit::attomole, TimeUnit::second, CatalyticActivityUnit::attokatal);
+        test_unit(AmountOfSubstanceUnit::zeptomole, TimeUnit::second, CatalyticActivityUnit::zeptokatal);
+        test_unit(AmountOfSubstanceUnit::yoctomole, TimeUnit::second, CatalyticActivityUnit::yoctokatal);
 
-//             test::<aos::particle, t::second, ca::particle_per_second>();
-//             test::<aos::mole, t::second, ca::mole_per_second>();
-//             test::<aos::standard_centimeter, t::minute, ca::standard_centimeter_per_minute>();
-//             test::<aos::standard_liter, t::minute, ca::standard_liter_per_minute>();
-//             test::<aos::standard_cubic_foot, t::minute, ca::standard_cubic_foot_per_minute>();
-//             test::<aos::standard_cubic_meter, t::minute, ca::standard_cubic_meter_per_minute>();
+        test_unit(AmountOfSubstanceUnit::examole, TimeUnit::minute, CatalyticActivityUnit::yotta_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::petamole, TimeUnit::minute, CatalyticActivityUnit::zetta_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::teramole, TimeUnit::minute, CatalyticActivityUnit::exa_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::gigamole, TimeUnit::minute, CatalyticActivityUnit::peta_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::megamole, TimeUnit::minute, CatalyticActivityUnit::tera_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::kilomole, TimeUnit::minute, CatalyticActivityUnit::giga_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::mole, TimeUnit::minute, CatalyticActivityUnit::mega_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::millimole, TimeUnit::minute, CatalyticActivityUnit::kilo_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::micromole, TimeUnit::minute, CatalyticActivityUnit::enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::nanomole, TimeUnit::minute, CatalyticActivityUnit::milli_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::picomole, TimeUnit::minute, CatalyticActivityUnit::micro_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::femtomole, TimeUnit::minute, CatalyticActivityUnit::nano_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::attomole, TimeUnit::minute, CatalyticActivityUnit::pico_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::zeptomole, TimeUnit::minute, CatalyticActivityUnit::femto_enzyme_unit);
+        test_unit(AmountOfSubstanceUnit::yoctomole, TimeUnit::minute, CatalyticActivityUnit::atto_enzyme_unit);
 
-//             fn test<AOS: aos::Conversion<V>, T: t::Conversion<V>, CA: ca::Conversion<V>>() {
-//                 Test::assert_approx_eq(
-//                     &(AmountOfSubstance::new::<AOS>(V::one()) / Time::new::<T>(V::one())),
-//                     &CatalyticActivity::new::<CA>(V::one()));
-//                 Test::assert_approx_eq(
-//                     &Time::new::<T>(V::one()),
-//                     &(AmountOfSubstance::new::<AOS>(V::one())
-//                         / CatalyticActivity::new::<CA>(V::one())));
-//             }
-//         }
-//     }
-// }
+        test_unit(AmountOfSubstanceUnit::particle, TimeUnit::second, CatalyticActivityUnit::particle_per_second);
+        test_unit(AmountOfSubstanceUnit::mole, TimeUnit::second, CatalyticActivityUnit::mole_per_second);
+        test_unit(AmountOfSubstanceUnit::standard_centimeter, TimeUnit::minute, CatalyticActivityUnit::standard_centimeter_per_minute);
+        test_unit(AmountOfSubstanceUnit::standard_liter, TimeUnit::minute, CatalyticActivityUnit::standard_liter_per_minute);
+        test_unit(AmountOfSubstanceUnit::standard_cubic_foot, TimeUnit::minute, CatalyticActivityUnit::standard_cubic_foot_per_minute);
+        test_unit(AmountOfSubstanceUnit::standard_cubic_meter, TimeUnit::minute, CatalyticActivityUnit::standard_cubic_meter_per_minute);
+
+        fn test_unit(amount: AmountOfSubstanceUnit, time: TimeUnit, value: CatalyticActivityUnit) {
+            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(amount) / Into::<Unit>::into(time), 1e-12));
+        }
+    }    
+}

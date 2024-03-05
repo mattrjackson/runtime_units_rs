@@ -6,7 +6,7 @@ Much of the code (particularly the unit definitions) were adapted from the excel
 ## Usage
 ```toml
 [dependencies]
-runtime_units = { version = "0.1.0", features = ["All", "serde"] }
+runtime_units = { version = "0.1.5", features = ["All", "serde"] }
 ```
 no_std is supported if the `std` feature flag is removed.
 

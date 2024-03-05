@@ -49,7 +49,7 @@ mod test {
 
     #[test]
     fn check_dimension() {
-        assert_eq!(ArealNumberDensityUnit::unit(),  LengthUnit::unit().powi(-2));
+        assert_eq!(ArealNumberDensityUnit::unit_base(),  LengthUnit::unit_base().powi(-2));
     }
 
     #[test]

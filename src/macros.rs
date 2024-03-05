@@ -178,13 +178,19 @@ macro_rules! quantity {
         impl [<$quantity Unit>] 
         {
             /// get the UnitBase for this type of unit
-            pub(crate) fn unit() -> UnitBase
+            pub(crate) fn unit_base() -> UnitBase
             {
                 $crate::units_base::UOMDimensions::to_unit_base(($($crate::units_base::UOMDimensions::$dimension,)+))
             }
 
+            /// Retrieve the underlying `Unit`
+            pub fn unit(&self) -> Unit
+            {
+                Unit::from(*self)
+            }
+
             /// Get the base unit for this unit type (for length, as an example, this would be `meter`)
-            pub fn base_unit(&self) -> [<$quantity Unit>]
+            pub fn base(&self) -> [<$quantity Unit>]
             {
                 $(if $conversion == 1.0 { return [<$quantity Unit>]::$unit; })+
                 panic!("No base unit found! for {}", stringify!($quantity));
@@ -194,7 +200,7 @@ macro_rules! quantity {
                 #[allow(clippy::eq_op)]
                 pub fn [<get_$unit:snake>]() -> Unit
                 {
-                    Unit{ base: [<$quantity Unit>]::unit(), multiplier: $conversion }
+                    Unit{ base: [<$quantity Unit>]::unit_base(), multiplier: $conversion }
                 })+
             }        
             #[doc = "Multiplier of unit to its base quantity."]
@@ -270,6 +276,11 @@ macro_rules! quantity {
                 pub fn to_quantity(&self) -> Quantity
                 {
                     (*self).into()
+                }
+
+                pub fn unit(&self) -> Unit
+                {
+                    self.unit.into()
                 }
             }
             impl From<$quantity> for Quantity
@@ -504,7 +515,7 @@ macro_rules! system {
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            Quantities::$quantity(x)=>Quantity { value: x.value, unit: Unit{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit()} },
+                            Quantities::$quantity(x)=>Quantity { value: x.value, unit: Unit{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()} },
                         )+
                     }
                 }
@@ -512,7 +523,7 @@ macro_rules! system {
             
             paste::paste!{     
             #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-#[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
+            #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
             #[derive(Hash)]
             #[cfg_attr(feature="utoipa", derive(ToSchema))]
             pub enum Units
@@ -530,7 +541,7 @@ macro_rules! system {
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]     
-                            Units::$quantity(x)=> Unit{multiplier: x.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit()},
+                            Units::$quantity(x)=> Unit{multiplier: x.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()},
                         )+
                     }
                 }
@@ -554,24 +565,24 @@ macro_rules! system {
                     }
                 }
                 
-                pub fn base(&self) -> UnitBase
+                pub fn unit_base(&self) -> UnitBase
                 {
                     match *self
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            Units::$quantity(_)=>[<$quantity:snake>]::[<$quantity Unit>]::unit(),
+                            Units::$quantity(_)=>[<$quantity:snake>]::[<$quantity Unit>]::unit_base(),
                         )+
                     }
                 }                
                 
-                pub fn base_unit(&self) -> Units
+                pub fn base(&self) -> Units
                 {
                     match *self
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]  
-                            Units::$quantity(x)=>Units::$quantity(x.base_unit()),)+
+                            Units::$quantity(x)=>Units::$quantity(x.base()),)+
                     }
                 }     
                 

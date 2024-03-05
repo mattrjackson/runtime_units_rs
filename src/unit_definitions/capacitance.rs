@@ -48,7 +48,7 @@ mod tests {
 
     #[test]
     fn check_dimension() {
-        assert_eq!(CapacitanceUnit::unit(),  ElectricCurrentUnit::unit() * TimeUnit::unit() / ElectricPotentialUnit::unit());       
+        assert_eq!(CapacitanceUnit::unit_base(),  ElectricCurrentUnit::unit_base() * TimeUnit::unit_base() / ElectricPotentialUnit::unit_base());       
     }
 
     #[test]

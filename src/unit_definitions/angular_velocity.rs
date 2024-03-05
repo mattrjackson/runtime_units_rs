@@ -32,7 +32,7 @@ mod tests {
     
     #[test]
     fn check_dimension() {
-        assert_eq!(AngularVelocityUnit::unit(), AngleUnit::unit() / TimeUnit::unit());
+        assert_eq!(AngularVelocityUnit::unit_base(), AngleUnit::unit_base() / TimeUnit::unit_base());
     }
 
     #[test]

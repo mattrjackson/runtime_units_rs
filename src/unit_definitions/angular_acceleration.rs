@@ -28,7 +28,7 @@ mod tests {
     
     #[test]
     fn check_dimension() {
-        assert_eq!(AngularAccelerationUnit::unit(), AngleUnit::unit() / TimeUnit::unit().powi(2));
+        assert_eq!(AngularAccelerationUnit::unit_base(), AngleUnit::unit_base() / TimeUnit::unit_base().powi(2));
     }
 
     #[test]

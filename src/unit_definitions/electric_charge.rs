@@ -54,61 +54,52 @@ quantity! {
         @abcoulomb: 1.0_E1; "abC", "abcoulomb", "abcoulombs";
         @faraday: 9.648_531_E4; "F", "faraday", "faradays";
         @franklin: 3.335_641_E-10; "Fr", "franklin", "franklins";
-        @statcoulomb: 3.335_641_E-10; "statC", "statcoulomb", "statcoulombs";
+        @statcoulomb: 3.33564095198152E-10; "statC", "statcoulomb", "statcoulombs";
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::electric_charge as q;
-//         use crate::si::electric_current as i;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod tests {
+    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_current::ElectricCurrentUnit, time::TimeUnit}, units_base::Unit};
+    
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricChargeUnit::unit_base(), ElectricCurrentUnit::unit_base() * TimeUnit::unit_base());
+    }
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricCharge<V> = ElectricCurrent::new::<i::ampere>(V::one())
-//                 * Time::new::<t::second>(V::one());
-//         }
+    #[test]
+    fn check_units() {
+        test_unit(ElectricCurrentUnit::yottaampere, TimeUnit::second, ElectricChargeUnit::yottacoulomb);
+        test_unit(ElectricCurrentUnit::zettaampere, TimeUnit::second, ElectricChargeUnit::zettacoulomb);
+        test_unit(ElectricCurrentUnit::exaampere, TimeUnit::second, ElectricChargeUnit::exacoulomb);
+        test_unit(ElectricCurrentUnit::petaampere, TimeUnit::second, ElectricChargeUnit::petacoulomb);
+        test_unit(ElectricCurrentUnit::teraampere, TimeUnit::second, ElectricChargeUnit::teracoulomb);
+        test_unit(ElectricCurrentUnit::gigaampere, TimeUnit::second, ElectricChargeUnit::gigacoulomb);
+        test_unit(ElectricCurrentUnit::megaampere, TimeUnit::second, ElectricChargeUnit::megacoulomb);
+        test_unit(ElectricCurrentUnit::kiloampere, TimeUnit::second, ElectricChargeUnit::kilocoulomb);
+        test_unit(ElectricCurrentUnit::hectoampere, TimeUnit::second, ElectricChargeUnit::hectocoulomb);
+        test_unit(ElectricCurrentUnit::decaampere, TimeUnit::second, ElectricChargeUnit::decacoulomb);
+        test_unit(ElectricCurrentUnit::ampere, TimeUnit::second, ElectricChargeUnit::coulomb);
+        test_unit(ElectricCurrentUnit::deciampere, TimeUnit::second, ElectricChargeUnit::decicoulomb);
+        test_unit(ElectricCurrentUnit::centiampere, TimeUnit::second, ElectricChargeUnit::centicoulomb);
+        test_unit(ElectricCurrentUnit::milliampere, TimeUnit::second, ElectricChargeUnit::millicoulomb);
+        test_unit(ElectricCurrentUnit::microampere, TimeUnit::second, ElectricChargeUnit::microcoulomb);
+        test_unit(ElectricCurrentUnit::nanoampere, TimeUnit::second, ElectricChargeUnit::nanocoulomb);
+        test_unit(ElectricCurrentUnit::picoampere, TimeUnit::second, ElectricChargeUnit::picocoulomb);
+        test_unit(ElectricCurrentUnit::femtoampere, TimeUnit::second, ElectricChargeUnit::femtocoulomb);
+        test_unit(ElectricCurrentUnit::attoampere, TimeUnit::second, ElectricChargeUnit::attocoulomb);
+        test_unit(ElectricCurrentUnit::zeptoampere, TimeUnit::second, ElectricChargeUnit::zeptocoulomb);
+        test_unit(ElectricCurrentUnit::yoctoampere, TimeUnit::second, ElectricChargeUnit::yoctocoulomb);
 
-//         #[test]
-//         fn check_units() {
-//             test::<i::yottaampere, t::second, q::yottacoulomb>();
-//             test::<i::zettaampere, t::second, q::zettacoulomb>();
-//             test::<i::exaampere, t::second, q::exacoulomb>();
-//             test::<i::petaampere, t::second, q::petacoulomb>();
-//             test::<i::teraampere, t::second, q::teracoulomb>();
-//             test::<i::gigaampere, t::second, q::gigacoulomb>();
-//             test::<i::megaampere, t::second, q::megacoulomb>();
-//             test::<i::kiloampere, t::second, q::kilocoulomb>();
-//             test::<i::hectoampere, t::second, q::hectocoulomb>();
-//             test::<i::decaampere, t::second, q::decacoulomb>();
-//             test::<i::ampere, t::second, q::coulomb>();
-//             test::<i::deciampere, t::second, q::decicoulomb>();
-//             test::<i::centiampere, t::second, q::centicoulomb>();
-//             test::<i::milliampere, t::second, q::millicoulomb>();
-//             test::<i::microampere, t::second, q::microcoulomb>();
-//             test::<i::nanoampere, t::second, q::nanocoulomb>();
-//             test::<i::picoampere, t::second, q::picocoulomb>();
-//             test::<i::femtoampere, t::second, q::femtocoulomb>();
-//             test::<i::attoampere, t::second, q::attocoulomb>();
-//             test::<i::zeptoampere, t::second, q::zeptocoulomb>();
-//             test::<i::yoctoampere, t::second, q::yoctocoulomb>();
-
-//             test::<i::elementary_charge_per_second, t::second, q::elementary_charge>();
-//             test::<i::atomic_unit_of_charge_per_second, t::second, q::atomic_unit_of_charge>();
-//             test::<i::ampere, t::hour, q::ampere_hour>();
-//             test::<i::abampere, t::second, q::abcoulomb>();
-//             test::<i::elementary_charge_per_second, t::second, q::elementary_charge>();
-//             test::<i::statampere, t::second, q::statcoulomb>();
-
-//             fn test<I: i::Conversion<V>, T: t::Conversion<V>, Q: q::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricCharge::new::<Q>(V::one()),
-//                     &(ElectricCurrent::new::<I>(V::one()) * Time::new::<T>(V::one())));
-//             }
-//         }
-//     }
-// }
+        test_unit(ElectricCurrentUnit::elementary_charge_per_second, TimeUnit::second, ElectricChargeUnit::elementary_charge);
+        test_unit(ElectricCurrentUnit::atomic_unit_of_charge_per_second, TimeUnit::second, ElectricChargeUnit::atomic_unit_of_charge);
+        test_unit(ElectricCurrentUnit::ampere, TimeUnit::hour, ElectricChargeUnit::ampere_hour);
+        test_unit(ElectricCurrentUnit::abampere, TimeUnit::second, ElectricChargeUnit::abcoulomb);
+        test_unit(ElectricCurrentUnit::elementary_charge_per_second, TimeUnit::second, ElectricChargeUnit::elementary_charge);
+        test_unit(ElectricCurrentUnit::statampere, TimeUnit::second, ElectricChargeUnit::statcoulomb);        
+    }
+    fn test_unit(current: ElectricCurrentUnit, time: TimeUnit, value: ElectricChargeUnit)
+    {
+        assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(current) * Into::<Unit>::into(time)));
+    }
+}

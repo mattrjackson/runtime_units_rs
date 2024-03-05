@@ -47,7 +47,7 @@ mod tests {
     
     #[test]
     fn check_dimension() {
-        assert_eq!(ElectricPotentialUnit::unit(),  LengthUnit::unit().powi(2) * MassUnit::unit() / ElectricCurrentUnit::unit() / TimeUnit::unit().powi(3));
+        assert_eq!(ElectricPotentialUnit::unit_base(),  LengthUnit::unit_base().powi(2) * MassUnit::unit_base() / ElectricCurrentUnit::unit_base() / TimeUnit::unit_base().powi(3));
     }
 
     #[test]

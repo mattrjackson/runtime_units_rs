@@ -28,35 +28,27 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::electric_dipole_moment as edm;
-//         use crate::si::electric_charge as ec;
-//         use crate::si::length as l;
-//         use crate::si::quantities::*;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod test {
+    use crate::{unit_definitions::{electric_charge::{ElectricChargeQuantity, ElectricChargeUnit}, electric_dipole_moment::{ElectricDipoleMomentQuantity, ElectricDipoleMomentUnit}, length::LengthQuantity}, units::LengthUnit, units_base::Unit};
+   
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricDipoleMomentUnit::unit_base(), ElectricChargeUnit::unit_base() * LengthUnit::unit_base());
+    }
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricDipoleMoment<V> = ElectricCharge::new::<ec::coulomb>(V::one())
-//                 * Length::new::<l::meter>(V::one());
-//         }
-
-//         #[test]
-//         fn check_units() {
-//             test::<ec::coulomb, l::meter, edm::coulomb_meter>();
-//             test::<ec::statcoulomb, l::angstrom, edm::debye>();
-//             test::<ec::elementary_charge, l::centimeter, edm::elementary_charge_centimeter>();
-//             test::<ec::elementary_charge, l::centimeter, edm::atomic_unit_of_charge_centimeter>();
-//             test::<ec::elementary_charge, l::bohr_radius,
-//                 edm::atomic_unit_of_electric_dipole_moment>();
-
-//             fn test<EC: ec::Conversion<V>, L: l::Conversion<V>, EDM: edm::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricDipoleMoment::new::<EDM>(V::one()),
-//                     &(ElectricCharge::new::<EC>(V::one()) * Length::new::<L>(V::one())));
-//             }
-//         }
-//     }
-// }
+    #[test]
+    fn check_units() {
+        test_unit(ElectricChargeUnit::coulomb, LengthUnit::meter, ElectricDipoleMomentUnit::coulomb_meter);
+        // Manually run this because 1 D = 1e-10 statC*Angstrom        
+        assert_eq!(ElectricDipoleMomentQuantity::debye(1.0), ElectricChargeQuantity::statcoulomb(1e-10) * LengthQuantity::angstrom(1.0));
+        test_unit(ElectricChargeUnit::elementary_charge, LengthUnit::centimeter, ElectricDipoleMomentUnit::elementary_charge_centimeter);
+        test_unit(ElectricChargeUnit::elementary_charge, LengthUnit::centimeter, ElectricDipoleMomentUnit::atomic_unit_of_charge_centimeter);
+        test_unit(ElectricChargeUnit::elementary_charge, LengthUnit::bohr_radius,
+        ElectricDipoleMomentUnit::atomic_unit_of_electric_dipole_moment);
+    }
+    fn test_unit(charge: ElectricChargeUnit, length: LengthUnit, value: ElectricDipoleMomentUnit)
+    {
+         assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(charge) * Into::<Unit>::into(length)));
+    }
+}

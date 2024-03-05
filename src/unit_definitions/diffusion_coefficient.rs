@@ -29,38 +29,30 @@ quantity! {
         }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::quantities::*;
-//         use crate::si::time as t;
-//         use crate::si::area as area;
-//         use crate::si::diffusion_coefficient as dc;
+#[cfg(test)]
+mod test {
+    use crate::{unit_definitions::{diffusion_coefficient::DiffusionCoefficientUnit, time::TimeUnit}, units::AreaUnit, units_base::Unit};
 
-//         use crate::tests::Test;
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: DiffusionCoefficient<V> = Area::new::<area::square_meter>(V::one())
-//                 / Time::new::<t::second>(V::one());
-//         }
 
-//         #[test]
-//         fn check_units() {
-//             test::<area::square_meter, t::second, dc::square_meter_per_second>();
-//             test::<area::square_centimeter, t::second, dc::square_centimeter_per_second>();
-//             test::<area::square_millimeter, t::second, dc::square_millimeter_per_second>();
-//             test::<area::square_micrometer, t::second, dc::square_micrometer_per_second>();
-//             test::<area::square_nanometer, t::second, dc::square_nanometer_per_second>();
-//             test::<area::square_centimeter, t::second, dc::stokes>();
-//             test::<area::square_millimeter, t::second, dc::centistokes>();
+    #[test]
+    fn check_dimension() {
+        assert_eq!(DiffusionCoefficientUnit::unit_base(), AreaUnit::unit_base() / TimeUnit::unit_base());
+    }
 
-//             fn test<A: area::Conversion<V>, T: t::Conversion<V>, DC: dc::Conversion<V>>() {
-//                 Test::assert_approx_eq(&DiffusionCoefficient::new::<DC>(V::one()),
-//                     &(Area::new::<A>(V::one())
-//                         / Time::new::<T>(V::one())));
-//             }
-//         }
-//     }
-// }
+    #[test]
+    fn check_units() {
+        test_unit(AreaUnit::square_meter, TimeUnit::second, DiffusionCoefficientUnit::square_meter_per_second);
+        test_unit(AreaUnit::square_centimeter, TimeUnit::second, DiffusionCoefficientUnit::square_centimeter_per_second);
+        test_unit(AreaUnit::square_millimeter, TimeUnit::second, DiffusionCoefficientUnit::square_millimeter_per_second);
+        test_unit(AreaUnit::square_micrometer, TimeUnit::second, DiffusionCoefficientUnit::square_micrometer_per_second);
+        test_unit(AreaUnit::square_nanometer, TimeUnit::second, DiffusionCoefficientUnit::square_nanometer_per_second);
+        test_unit(AreaUnit::square_centimeter, TimeUnit::second, DiffusionCoefficientUnit::stokes);
+        test_unit(AreaUnit::square_millimeter, TimeUnit::second, DiffusionCoefficientUnit::centistokes);
+
+    }
+    fn test_unit(area: AreaUnit, time: TimeUnit, value: DiffusionCoefficientUnit) {
+        assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(area) / Into::<Unit>::into(time), 1e-12));
+    }
+    
+}

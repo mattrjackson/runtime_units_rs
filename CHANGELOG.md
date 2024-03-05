@@ -10,6 +10,17 @@
 ### Fixed
 -->
 
+## [0.1.5] — 2024-03-05
+
+### Security
+### Added
+`unit(&self)` method for unit enumerator (e.g. `LengthUnit`) that now returns a `Unit` (e.g. `UnitBase` + multiplier). 
+Continue to add more unit conversion tests back in.
+### Changed
+Method previously labeled `unit(&self)`and returns `UnitBase` renamed to `unit_base()` for clarity. 
+### Deprecated
+### Removed
+
 ## [0.1.4] — 2024-03-02
 
 ### Security
@@ -18,7 +29,6 @@
 The constructor for `Quantity` now takes `Unit` rather than `Units`.
 ### Deprecated
 ### Removed
-Removed duplica
 
 ## [0.1.3] — 2024-03-02
 

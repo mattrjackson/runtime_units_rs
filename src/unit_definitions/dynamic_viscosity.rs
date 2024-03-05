@@ -37,59 +37,43 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::quantities::*;
-//         use crate::si::dynamic_viscosity as dv;
-//         use crate::si::time as t;
-//         use crate::si::mass as m;
-//         use crate::si::length as l;
-//         use crate::si::pressure as p;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod test {
+    use crate::{unit_definitions::{dynamic_viscosity::DynamicViscosityUnit, time::TimeUnit}, units::{LengthUnit, MassUnit, PressureUnit}, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: DynamicViscosity<V> = Pressure::new::<p::pascal>(V::one())
-//                 * Time::new::<t::second>(V::one());
-//         }
 
-//         #[test]
-//         fn check_units() {
-//             test::<p::pascal, t::second, dv::pascal_second>();
-//             test::<p::millipascal, t::second, dv::millipascal_second>();
-//             test::<p::micropascal, t::second, dv::micropascal_second>();
-//             test::<p::dyne_per_square_centimeter, t::second, dv::poise>();
-//             test::<p::millipascal, t::second,dv::centipoise>();
-//             test::<p::pound_force_per_square_foot, t::second,
-//                 dv::pound_force_second_per_square_foot>();
-//             test::<p::pound_force_per_square_inch, t::second,
-//                 dv::pound_force_second_per_square_inch>();
-//             test::<p::pound_force_per_square_inch, t::second, dv::reyn>();
+    #[test]
+    fn check_dimension() {
+        assert_eq!(DynamicViscosityUnit::unit_base(), PressureUnit::unit_base() * TimeUnit::unit_base());
+    }
 
-//             fn test<P: p::Conversion<V>, T: t::Conversion<V>, DV: dv::Conversion<V>>() {
-//                 Test::assert_approx_eq(&DynamicViscosity::new::<DV>(V::one()),
-//                     &(Pressure::new::<P>(V::one())
-//                         * Time::new::<T>(V::one())));
-//             }
-//         }
+    #[test]
+    fn check_units() {
+        test_unit(PressureUnit::pascal, TimeUnit::second, DynamicViscosityUnit::pascal_second);
+        test_unit(PressureUnit::millipascal, TimeUnit::second, DynamicViscosityUnit::millipascal_second);
+        test_unit(PressureUnit::micropascal, TimeUnit::second, DynamicViscosityUnit::micropascal_second);
+        test_unit(PressureUnit::dyne_per_square_centimeter, TimeUnit::second, DynamicViscosityUnit::poise);
+        test_unit(PressureUnit::millipascal, TimeUnit::second,DynamicViscosityUnit::centipoise);
+        test_unit(PressureUnit::pound_force_per_square_foot, TimeUnit::second,
+            DynamicViscosityUnit::pound_force_second_per_square_foot);
+        test_unit(PressureUnit::pound_force_per_square_inch, TimeUnit::second,
+            DynamicViscosityUnit::pound_force_second_per_square_inch);
+        test_unit(PressureUnit::pound_force_per_square_inch, TimeUnit::second, DynamicViscosityUnit::reyn);
+    }
 
-//         #[test]
-//         fn check_units_mlt() {
-//             test::<m::pound, l::foot, t::second, dv::pound_per_foot_second>();
-//             test::<m::pound, l::foot, t::hour, dv::pound_per_foot_hour>();
-//             test::<m::gram, l::centimeter, t::second, dv::gram_per_centimeter_second>();
-//             test::<m::slug, l::foot, t::second, dv::slug_per_foot_second>();
+    #[test]
+    fn check_units_mlt() {
+        test_unit_mlt(MassUnit::pound, LengthUnit::foot, TimeUnit::second, DynamicViscosityUnit::pound_per_foot_second);
+        test_unit_mlt(MassUnit::pound, LengthUnit::foot, TimeUnit::hour, DynamicViscosityUnit::pound_per_foot_hour);
+        test_unit_mlt(MassUnit::gram, LengthUnit::centimeter, TimeUnit::second, DynamicViscosityUnit::gram_per_centimeter_second);
+        test_unit_mlt(MassUnit::slug, LengthUnit::foot, TimeUnit::second, DynamicViscosityUnit::slug_per_foot_second);
+    }
+    fn test_unit(pressure: PressureUnit, time: TimeUnit, value: DynamicViscosityUnit)
+    {
+        assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(pressure) * Into::<Unit>::into(time), 1e-12));
+    }
+    fn test_unit_mlt(mass: MassUnit, length: LengthUnit, time: TimeUnit, value: DynamicViscosityUnit) {
+        assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(mass) / Into::<Unit>::into(length) / Into::<Unit>::into(time), 1e-12));
+    }
+}
 
-//             fn test<M: m::Conversion<V>, L: l::Conversion<V>, T: t::Conversion<V>,
-//                 DV: dv::Conversion<V>>()
-//             {
-//                 Test::assert_approx_eq(&DynamicViscosity::new::<DV>(V::one()),
-//                     &(Mass::new::<M>(V::one())
-//                         / Length::new::<L>(V::one())
-//                         / Time::new::<T>(V::one())));
-//             }
-//         }
-//     }
-// }

@@ -25,43 +25,23 @@ quantity! {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     storage_types! {
-//         use crate::num::One;
-//         use crate::si::electric_quadrupole_moment as edm;
-//         use crate::si::electric_charge as ec;
-//         use crate::si::area as a;
-//         use crate::si::length as l;
-//         use crate::si::quantities::*;
-//         use crate::tests::Test;
+#[cfg(test)]
+mod test {
+    use crate::{unit_definitions::{area::AreaUnit, electric_charge::ElectricChargeUnit, electric_quadrupole_moment::ElectricQuadrupoleMomentUnit}, units::LengthUnit, units_base::Unit};
 
-//         #[test]
-//         fn check_dimension() {
-//             let _: ElectricQuadrupoleMoment<V> = ElectricCharge::new::<ec::coulomb>(V::one())
-//                 * Area::new::<a::square_meter>(V::one());
-//         }
 
-//         #[test]
-//         fn check_units() {
-//             test::<ec::coulomb, a::square_meter, edm::coulomb_square_meter>();
-//             test::<ec::elementary_charge, a::barn, edm::elementary_charge_barn>();
+    #[test]
+    fn check_dimension() {
+        assert_eq!(ElectricQuadrupoleMomentUnit::unit_base(), ElectricChargeUnit::unit_base() * AreaUnit::unit_base());
+    }
 
-//             fn test<EC: ec::Conversion<V>, A: a::Conversion<V>, EDM: edm::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricQuadrupoleMoment::new::<EDM>(V::one()),
-//                     &(ElectricCharge::new::<EC>(V::one()) * Area::new::<A>(V::one())));
-//             }
-//         }
+    #[test]
+    fn check_units() {
+        test(ElectricChargeUnit::coulomb, AreaUnit::square_meter, ElectricQuadrupoleMomentUnit::coulomb_square_meter);
+        test(ElectricChargeUnit::elementary_charge, AreaUnit::barn, ElectricQuadrupoleMomentUnit::elementary_charge_barn);
 
-//         #[test]
-//         fn check_units_charge_length() {
-//             test::<ec::elementary_charge, l::bohr_radius, edm::elementary_charge_barn>();
-
-//             fn test<EC: ec::Conversion<V>, L: l::Conversion<V>, EDM: edm::Conversion<V>>() {
-//                 Test::assert_approx_eq(&ElectricQuadrupoleMoment::new::<EDM>(V::one()),
-//                     &(ElectricCharge::new::<EC>(V::one()) * Length::new::<L>(V::one())
-//                         * Length::new::<L>(V::one())));
-//             }
-//         }
-//     }
-// }
+        fn test(charge: ElectricChargeUnit, area: AreaUnit, value: ElectricQuadrupoleMomentUnit) {
+            assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(charge) * Into::<Unit>::into(area));
+        }
+    }
+}

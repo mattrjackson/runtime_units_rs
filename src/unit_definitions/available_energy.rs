@@ -90,7 +90,7 @@ mod tests {
 
     #[test]
     fn check_dimension() {
-        assert_eq!(AvailableEnergyUnit::unit(),  EnergyUnit::unit() / MassUnit::unit());
+        assert_eq!(AvailableEnergyUnit::unit_base(),  EnergyUnit::unit_base() / MassUnit::unit_base());
     }
 
     #[test]
