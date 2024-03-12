@@ -9,6 +9,20 @@
 ### Removed
 ### Fixed
 -->
+## [0.1.6] — 2024-03-12
+
+### Security
+### Added
+Added `to_unit` method for `UnitTypes` to allow conversion from an `&str` to `Units`.
+Added ability to convert from individual unit enumerations (e.g. `LengthUnit`) to `Units`.
+Added additional documentation to many methods.
+### Changed
+Corrected bug in `readme_example()`. Added tag since it is dependent on `std`.
+Changed From<&str> for individual unit enumerations to TryFrom<&str>.
+### Deprecated
+### Removed
+Removed `unit_base` and `multiplier` from `Units`. These were originally used for internal operations, but are no longer needed.
+
 
 ## [0.1.5] — 2024-03-05
 

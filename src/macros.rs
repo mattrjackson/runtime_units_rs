@@ -250,6 +250,21 @@ macro_rules! quantity {
         }
         paste::paste!
         {
+            
+            impl From<[<$quantity Unit>]> for $crate::Units
+            {
+                fn from(value: [<$quantity Unit>]) -> Self {
+                    match value
+                    {
+                        $(
+                            [<$quantity Unit>]::$unit => $crate::Units::$quantity([<$quantity Unit>]::$unit),
+                        )+
+                    }
+                }
+            }
+        }
+        paste::paste!
+        {
             $(#[$quantity_attr])*
             #[derive(Copy, Clone, Debug, PartialEq)]
             #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
@@ -261,6 +276,7 @@ macro_rules! quantity {
             }
             impl $quantity
             {
+                #[doc = "Create a new [`" [<$quantity Unit>]"`]."]   
                 pub fn new(value: f64, unit: [<$quantity Unit>]) -> Self
                 {
                     Self {value, unit }
@@ -277,7 +293,7 @@ macro_rules! quantity {
                 {
                     (*self).into()
                 }
-
+                #[doc = "Retrieve the `Unit` associated with this [`" [<$quantity>]"`]."]   
                 pub fn unit(&self) -> Unit
                 {
                     self.unit.into()
@@ -316,9 +332,10 @@ macro_rules! quantity {
         }
         paste::paste!
         {
-            impl From<&str> for [<$quantity Unit>]
+            impl TryFrom<&str> for [<$quantity Unit>]
             {
-                fn from(value: &str) -> Self 
+                type Error = &'static str;
+                fn try_from(value: &str) -> Result<Self, Self::Error> 
                 {                
                     let abbreviation_check: Option<[<$quantity Unit>]> =
                     match value
@@ -328,7 +345,7 @@ macro_rules! quantity {
                     };
                     if abbreviation_check.is_some()
                     {
-                        return abbreviation_check.unwrap();
+                        return Ok(abbreviation_check.unwrap());
                     }
                     let singular_check: Option<[<$quantity Unit>]> = 
                     match value
@@ -338,7 +355,7 @@ macro_rules! quantity {
                     };
                     if singular_check.is_some()
                     {
-                        return singular_check.unwrap();
+                        return Ok(singular_check.unwrap());
                     }
                     let plural_check: Option<[<$quantity Unit>]> = 
                     match value
@@ -348,11 +365,12 @@ macro_rules! quantity {
                     };
                     if plural_check.is_some()
                     {
-                        plural_check.unwrap()
+                        Ok(plural_check.unwrap())
                     }
                     else
                     {
-                        panic!("Unit \"{value}\" not supported for quantity \"{}\"", stringify!{$quantity})
+                        Err(concat!("Unit \"{value}\" not supported for quantity \"", stringify!{$quantity}, "\""))
+
                     }
                 }
             }
@@ -374,6 +392,7 @@ macro_rules! quantity {
         paste::paste!{
             $(#[$quantity_attr])*
             #[derive(Copy, Clone, Debug)]
+            #[doc = "Defines storage of a given quantity of type [`" [<$quantity Unit>]"`]."]   
             pub struct [<$quantity Quantity>](Quantity);
             impl [<$quantity Quantity>]
             {
@@ -434,7 +453,6 @@ macro_rules! system {
         }
     ) => {
         use $crate::units_base::Unit;
-        use $crate::units_base::UnitBase;
         use $crate::Quantity;
         #[cfg(feature="utoipa")]
         use utoipa::ToSchema;
@@ -471,6 +489,9 @@ macro_rules! system {
         }
         }
         paste!{
+            ///
+            /// A list of unit types supported for the library (given feature flags selected).
+            /// 
             #[derive(Copy, Clone, Debug)]
             pub enum UnitTypes
             {
@@ -482,6 +503,9 @@ macro_rules! system {
         impl UnitTypes
         {
             paste::paste!{
+                ///
+                /// Retrieve list of units available for this `UnitType`.
+                /// 
                 pub fn units(&self) -> &'static Vec<&'static str>
                 {
                     match self
@@ -494,12 +518,35 @@ macro_rules! system {
                         
                     }
                 }       
+                ///
+                /// Convert a given unit string to the Corresponding `Units`
+                /// 
+                pub fn to_unit(&self, unit_str: &str) -> Result<$crate::Units, &'static str>
+                {
+                    match self
+                    {
+                        $(
+                            #[cfg(any(feature = "" $quantity, feature="All"))]   
+                            UnitTypes::$quantity => {
+                                match crate::units::[<$quantity Unit>]::try_from(unit_str)
+                                {
+                                    Ok(r) => Ok(r.into()),
+                                    Err(err) => Err(err)
+                                }                                
+                            }
+                        )+
+                    }
+                }
             }
         }
         paste::paste!{
             #[derive(Copy, Clone, Debug, PartialEq)]
             #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
             #[cfg_attr(feature="utoipa", derive(ToSchema))]
+            ///
+            /// A wrapper to hold all quantities supported by this library. It is analogous to `Units``, 
+            /// but when combined with the `serde` feature flag, can serve as a way to serialize a quantity, not just the unit. 
+            /// 
             pub enum Quantities
             {
                 $(
@@ -522,60 +569,51 @@ macro_rules! system {
             }
             
             paste::paste!{     
-            #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-            #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
-            #[derive(Hash)]
-            #[cfg_attr(feature="utoipa", derive(ToSchema))]
-            pub enum Units
-            {                               
-                $(
-                    #[cfg(any(feature = "" $quantity, feature="All"))]                 
-                    $quantity([<$quantity:snake>]::[<$quantity Unit>]),
-                )+                
-            }
-            
-            impl From<Units> for $crate::units_base::Unit
-            {
-                fn from(value: Units) -> Self {
-                    match value
-                    {
-                        $(
-                            #[cfg(any(feature = "" $quantity, feature="All"))]     
-                            Units::$quantity(x)=> Unit{multiplier: x.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()},
-                        )+
+                #[derive(Copy, Clone, Debug, PartialEq, Eq)]
+                #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
+                #[derive(Hash)]
+                #[cfg_attr(feature="utoipa", derive(ToSchema))]
+                ///
+                /// A wrapper to hold all available units supported by the library. Contains utilities to convert from
+                /// a given arbitrary unit to the underlying `Quantity` that is used to perform
+                /// unit conversion calculations.
+                /// 
+                pub enum Units
+                {                               
+                    $(
+                        #[cfg(any(feature = "" $quantity, feature="All"))]                 
+                        $quantity([<$quantity:snake>]::[<$quantity Unit>]),
+                    )+                
+                }
+                
+                impl From<Units> for $crate::units_base::Unit
+                {
+                    fn from(value: Units) -> Self {
+                        match value
+                        {
+                            $(
+                                #[cfg(any(feature = "" $quantity, feature="All"))]     
+                                Units::$quantity(x)=> Unit{multiplier: x.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()},
+                            )+
+                        }
                     }
                 }
             }
-            }
             impl Units
             {
+                ///
+                /// Convert a given 'value' expressed in the given `Units` intto a convertible `Quantity`
+                /// 
                 pub fn to_quantity(&self, value: f64) -> $crate::quantity::Quantity
                 {
                     let unit: Unit = (*self).into();
                     $crate::quantity::Quantity { unit, value }
                 }
                 paste!{
-                pub fn multiplier(&self) -> f64
-                {
-                    match *self
-                    {
-                        $(
-                            #[cfg(any(feature = "" $quantity, feature="All"))]  
-                            Units::$quantity(x)=>x.multiplier(),)+
-                    }
-                }
-                
-                pub fn unit_base(&self) -> UnitBase
-                {
-                    match *self
-                    {
-                        $(
-                            #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            Units::$quantity(_)=>[<$quantity:snake>]::[<$quantity Unit>]::unit_base(),
-                        )+
-                    }
-                }                
-                
+
+                ///
+                /// Get the base unit for this particular unit type (e.g. `LengthUnit` this would be `LengthUnit::meter`)
+                /// 
                 pub fn base(&self) -> Units
                 {
                     match *self
@@ -586,6 +624,9 @@ macro_rules! system {
                     }
                 }     
                 
+                ///
+                /// Get list of units available for this `Units` type
+                /// 
                 pub fn units(&self) -> &'static Vec<&'static str>
                 {
                     match *self
