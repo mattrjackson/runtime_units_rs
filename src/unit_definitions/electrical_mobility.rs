@@ -1,9 +1,9 @@
-//! Electrical mobility (base unit square meter per volt second, kg⁻¹ · s² · A).
+//! Electrical mobility (base UnitDefinition square meter per volt second, kg⁻¹ · s² · A).
 use crate::{prefix, quantity};
 quantity! {
-    /// Electrical mobility (base unit square meter per volt second, kg⁻¹ · s² · A).
+    /// Electrical mobility (base UnitDefinition square meter per volt second, kg⁻¹ · s² · A).
     quantity: ElectricalMobility; "electrical mobility";
-    /// Dimension of electrical mobility, M⁻¹T²I⁻¹ (base unit square meter per volt second,
+    /// Dimension of electrical mobility, M⁻¹T²I⁻¹ (base UnitDefinition square meter per volt second,
     /// kg⁻¹ · s² · A).
     dimension: ISQ<
         Z0,     // length

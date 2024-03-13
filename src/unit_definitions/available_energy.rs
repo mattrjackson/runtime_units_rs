@@ -1,9 +1,9 @@
-//! Available energy (base unit joule per kilogram, m² · s⁻²).
+//! Available energy (base UnitDefinition joule per kilogram, m² · s⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Available energy (base unit joule per kilogram, m² · s⁻²).
+    /// Available energy (base UnitDefinition joule per kilogram, m² · s⁻²).
     quantity: AvailableEnergy; "available energy";
-    /// Dimension of available energy, L²T⁻² (base unit joule per kilogram, m² · s⁻²).
+    /// Dimension of available energy, L²T⁻² (base UnitDefinition joule per kilogram, m² · s⁻²).
     dimension: ISQ<
         P2,     // length
         Z0,     // mass
@@ -33,7 +33,7 @@ quantity! {
             "hectojoules per kilogram";
         @decajoule_per_kilogram: prefix!(deca); "daJ/kg", "decajoule per kilogram",
             "decajoules per kilogram";
-        /// Derived unit of available energy.
+        /// Derived UnitDefinition of available energy.
         @joule_per_kilogram: prefix!(none); "J/kg", "joule per kilogram", "joules per kilogram";
         @decijoule_per_kilogram: prefix!(deci); "dJ/kg", "decijoule per kilogram",
             "decijoules per kilogram";
@@ -75,8 +75,8 @@ quantity! {
             "joules per yottagram";
 
         @btu_it_per_pound: 2.326_000_171_078_704_E3; "Btu (IT)/lb",
-            "British thermal unit (IT) per pound", "British thermal units (IT) per pound";
-        @btu_per_pound: 2.324_443_707_610_621_E3; "Btu/lb", "British thermal unit per pound",
+            "British thermal UnitDefinition (IT) per pound", "British thermal units (IT) per pound";
+        @btu_per_pound: 2.324_443_707_610_621_E3; "Btu/lb", "British thermal UnitDefinition per pound",
             "British thermal units per pound";
         @calorie_it_per_gram: 4.186_8_E3; "cal (IT)/lb", "calorie (IT) per gram",
             "calories (IT) per gram";
@@ -86,7 +86,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{unit_definitions::energy::EnergyUnit, units::{AvailableEnergyUnit, MassUnit}, units_base::Unit};
+    use crate::{unit_definitions::energy::EnergyUnit, units::{AvailableEnergyUnit, MassUnit}, units_base::UnitDefinition};
 
     #[test]
     fn check_dimension() {
@@ -119,7 +119,7 @@ mod tests {
         test_unit(EnergyUnit::calorie, MassUnit::gram, AvailableEnergyUnit::calorie_per_gram);
 
         fn test_unit(energy: EnergyUnit, mass: MassUnit, value: AvailableEnergyUnit) {
-            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(mass).powi(-1) * Into::<Unit>::into(energy) , 1e-12));
+            assert!(Into::<UnitDefinition>::into(value).approx_eq(Into::<UnitDefinition>::into(mass).powi(-1) * Into::<UnitDefinition>::into(energy) , 1e-12));
         }
     }
     

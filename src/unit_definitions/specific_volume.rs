@@ -1,9 +1,9 @@
-//! Specific volume (base unit cubic meter per kilogram, m³ · kg⁻¹).
+//! Specific volume (base UnitDefinition cubic meter per kilogram, m³ · kg⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Specific volume (base unit cubic meter per kilogram, m³ · kg⁻¹).
+    /// Specific volume (base UnitDefinition cubic meter per kilogram, m³ · kg⁻¹).
     quantity: SpecificVolume; "specific volume";
-    /// Dimension of specific volume, L³M⁻¹ (base unit cubic meter per kilogram, m³ · kg⁻¹).
+    /// Dimension of specific volume, L³M⁻¹ (base UnitDefinition cubic meter per kilogram, m³ · kg⁻¹).
     dimension: ISQ<
         P3,     // length
         N1,     // mass

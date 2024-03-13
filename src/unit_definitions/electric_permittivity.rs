@@ -1,9 +1,9 @@
-//! Electric permittivity (base unit farad per meter, m⁻³ · kg⁻¹ · s⁴ · A²).
+//! Electric permittivity (base UnitDefinition farad per meter, m⁻³ · kg⁻¹ · s⁴ · A²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Electric permittivity (base unit farad per meter, m⁻³ · kg⁻¹ · s⁴ · A²).
+    /// Electric permittivity (base UnitDefinition farad per meter, m⁻³ · kg⁻¹ · s⁴ · A²).
     quantity: ElectricPermittivity; "electric permittivity";
-    /// Dimension of electric permittivity, L⁻³M⁻¹T⁴I² (base unit farad per meter,
+    /// Dimension of electric permittivity, L⁻³M⁻¹T⁴I² (base UnitDefinition farad per meter,
     /// m⁻³ · kg⁻¹ · s⁴ · A²).
     dimension: ISQ<
         N3,     // length
@@ -22,7 +22,7 @@ quantity! {
 
 #[cfg(test)]
 mod test {
-    use crate::{unit_definitions::{capacitance::CapacitanceUnit, electric_permittivity::ElectricPermittivityUnit}, units::LengthUnit, units_base::Unit};
+    use crate::{unit_definitions::{capacitance::CapacitanceUnit, electric_permittivity::ElectricPermittivityUnit}, units::LengthUnit, units_base::UnitDefinition};
 
 
     #[test]
@@ -35,7 +35,7 @@ mod test {
         test(ElectricPermittivityUnit::farad_per_meter, CapacitanceUnit::farad, LengthUnit::meter);
 
         fn test(value: ElectricPermittivityUnit, capacitance: CapacitanceUnit, length: LengthUnit) {
-            assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(capacitance) / Into::<Unit>::into(length));
+            assert_eq!(Into::<UnitDefinition>::into(value), Into::<UnitDefinition>::into(capacitance) / Into::<UnitDefinition>::into(length));
         }
     }
 }

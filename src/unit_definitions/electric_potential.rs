@@ -1,9 +1,9 @@
-//! Electric potential (base unit volt, m² · kg · s⁻³ · A⁻¹).
+//! Electric potential (base UnitDefinition volt, m² · kg · s⁻³ · A⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Electric potential (base unit volt, m² · kg · s⁻³ · A⁻¹).
+    /// Electric potential (base UnitDefinition volt, m² · kg · s⁻³ · A⁻¹).
     quantity: ElectricPotential; "electric potential";
-    /// Dimension of electric potential, L²MT⁻³I⁻¹ (base unit volt, m² · kg · s⁻³ · A⁻¹).
+    /// Dimension of electric potential, L²MT⁻³I⁻¹ (base UnitDefinition volt, m² · kg · s⁻³ · A⁻¹).
     dimension: ISQ<
         P2,     // length
         P1,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kilovolt: prefix!(kilo); "kV", "kilovolt", "kilovolts";
         @hectovolt: prefix!(hecto); "hV", "hectovolt", "hectovolts";
         @decavolt: prefix!(deca); "daV", "decavolt", "decavolts";
-        /// Derived unit of electric potential.
+        /// Derived UnitDefinition of electric potential.
         @volt: prefix!(none); "V", "volt", "volts";
         @decivolt: prefix!(deci); "dV", "decivolt", "decivolts";
         @centivolt: prefix!(centi); "cV", "centivolt", "centivolts";
@@ -43,7 +43,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{unit_definitions::{electric_current::ElectricCurrentUnit, electric_potential::ElectricPotentialUnit, time::TimeUnit}, units::{LengthUnit, MassUnit}, units_base::Unit};
+    use crate::{unit_definitions::{electric_current::ElectricCurrentUnit, electric_potential::ElectricPotentialUnit, time::TimeUnit}, units::{LengthUnit, MassUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {
@@ -75,7 +75,7 @@ mod tests {
         test_unit(ElectricCurrentUnit::yoctoampere, ElectricPotentialUnit::yottavolt);
 
         fn test_unit(current: ElectricCurrentUnit, value: ElectricPotentialUnit) {
-            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(LengthUnit::meter).powi(2) * MassUnit::kilogram.into() / Into::<Unit>::into(TimeUnit::second).powi(3) /  Into::<Unit>::into(current), 1e-12));
+            assert!(Into::<UnitDefinition>::into(value).approx_eq(Into::<UnitDefinition>::into(LengthUnit::meter).powi(2) * MassUnit::kilogram.into() / Into::<UnitDefinition>::into(TimeUnit::second).powi(3) /  Into::<UnitDefinition>::into(current), 1e-12));
         }
     }
     

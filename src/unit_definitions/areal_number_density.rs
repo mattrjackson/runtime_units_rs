@@ -1,9 +1,9 @@
-//! Areal number density (base unit 1 per square meter, m⁻²).
+//! Areal number density (base UnitDefinition 1 per square meter, m⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Areal number density (base unit 1 per square meter, m⁻²).
+    /// Areal number density (base UnitDefinition 1 per square meter, m⁻²).
     quantity: ArealNumberDensity; "areal number density";
-    /// Dimension of areal number density, L⁻² (base unit 1 per square meter, m⁻²).
+    /// Dimension of areal number density, L⁻² (base UnitDefinition 1 per square meter, m⁻²).
     dimension: ISQ<
         N2,     // length
         Z0,     // mass
@@ -44,7 +44,7 @@ quantity! {
 
 #[cfg(test)]
 mod test {
-    use crate::{unit_definitions::areal_number_density::ArealNumberDensityUnit, units::{AreaUnit, LengthUnit}, units_base::Unit};
+    use crate::{unit_definitions::areal_number_density::ArealNumberDensityUnit, units::{AreaUnit, LengthUnit}, units_base::UnitDefinition};
    
 
     #[test]
@@ -72,7 +72,7 @@ mod test {
         test_unit(ArealNumberDensityUnit::per_square_yard, AreaUnit::square_yard);
 
         fn test_unit(value: ArealNumberDensityUnit, area: AreaUnit) {
-            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(area).powi(-1), 1e-12));
+            assert!(Into::<UnitDefinition>::into(value).approx_eq(Into::<UnitDefinition>::into(area).powi(-1), 1e-12));
         }
     }
     

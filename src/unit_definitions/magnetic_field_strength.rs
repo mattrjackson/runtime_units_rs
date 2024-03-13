@@ -1,9 +1,9 @@
-//! Magnetic field strength (H field) (base unit ampere per meter, m⁻¹ · A).
+//! Magnetic field strength (H field) (base UnitDefinition ampere per meter, m⁻¹ · A).
 use crate::{prefix, quantity};
 quantity! {
-    /// Magnetic field strength (H field) (base unit ampere per meter, m⁻¹ · A).
+    /// Magnetic field strength (H field) (base UnitDefinition ampere per meter, m⁻¹ · A).
     quantity: MagneticFieldStrength; "magnetic field strength (H field)";
-    /// Dimension of magnetic field strength (H field), L⁻¹I (base unit ampere per meter, m⁻¹ · A).
+    /// Dimension of magnetic field strength (H field), L⁻¹I (base UnitDefinition ampere per meter, m⁻¹ · A).
     dimension: ISQ<
         N1,     // length
         Z0,     // mass

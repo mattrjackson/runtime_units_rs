@@ -1,9 +1,9 @@
-//! Magnetic moment (base unit ampere square meter A · m²).
+//! Magnetic moment (base UnitDefinition ampere square meter A · m²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Magnetic moment (base unit ampere square meter A · m²).
+    /// Magnetic moment (base UnitDefinition ampere square meter A · m²).
     quantity: MagneticMoment; "magnetic moment";
-    /// Dimension of magnetic moment, IL² (base unit ampere square meter A · m²).
+    /// Dimension of magnetic moment, IL² (base UnitDefinition ampere square meter A · m²).
     dimension: ISQ<
         P2,     // length
         Z0,     // mass
@@ -29,7 +29,7 @@ quantity! {
         @nuclear_magneton: 5.050_783_7461_E-27; "μ(Nuclear)", "nuclear magneton",
             "nuclear magnetons";
         @atomic_unit_of_magnetic_dipole_moment: 1.854_802_015_66_E-23; "ħ · e/mₑ",
-            "atomic unit of magnetic dipole moment", " atomic units of magnetic dipole moment";
+            "atomic UnitDefinition of magnetic dipole moment", " atomic units of magnetic dipole moment";
         @deuteron_magnetic_moment: 4.330_735_094_E-27; "μ(deuteron)", "deuteron magnetic moment",
             "deuteron magnetic moments";
         @electron_magnetic_moment: -9.284_764_704_3_E-24; "μₑ", "electron magnetic moment",

@@ -1,9 +1,9 @@
-//! Linear density of states (base unit 1 / meter joule, kg⁻¹ · m⁻³ · s²).
+//! Linear density of states (base UnitDefinition 1 / meter joule, kg⁻¹ · m⁻³ · s²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Linear density of states (base unit 1 / meter joule, kg⁻¹ · m⁻³ · s²).
+    /// Linear density of states (base UnitDefinition 1 / meter joule, kg⁻¹ · m⁻³ · s²).
     quantity: LinearDensityOfStates; "linear density of states";
-    /// Dimension of linear density of states, L⁻³M⁻¹T² (base unit 1 / meter joule,
+    /// Dimension of linear density of states, L⁻³M⁻¹T² (base UnitDefinition 1 / meter joule,
     /// kg⁻¹ · m⁻³ · s²).
     dimension: ISQ<
         N3,     // length

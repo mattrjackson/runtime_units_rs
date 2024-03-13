@@ -1,9 +1,9 @@
-//! Mass flux (base unit kilogram per square meter second, m⁻² · kg ·  s⁻¹).
+//! Mass flux (base UnitDefinition kilogram per square meter second, m⁻² · kg ·  s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    ///  Mass flux (base unit kilogram per square meter second, m⁻² · kg ·  s⁻¹).
+    ///  Mass flux (base UnitDefinition kilogram per square meter second, m⁻² · kg ·  s⁻¹).
     quantity: MassFlux; "mass flux";
-    /// Dimension of mass flux, L⁻²MT⁻¹ (base unit kilogram per square meter second,
+    /// Dimension of mass flux, L⁻²MT⁻¹ (base UnitDefinition kilogram per square meter second,
     /// m⁻² · kg ·  s⁻¹).
     dimension: ISQ<
         N2,     // length

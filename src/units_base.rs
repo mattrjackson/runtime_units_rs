@@ -247,23 +247,23 @@ impl UnitBase
 /// Storage for a single unit and its multiplier to convert it to the base unit.
 #[derive(PartialEq, Debug, Clone, Copy)]
 #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct Unit
+pub struct UnitDefinition
 {
     pub base: UnitBase,
     pub multiplier: f64
 }
-impl Eq for Unit{}
-impl Unit
+impl Eq for UnitDefinition{}
+impl UnitDefinition
 {
     #[doc="Check whether this unit can be converted to a a given `unit`."]      
-    pub fn is_convertible(&self, unit: Unit) -> bool
+    pub fn is_convertible(&self, unit: UnitDefinition) -> bool
     {
         self.base == unit.base
     }
     #[doc="Raise a unit to an integer power."]
-    pub fn powi(&self, power: i8) -> Unit
+    pub fn powi(&self, power: i8) -> UnitDefinition
     {
-        Unit { base: self.base.powi(power), multiplier: self.multiplier.powi(power as i32) }
+        UnitDefinition { base: self.base.powi(power), multiplier: self.multiplier.powi(power as i32) }
     }
     #[doc="Retrieve multiplier that converts this unit to its base quantity."]
     pub fn multiplier(&self) -> f64
@@ -276,43 +276,43 @@ impl Unit
         self.base.to_string()
     }
     #[doc="Approximate equality for two units, given some relative error `rel_error`"]
-    pub fn approx_eq(&self, other: Unit, rel_error: f64) -> bool
+    pub fn approx_eq(&self, other: UnitDefinition, rel_error: f64) -> bool
     {
         other.base == self.base && if self.multiplier == 0.0 { (self.multiplier-other.multiplier).abs()} else { (1.0-other.multiplier/self.multiplier).abs() } <= rel_error 
     }
 }
-impl Mul<Unit> for Unit
+impl Mul<UnitDefinition> for UnitDefinition
 {
-    type Output = Unit;
+    type Output = UnitDefinition;
 
-    fn mul(self, rhs: Unit) -> Self::Output {
-        Unit{
+    fn mul(self, rhs: UnitDefinition) -> Self::Output {
+        UnitDefinition{
             multiplier: self.multiplier*rhs.multiplier,
             base: self.base*rhs.base
         }
     }
 }
-impl Div<Unit> for Unit
+impl Div<UnitDefinition> for UnitDefinition
 {
-    type Output=Unit;
+    type Output=UnitDefinition;
 
-    fn div(self, rhs: Unit) -> Self::Output {
-        Unit{
+    fn div(self, rhs: UnitDefinition) -> Self::Output {
+        UnitDefinition{
             multiplier: self.multiplier/rhs.multiplier,
             base: self.base/rhs.base
         }
     }
 }
 
-impl DivAssign for Unit
+impl DivAssign for UnitDefinition
 {
-    fn div_assign(&mut self, rhs: Unit) {
+    fn div_assign(&mut self, rhs: UnitDefinition) {
         self.multiplier /= rhs.multiplier;
         self.base /= rhs.base;
     }
 }
 
-impl MulAssign for Unit
+impl MulAssign for UnitDefinition
 {
     fn mul_assign(&mut self, rhs: Self) {
         self.multiplier *= rhs.multiplier;

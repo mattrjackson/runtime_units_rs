@@ -1,9 +1,9 @@
-//! Moment of inertia (base unit kilogram square meter, kg · m² ).
+//! Moment of inertia (base UnitDefinition kilogram square meter, kg · m² ).
 use crate::{prefix, quantity};
 quantity! {
-    /// Moment of inertia (base unit kilogram square meter, kg · m² ).
+    /// Moment of inertia (base UnitDefinition kilogram square meter, kg · m² ).
     quantity: MomentOfInertia; "moment of inertia";
-    /// Dimension of moment of inertia, L²M (base unit kilogram square meter, kg · m² ).
+    /// Dimension of moment of inertia, L²M (base UnitDefinition kilogram square meter, kg · m² ).
     dimension: ISQ<
         P2,     // length
         P1,     // mass

@@ -1,4 +1,4 @@
-use quantity::Quantity;
+use quantity::QuantityBase;
 
 
 pub mod errors;
@@ -7,76 +7,36 @@ pub(crate) mod macros;
 pub mod units_base;
 mod unit_definitions;
 pub use crate::unit_definitions::*;
+mod tests;
 
-#[cfg(test)]
-mod test
-{    
-    #[test]
-    #[cfg(all(any(feature="All", all(feature="Time", feature="Length", feature="Velocity", feature="Acceleration")), feature="std"))]
-    fn readme_example()
-    {
-        use crate::quantities::{LengthQuantity, TimeQuantity };
-        use crate::{Length, Time, Units, Velocity};         
-        let length = Length::meter(1.0);
-        let time = Time::second(5.0);
-        let velocity  = Velocity::meter_per_second(0.2).to_quantity();
-        assert!(length.to_quantity()/time.to_quantity() == velocity);
+// #[cfg(all(any(feature="All", all(feature="Time", feature="Length", feature="Velocity", feature="Acceleration")), feature="std"))]
+// #[test]
+// fn example()
+// {
+//     let length = Length::meter(10.0);
+//     let length_cm = length.to_centimeter();
+//     assert_eq!(length, length_cm);
+//     let velocity = Acceleration::meter_per_second_squared(1.0) * Time::second(10.0);
+//     assert_eq!(length / Time::second(1.0), velocity); 
 
+//     let unit = Units::Length(units::LengthUnit::angstrom);
+//     let _ = length.try_convert(unit).unwrap();
 
-        let length_quantity = LengthQuantity::meter(10.0);
-        let time_quantity = TimeQuantity::second(1.0);
-        let _quantity = length_quantity*time_quantity;
-        let velocity_quantity = crate::quantities::VelocityQuantity::meter_per_second(5.0).to_foot_per_second();
-        assert!(length_quantity.to_foot() / time_quantity == velocity_quantity * 2.0);
-        let start = std::time::Instant::now();
-        for _i in 0..1e9 as usize
-        {
-            let _quantity = length_quantity.to_foot();
-        }
-        let ending = std::time::Instant::now();
-        println!("{}", ending.duration_since(start).as_nanos());
-        let quantity = *length_quantity;        
-        assert!(quantity.convert(Units::Acceleration(crate::units::AccelerationUnit::centimeter_per_second_squared)).is_err());
-        println!("{:?}", quantity.convert(Units::Luminance(crate::units::LuminanceUnit::candela_per_square_centimeter)).err());
-        assert!(quantity.convert(Units::Length(crate::units::LengthUnit::angstrom)).is_ok());
-    }
-    #[test]
-    #[cfg(any(feature="All", feature="Length"))]
-    /// Test unit enumeration -> `Units` conversion
-    fn convert_unit_length_to_units()
-    {
-        use crate::{units::LengthUnit, Units};
+//     // list units available for Length:
+//     for unit in UnitTypes::Length.units()
+//     {
+//         println!("{unit}");
+//     }
 
-        let length = LengthUnit::meter;
-        let _units: Units = length.into();
-    }
-    #[test]
-    #[cfg(any(feature="All", feature="Length"))]
-    /// Test `UnitTypes` -> `Units`
-    fn test_convert_unit_type_to_units()
-    {
-        use crate::{units::LengthUnit, UnitTypes};
+//     let quantity = Quantities::Acceleration(Acceleration::centimeter_per_second_squared(10.0));
+//     assert_eq!(velocity, QuantityBase::from(quantity) * Time::second(100.0));
 
-        let unit_type = UnitTypes::Length;
-        assert_eq!(unit_type.to_unit("m").unwrap(),crate::Units::Length(LengthUnit::meter));
-        assert_eq!(unit_type.to_unit("meter").unwrap(), crate::Units::Length(LengthUnit::meter));
-        assert_ne!(unit_type.to_unit("meter").unwrap(), crate::Units::Length(LengthUnit::kilometer));        
-    }
-    #[test]
-    #[cfg(any(feature="All", feature="Length"))]
-    fn available_units()
-    {
-        for unit in crate::units::LengthUnit::units()
-        {
-            println!("{unit}");
-        }
-    }
-    #[test]
-    #[cfg(feature="serde")]    
-    #[cfg(any(feature="All", feature="Length"))]
-    fn serialize_units()
-    {
-        use serde_json::json;
-        println!("{}",json!(crate::Length::new(1.0, crate::units::LengthUnit::centimeter)));
-    }
-}
+//     // Get a unit type from a string
+//     let _units = UnitTypes::Length.to_unit("m").unwrap();
+
+//     // Different ways to print base units of a quantity
+//     println!("Base Units of Velocity = {}", velocity.definition().unit_string());
+//     println!("Base Units of Acceleration = {}", Acceleration::meter_per_second_squared(1.0).definition().unit_string());
+    
+
+// }

@@ -1,9 +1,9 @@
-//! Energy (base unit joule, kg · m² · s⁻²).
+//! Energy (base UnitDefinition joule, kg · m² · s⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Energy (base unit joule, kg · m² · s⁻²).
+    /// Energy (base UnitDefinition joule, kg · m² · s⁻²).
     quantity: Energy; "energy";
-    /// Dimension of energy, L²MT⁻² (base unit joule, kg · m² · s⁻²).
+    /// Dimension of energy, L²MT⁻² (base UnitDefinition joule, kg · m² · s⁻²).
     dimension: ISQ<
         P2,     // length
         P1,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kilojoule: prefix!(kilo); "kJ", "kilojoule", "kilojoules";
         @hectojoule: prefix!(hecto); "hJ", "hectojoule", "hectojoules";
         @decajoule: prefix!(deca); "daJ", "decajoule", "decajoules";
-        /// Derived unit of energy.
+        /// Derived UnitDefinition of energy.
         @joule: prefix!(none); "J", "joule", "joules";
         @decijoule: prefix!(deci); "dJ", "decijoule", "decijoules";
         @centijoule: prefix!(centi); "cJ", "centijoule", "centijoules";
@@ -56,17 +56,17 @@ quantity! {
         @decaelectronvolt: 1.602_176_634_E-18; "daeV", "decaelectronvolt", "decaelectronvolts";
         @electronvolt: 1.602_176_634_E-19; "eV", "electronvolt", "electronvolts";
 
-        /// Atomic unit of energy (Hartree energy).
+        /// Atomic UnitDefinition of energy (Hartree energy).
         @hartree: 4.359_744_722_207_1_E-18; "Eₕ", "hartree", "hartrees";
 
-        @btu_it: 1.055_056_E3; "Btu (IT)", "British thermal unit (IT)",
+        @btu_it: 1.055_056_E3; "Btu (IT)", "British thermal UnitDefinition (IT)",
             "British thermal units (IT)";
-        @btu: 1.054_350_E3; "Btu", "British thermal unit", "British thermal units";
-        @btu_39: 1.059_67_E3; "Btu₃₉", "British thermal unit (39 °F)",
+        @btu: 1.054_350_E3; "Btu", "British thermal UnitDefinition", "British thermal units";
+        @btu_39: 1.059_67_E3; "Btu₃₉", "British thermal UnitDefinition (39 °F)",
             "British thermal units (39 °F)";
-        @btu_59: 1.054_80_E3; "Btu₅₉", "British thermal unit (59 °F)",
+        @btu_59: 1.054_80_E3; "Btu₅₉", "British thermal UnitDefinition (59 °F)",
             "British thermal units (59 °F)";
-        @btu_60: 1.054_68_E3; "Btu₆₀", "British thermal unit (60 °F)",
+        @btu_60: 1.054_68_E3; "Btu₆₀", "British thermal UnitDefinition (60 °F)",
             "British thermal units (60 °F)";
         @calorie_it: 4.186_8_E0; "cal (IT)", "calorie (IT)", "calories (IT)";
         @calorie: 4.184_E0; "cal", "calorie", "calories";
@@ -92,7 +92,7 @@ quantity! {
 #[cfg(test)]
 #[cfg(feature="Energy")]
 mod tests {
-    use crate::{quantities, units::{MassUnit, LengthUnit, EnergyUnit, TimeUnit}, units_base::{Unit, UnitBase}};
+    use crate::{units::{MassUnit, LengthUnit, EnergyUnit, TimeUnit}, units_base::{UnitDefinition, UnitBase}};
     
     #[test]
     fn check_dimension() {
@@ -120,8 +120,8 @@ mod tests {
         test_unit(MassUnit::zeptogram, EnergyUnit::yoctojoule);
         
     }
-    fn test_unit(mass: MassUnit, unit: EnergyUnit) {
-        assert!(Into::<Unit>::into(unit).approx_eq(Into::<Unit>::into(mass) * Into::<Unit>::into(LengthUnit::meter).powi(2) / Into::<Unit>::into(TimeUnit::second).powi(2), 1e-12));
+    fn test_unit(mass: MassUnit, energy: EnergyUnit) {
+        assert!(Into::<UnitDefinition>::into(energy).approx_eq(Into::<UnitDefinition>::into(mass) * Into::<UnitDefinition>::into(LengthUnit::meter).powi(2) / Into::<UnitDefinition>::into(TimeUnit::second).powi(2), 1e-12));
     }
     
 }

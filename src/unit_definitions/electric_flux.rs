@@ -1,9 +1,9 @@
-//! Electric Flux (base unit volt meter, m³ ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
+//! Electric Flux (base UnitDefinition volt meter, m³ ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Electric Flux (base unit volt meter, m³ ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
+    /// Electric Flux (base UnitDefinition volt meter, m³ ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
     quantity: ElectricFlux; "electric flux";
-    /// Dimension of electric flux, L³MT⁻³I⁻¹ (base unit volt meter, m³ ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
+    /// Dimension of electric flux, L³MT⁻³I⁻¹ (base UnitDefinition volt meter, m³ ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
     dimension: ISQ<
         P3,     // length
         P1,     // mass
@@ -21,7 +21,7 @@ quantity! {
 
 #[cfg(test)]
 mod test {
-    use crate::{unit_definitions::{electric_flux::ElectricFluxUnit, electric_potential::ElectricPotentialUnit}, units::LengthUnit, units_base::Unit};
+    use crate::{unit_definitions::{electric_flux::ElectricFluxUnit, electric_potential::ElectricPotentialUnit}, units::LengthUnit, units_base::UnitDefinition};
 
 
     #[test]
@@ -36,6 +36,6 @@ mod test {
     }
     fn test_unit(ef: ElectricFluxUnit, length: LengthUnit, potential: ElectricPotentialUnit)
     {
-        assert_eq!(Into::<Unit>::into(ef), Into::<Unit>::into(potential) * Into::<Unit>::into(length));
+        assert_eq!(Into::<UnitDefinition>::into(ef), Into::<UnitDefinition>::into(potential) * Into::<UnitDefinition>::into(length));
     }
 }

@@ -1,9 +1,9 @@
-//! Molar mass (base unit kilogram per mole, kg · mol⁻¹).
+//! Molar mass (base UnitDefinition kilogram per mole, kg · mol⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Molar mass (base unit kilogram per mole, kg · mol⁻¹).
+    /// Molar mass (base UnitDefinition kilogram per mole, kg · mol⁻¹).
     quantity: MolarMass; "molar mass";
-    /// Dimension of molar mass, MN⁻¹ (base unit kilogram per mole, kg · mol⁻¹).
+    /// Dimension of molar mass, MN⁻¹ (base UnitDefinition kilogram per mole, kg · mol⁻¹).
     dimension: ISQ<
         Z0,     // length
         P1,     // mass
@@ -27,7 +27,7 @@ quantity! {
             "Gg/mol", "gigagram per mole", "gigagrams per mole";
         @megagram_per_mole: prefix!(mega) / prefix!(kilo);
             "Mg/mol", "megagram per mole", "megagrams per mole";
-        /// The derived unit of molar mass.
+        /// The derived UnitDefinition of molar mass.
         @kilogram_per_mole: prefix!(kilo) / prefix!(kilo);
             "kg/mol", "kilogram per mole", "kilograms per mole";
         @hectogram_per_mole: prefix!(hecto) / prefix!(kilo);

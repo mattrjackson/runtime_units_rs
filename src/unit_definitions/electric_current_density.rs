@@ -1,9 +1,9 @@
-//! Electric current density (base unit ampere per square meter, m⁻² · A).
+//! Electric current density (base UnitDefinition ampere per square meter, m⁻² · A).
 use crate::{prefix, quantity};
 quantity! {
-    /// Electric current density (base unit ampere per square meter, m⁻² · A).
+    /// Electric current density (base UnitDefinition ampere per square meter, m⁻² · A).
     quantity: ElectricCurrentDensity; "electric current density";
-    /// Dimension of electric current density, L⁻²I (base unit ampere per square meter, A · m⁻²).
+    /// Dimension of electric current density, L⁻²I (base UnitDefinition ampere per square meter, A · m⁻²).
     dimension: ISQ<
         N2,     // length
         Z0,     // mass
@@ -25,7 +25,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{unit_definitions::{electric_current::ElectricCurrentUnit, electric_current_density::ElectricCurrentDensityUnit}, units::AreaUnit, units_base::Unit, ElectricCurrentDensity};
+    use crate::{unit_definitions::{electric_current::ElectricCurrentUnit, electric_current_density::ElectricCurrentDensityUnit}, units::AreaUnit, units_base::UnitDefinition};
 
     
     #[test]
@@ -41,6 +41,6 @@ mod tests {
     }
     fn test_unit(value: ElectricCurrentDensityUnit, current: ElectricCurrentUnit, area: AreaUnit)
     {
-        assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(current) / Into::<Unit>::into(area)));
+        assert_eq!(Into::<UnitDefinition>::into(value), (Into::<UnitDefinition>::into(current) / Into::<UnitDefinition>::into(area)));
     }
 }

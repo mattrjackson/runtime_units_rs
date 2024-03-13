@@ -1,9 +1,9 @@
-//! Magnetic permeability (base unit henry per meter, m · kg · s⁻² · A⁻²).
+//! Magnetic permeability (base UnitDefinition henry per meter, m · kg · s⁻² · A⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Magnetic permeability (base unit henry per meter, m · kg · s⁻² · A⁻²).
+    /// Magnetic permeability (base UnitDefinition henry per meter, m · kg · s⁻² · A⁻²).
     quantity: MagneticPermeability; "magnetic permeability";
-    /// Dimension of magnetic permeability, LMT⁻²I⁻² (base unit henry per meter,
+    /// Dimension of magnetic permeability, LMT⁻²I⁻² (base UnitDefinition henry per meter,
     /// m · kg · s⁻² · A⁻²).
     dimension: ISQ<
         P1,     // length

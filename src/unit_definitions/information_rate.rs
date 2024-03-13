@@ -1,9 +1,9 @@
-//! Information rate (base unit byte per second, s⁻¹).
+//! Information rate (base UnitDefinition byte per second, s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Information rate (base unit byte per second, s⁻¹).
+    /// Information rate (base UnitDefinition byte per second, s⁻¹).
     quantity: InformationRate; "information rate";
-    /// Dimension of information rate, T⁻¹ (base unit byte per second, s⁻¹).
+    /// Dimension of information rate, T⁻¹ (base UnitDefinition byte per second, s⁻¹).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

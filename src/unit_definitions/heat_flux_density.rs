@@ -1,9 +1,9 @@
-//! Heat flux density (base unit watt per square meter, kg · s⁻³).
+//! Heat flux density (base UnitDefinition watt per square meter, kg · s⁻³).
 use crate::{prefix, quantity};
 quantity! {
-    /// Heat flux density (base unit watt per square meter, kg · s⁻³).
+    /// Heat flux density (base UnitDefinition watt per square meter, kg · s⁻³).
     quantity: HeatFluxDensity; "heat flux density";
-    /// Dimension of heat flux density, MT⁻³ (base unit watt per square meter, kg · s⁻³).
+    /// Dimension of heat flux density, MT⁻³ (base UnitDefinition watt per square meter, kg · s⁻³).
     dimension: ISQ<
         Z0,     // length
         P1,     // mass
@@ -27,7 +27,7 @@ quantity! {
             "gigawatt per square meter", "gigawatts per square meter";
         @megawatt_per_square_meter: prefix!(mega); "MW/m²",
             "megawatt per square meter", "megawatts per square meter";
-        /// Derived unit of density.
+        /// Derived UnitDefinition of density.
         @kilowatt_per_square_meter: prefix!(kilo); "kW/m²",
             "kilowatt per square meter", "kilowatts per square meter";
         @hectowatt_per_square_meter: prefix!(hecto); "hW/m²",

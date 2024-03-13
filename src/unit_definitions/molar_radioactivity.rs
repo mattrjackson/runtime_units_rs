@@ -1,9 +1,9 @@
-//! Molar radioactivity (base unit becquerel per mole, s⁻¹ · mol⁻¹).
+//! Molar radioactivity (base UnitDefinition becquerel per mole, s⁻¹ · mol⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Molar radioactivity (base unit becquerel per mole, s⁻¹ · mol⁻¹).
+    /// Molar radioactivity (base UnitDefinition becquerel per mole, s⁻¹ · mol⁻¹).
     quantity: MolarRadioactivity; "molar radioactivity";
-    /// Dimension of molar radioactivity, T⁻¹N⁻¹ (base unit becquerel per mole, s⁻¹ · mol⁻¹).
+    /// Dimension of molar radioactivity, T⁻¹N⁻¹ (base UnitDefinition becquerel per mole, s⁻¹ · mol⁻¹).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

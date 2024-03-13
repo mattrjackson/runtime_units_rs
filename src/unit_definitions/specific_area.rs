@@ -1,9 +1,9 @@
-//! Specific area (base unit square meter per kilogram, m² · kg⁻¹).
+//! Specific area (base UnitDefinition square meter per kilogram, m² · kg⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Specific area (base unit square meter per kilogram, m² · kg⁻¹).
+    /// Specific area (base UnitDefinition square meter per kilogram, m² · kg⁻¹).
     quantity: SpecificArea; "specific area";
-    /// Dimension of specific area, L²M⁻¹ (base unit square meter per kilogram, m² · kg⁻¹).
+    /// Dimension of specific area, L²M⁻¹ (base UnitDefinition square meter per kilogram, m² · kg⁻¹).
     dimension: ISQ<
         P2,     // length
         N1,     // mass

@@ -38,7 +38,7 @@ quantity! {
         @kilosievert: prefix!(centi)*prefix!(kilo); "kSv", "kilosievert", "kilosieverts";
         @hectosievert: prefix!(centi)*prefix!(hecto); "hSv", "hectosievert", "hectosieverts";
         @decasievert: prefix!(centi)*prefix!(deca); "daSv", "decasievert", "decasieverts";
-        /// SI derived unit of dose equivalent. 
+        /// SI derived UnitDefinition of dose equivalent. 
         @sievert: prefix!(none); "Sv", "sievert", "sieverts";
         @decisievert: prefix!(deci); "dSv", "decisievert", "decisieverts";
         @centisievert: prefix!(centi); "cSv", "centisievert", "centisieverts";
@@ -48,8 +48,8 @@ quantity! {
         @picosievert: prefix!(pico); "pSv", "picosievert", "picosieverts";
         @femtosievert: prefix!(femto); "fSv", "femtosievert", "femtosieverts";
         @attosievert: prefix!(atto); "aSv", "attosievert", "attosieverts";
-        @zeptosievert: prefix!(zepto); "zN", "zeptosievert", "zeptosieverts";
-        @yoctosievert: prefix!(yocto); "yN", "yoctosievert", "yoctosieverts";
+        @zeptosievert: prefix!(zepto); "zSv", "zeptosievert", "zeptosieverts";
+        @yoctosievert: prefix!(yocto); "ySv", "yoctosievert", "yoctosieverts";
     }
 }
 
@@ -65,11 +65,11 @@ mod tests {
     #[test]
     fn check_units() {
         
-        assert_eq!(DoseEquivalent::centisievert(100.0).to_quantity(), DoseEquivalent::sievert(1.0).to_quantity());
-        assert_ne!(DoseEquivalent::centisievert(10.0).to_quantity(), DoseEquivalent::sievert(1.0).to_quantity());
+        assert_eq!(DoseEquivalent::centisievert(100.0), DoseEquivalent::sievert(1.0));
+        assert_ne!(DoseEquivalent::centisievert(10.0), DoseEquivalent::sievert(1.0));
         
-        assert_eq!(DoseEquivalent::centisievert(10.0).to_quantity(), DoseEquivalent::rem(10.0).to_quantity());
-        assert_eq!(DoseEquivalent::sievert(0.1).to_quantity(), DoseEquivalent::rem(10.0).to_quantity());
-        assert_ne!(DoseEquivalent::centisievert(10.0).to_quantity(), DoseEquivalent::rem(100.0).to_quantity());
+        assert_eq!(DoseEquivalent::centisievert(10.0), DoseEquivalent::rem(10.0));
+        assert_eq!(DoseEquivalent::sievert(0.1), DoseEquivalent::rem(10.0));
+        assert_ne!(DoseEquivalent::centisievert(10.0), DoseEquivalent::rem(100.0));
     }    
 }

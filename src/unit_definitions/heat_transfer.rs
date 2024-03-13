@@ -1,4 +1,4 @@
-//! Heat transfer (base unit watt per square meter kelvin, kg · s⁻³ · K⁻¹).
+//! Heat transfer (base UnitDefinition watt per square meter kelvin, kg · s⁻³ · K⁻¹).
 //!
 //! Heat transfer is also known as heat transfer coefficient, film coefficient, or film
 //! effectiveness. Commonly expressed using derived units power and area: watt per square meter
@@ -12,9 +12,9 @@
 //! [tt]: ../thermodynamic_temperature/index.html
 use crate::{prefix, quantity};
 quantity! {
-    /// Heat transfer (base unit watt per square meter kelvin, kg · s⁻³ · K⁻¹).
+    /// Heat transfer (base UnitDefinition watt per square meter kelvin, kg · s⁻³ · K⁻¹).
     quantity: HeatTransfer; "heat transfer";
-    /// Dimension of heat transfer, MT⁻³Th⁻¹ (base unit watt per square meter kelvin,
+    /// Dimension of heat transfer, MT⁻³Th⁻¹ (base UnitDefinition watt per square meter kelvin,
     /// kg · s⁻³ · K⁻¹).
     dimension: ISQ<
         Z0,     // length
@@ -39,7 +39,7 @@ quantity! {
             "gigagram per second cubed kelvin", "gigagrams per second cubed kelvin";
         @megagram_per_second_cubed_kelvin: prefix!(mega) / prefix!(kilo); "Mg/(s³ · K)",
             "megagram per second cubed kelvin", "megagrams per second cubed kelvin";
-        /// Derived unit of heat transfer in base units. Equivalent to W/(m² · K).        
+        /// Derived UnitDefinition of heat transfer in base units. Equivalent to W/(m² · K).        
         @kilogram_per_second_cubed_kelvin: prefix!(kilo) / prefix!(kilo); "kg/(s³ · K)",
             "kilogram per second cubed kelvin", "kilograms per second cubed kelvin";
         @hectogram_per_second_cubed_kelvin: prefix!(hecto) / prefix!(kilo); "hg/(s³ · K)",
@@ -93,7 +93,7 @@ quantity! {
             "hectowatt per square meter kelvin", "hectowatts per square meter kelvin";
         @decawatt_per_square_meter_kelvin: prefix!(deca); "daW/(m² · K)",
             "decawatt per square meter kelvin", "decawatts per square meter kelvin";
-        /// Derived unit of heat transfer in derived units. Equivalent to kg/(s³ · K).
+        /// Derived UnitDefinition of heat transfer in derived units. Equivalent to kg/(s³ · K).
         @watt_per_square_meter_kelvin: prefix!(none); "W/(m² · K)",
             "watt per square meter kelvin", "watts per square meter kelvin";
         @deciwatt_per_square_meter_kelvin: prefix!(deci); "dW/(m² · K)",
@@ -140,45 +140,45 @@ quantity! {
             "joules per second square meter degree celsius";
         @btu_it_per_hour_square_foot_degree_fahrenheit: 5.678_264_134_306_046;
             "Btu (IT)/(hr · ft² · °F)",
-            "British thermal unit (IT) per hour square foot degree Fahrenheit",
+            "British thermal UnitDefinition (IT) per hour square foot degree Fahrenheit",
             "British thermal units (IT) per hour square foot degree Fahrenheit";
         @btu_it_per_hour_square_inch_degree_fahrenheit: 8.176_700_353_400_707_E2;
             "Btu (IT)/(hr · in² · °F)",
-            "British thermal unit (IT) per hour square inch degree Fahrenheit",
+            "British thermal UnitDefinition (IT) per hour square inch degree Fahrenheit",
             "British thermal units (IT) per hour square inch degree Fahrenheit";
         @btu_it_per_minute_square_foot_degree_fahrenheit: 3.406_958_480_583_627_4_E2;
             "Btu (IT)/(min · ft² · °F)",
-            "British thermal unit (IT) per minute square foot degree Fahrenheit",
+            "British thermal UnitDefinition (IT) per minute square foot degree Fahrenheit",
             "British thermal units (IT) per minute square foot degree Fahrenheit";
         @btu_it_per_minute_square_inch_degree_fahrenheit: 4.906_020_212_040_425_E4;
             "Btu (IT)/(min · in² · °F)",
-            "British thermal unit (IT) per minute square inch degree Fahrenheit",
+            "British thermal UnitDefinition (IT) per minute square inch degree Fahrenheit",
             "British thermal units (IT) per minute square inch degree Fahrenheit";
         @btu_it_per_second_square_foot_degree_fahrenheit: 2.044_175_088_350_176_5_E4;
             "Btu (IT)/(s · ft² · °F)",
-            "British thermal unit (IT) per second square foot degree Fahrenheit",
+            "British thermal UnitDefinition (IT) per second square foot degree Fahrenheit",
             "British thermal units (IT) per second square foot degree Fahrenheit";
         @btu_it_per_second_square_inch_degree_fahrenheit: 2.943_612_127_224_254_4_E6;
             "Btu (IT)/(s · in² · °F)",
-            "British thermal unit (IT) per second square inch degree Fahrenheit",
+            "British thermal UnitDefinition (IT) per second square inch degree Fahrenheit",
             "British thermal units (IT) per second square inch degree Fahrenheit";
         @btu_per_hour_square_foot_degree_fahrenheit: 5.674_464_473_928_946; "Btu/(hr · ft² · °F)",
-            "British thermal unit per hour square foot degree Fahrenheit",
+            "British thermal UnitDefinition per hour square foot degree Fahrenheit",
             "British thermal units per hour square foot degree Fahrenheit";
         @btu_per_hour_square_inch_degree_fahrenheit: 8.171_228_842_457_684_E2;
-            "Btu/(hr · in² · °F)", "British thermal unit per hour square inch degree Fahrenheit",
+            "Btu/(hr · in² · °F)", "British thermal UnitDefinition per hour square inch degree Fahrenheit",
             "British thermal units per hour square inch degree Fahrenheit";
         @btu_per_minute_square_foot_degree_fahrenheit: 3.404_678_684_357_368_E2;
-            "Btu/(min · ft² · °F)", "British thermal unit per minute square foot degree Fahrenheit",
+            "Btu/(min · ft² · °F)", "British thermal UnitDefinition per minute square foot degree Fahrenheit",
             "British thermal units per minute square foot degree Fahrenheit";
         @btu_per_minute_square_inch_degree_fahrenheit: 4.902_737_305_474_611_E4;
-            "Btu/(min · in² · °F)", "British thermal unit per minute square inch degree Fahrenheit",
+            "Btu/(min · in² · °F)", "British thermal UnitDefinition per minute square inch degree Fahrenheit",
             "British thermal units per minute square inch degree Fahrenheit";
         @btu_per_second_square_foot_degree_fahrenheit: 2.042_807_210_614_421_E4;
-            "Btu/(s · ft² · °F)", "British thermal unit per second square foot degree Fahrenheit",
+            "Btu/(s · ft² · °F)", "British thermal UnitDefinition per second square foot degree Fahrenheit",
             "British thermal units per second square foot degree Fahrenheit";
         @btu_per_second_square_inch_degree_fahrenheit: 2.941_642_383_284_766_E6;
-            "Btu/(s · in² · °F)", "British thermal unit per second square inch degree Fahrenheit",
+            "Btu/(s · in² · °F)", "British thermal UnitDefinition per second square inch degree Fahrenheit",
             "British thermal units per second square inch degree Fahrenheit";
     }
 }

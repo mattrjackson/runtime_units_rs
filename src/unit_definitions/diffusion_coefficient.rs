@@ -1,9 +1,9 @@
-//! Diffusion coefficient (base unit square meter per second, m² · s⁻¹).
+//! Diffusion coefficient (base UnitDefinition square meter per second, m² · s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Diffusion coefficient (base unit square meter per second, m² · s⁻¹).
+    /// Diffusion coefficient (base UnitDefinition square meter per second, m² · s⁻¹).
     quantity: DiffusionCoefficient; "diffusion coefficient";
-    /// Dimension of diffusion coefficient, L²T⁻¹ (base unit square meter per second, m² · s⁻¹).
+    /// Dimension of diffusion coefficient, L²T⁻¹ (base UnitDefinition square meter per second, m² · s⁻¹).
     dimension: ISQ<
         P2,     // length
         Z0,     // mass
@@ -31,7 +31,7 @@ quantity! {
 
 #[cfg(test)]
 mod test {
-    use crate::{unit_definitions::{diffusion_coefficient::DiffusionCoefficientUnit, time::TimeUnit}, units::AreaUnit, units_base::Unit};
+    use crate::{unit_definitions::{diffusion_coefficient::DiffusionCoefficientUnit, time::TimeUnit}, units::AreaUnit, units_base::UnitDefinition};
 
 
 
@@ -52,7 +52,7 @@ mod test {
 
     }
     fn test_unit(area: AreaUnit, time: TimeUnit, value: DiffusionCoefficientUnit) {
-        assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(area) / Into::<Unit>::into(time), 1e-12));
+        assert!(Into::<UnitDefinition>::into(value).approx_eq(Into::<UnitDefinition>::into(area) / Into::<UnitDefinition>::into(time), 1e-12));
     }
     
 }

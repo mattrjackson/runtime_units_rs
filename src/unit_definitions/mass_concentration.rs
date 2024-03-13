@@ -1,9 +1,9 @@
-//! Mass concentration (base unit kilogram per cubic meter, kg · m⁻³).
+//! Mass concentration (base UnitDefinition kilogram per cubic meter, kg · m⁻³).
 use crate::{prefix, quantity};
 quantity! {
-    /// Mass concentration (base unit kilogram per cubic meter, kg · m⁻³).
+    /// Mass concentration (base UnitDefinition kilogram per cubic meter, kg · m⁻³).
     quantity: MassConcentration; "mass concentration";
-    /// Dimension of mass concentration, L⁻³M (base unit kilogram per cubic meter, kg · m⁻³).
+    /// Dimension of mass concentration, L⁻³M (base UnitDefinition kilogram per cubic meter, kg · m⁻³).
     dimension: ISQ<
         N3,     // length
         P1,     // mass

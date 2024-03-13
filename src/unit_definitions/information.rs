@@ -31,10 +31,10 @@ quantity! {
         @megabit: prefix!(mega) / 8.0; "Mb", "megabit", "megabits";
         @kibibit: prefix!(kibi) / 8.0; "Kib", "kibibit", "kibibits";
         @kilobit: prefix!(kilo) / 8.0; "kb", "kilobit", "kilobits";
-        /// The bit is the basic unit of information.
+        /// The bit is the basic UnitDefinition of information.
         ///
-        /// Although the bit is the base unit of information `uom` treats it as a derived unit. The
-        /// byte is treated as the base unit in order to provide more accurate conversion factors
+        /// Although the bit is the base UnitDefinition of information `uom` treats it as a derived UnitDefinition. The
+        /// byte is treated as the base UnitDefinition in order to provide more accurate conversion factors
         /// for byte derived units which are more commonly used than bits.
         @bit: prefix!(none) / 8.0; "b", "bit", "bits";
 
@@ -54,10 +54,10 @@ quantity! {
         @megabyte: prefix!(mega); "MB", "megabyte", "megabytes";
         @kibibyte: prefix!(kibi); "KiB", "kibibyte", "kibibytes";
         @kilobyte: prefix!(kilo); "kB", "kilobyte", "kilobytes";
-        /// The byte is a unit of information consisting of 8 bits.
+        /// The byte is a UnitDefinition of information consisting of 8 bits.
         ///
-        /// Although the bit is the base unit of information `uom` treats it as a derived unit. The
-        /// byte is treated as the base unit in order to provide more accurate conversion factors
+        /// Although the bit is the base UnitDefinition of information `uom` treats it as a derived UnitDefinition. The
+        /// byte is treated as the base UnitDefinition in order to provide more accurate conversion factors
         /// for byte derived units which are more commonly used than bits.
         @byte: prefix!(none); "B", "byte", "bytes";
 
@@ -68,7 +68,7 @@ quantity! {
 
         // Base-e. ln(2).
         @natural_unit_of_information: 1.442_695_040_888_963_E0 * prefix!(none) / 8.0;
-            "nat", "natural unit of uniformation", "natural units of information";
+            "nat", "natural UnitDefinition of uniformation", "natural units of information";
 
         // Base-3. log2(3).
         @trit: 1.584_962_500_721_156_E0 * prefix!(none) / 8.0; "trit", "trit", "trits";

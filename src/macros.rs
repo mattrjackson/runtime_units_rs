@@ -38,16 +38,16 @@ macro_rules! prefix {
 macro_rules! impl_quantity_ops {   
     ($quantity:ident) =>
     {
-        use core::ops::{Mul, Div, Add, Sub, AddAssign, SubAssign, MulAssign, DivAssign};
+        use core::ops::{Mul, Div, Add, Sub, AddAssign, SubAssign, MulAssign, DivAssign };
         use $crate::quantity::IsQuantity;
         impl IsQuantity for $quantity
         {        
             fn value(&self) -> f64 {
-                self.0.value
+                self.value
             }
         
-            fn unit(&self) -> Unit {
-                self.0.unit
+            fn definition(&self) -> UnitDefinition {
+                self.unit.into()
             }
         }
         
@@ -56,7 +56,7 @@ macro_rules! impl_quantity_ops {
             type Output = $quantity;
 
             fn mul(self, rhs: f64) -> Self::Output {
-                Self(Quantity{ value: self.value*rhs, unit: self.unit })
+                Self { value: self.value*rhs, unit: self.unit }
             }
         }
         impl Div<f64> for $quantity
@@ -64,81 +64,146 @@ macro_rules! impl_quantity_ops {
             type Output = $quantity;
 
             fn div(self, rhs: f64) -> Self::Output {
-                Self(Quantity{ value: self.value/rhs, unit: self.unit })
+                Self { value: self.value/rhs, unit: self.unit }
             }
         }
-        impl PartialEq<Quantity> for $quantity
+
+        
+        impl MulAssign<f64> for $quantity
         {
-            fn eq(&self, other: &Quantity) -> bool {
-                self.0 == *other
+            fn mul_assign(&mut self, rhs: f64) {
+                self.value *= rhs;
             }
         }
-        impl PartialEq<$quantity> for Quantity
+
+
+        impl DivAssign<f64> for $quantity
+        {
+            fn div_assign(&mut self, rhs: f64) {
+                self.value /= rhs;
+            }
+        }
+
+        impl PartialEq<QuantityBase> for $quantity
+        {
+            fn eq(&self, other: &QuantityBase) -> bool {
+                QuantityBase::from(*self).eq(other)
+            }
+        }
+        
+        impl PartialEq<$quantity> for QuantityBase
         {
             fn eq(&self, other: &$quantity) -> bool {
-                other == self
+                *other == *self
+            }
+        }
+
+        impl PartialEq<$quantity> for $quantity
+        {
+            fn eq(&self, other: &$quantity) -> bool {
+                self.value * self.definition().multiplier == other.value * other.definition().multiplier
             }
         }
 
         impl<T:IsQuantity> Mul<T> for $quantity
         {
-            type Output = Quantity;
-            fn mul(self, rhs: T) -> Quantity {
-                Quantity{ value: self.value*rhs.value(), unit: self.unit*rhs.unit() }
+            type Output = QuantityBase;
+            fn mul(self, rhs: T) -> QuantityBase {
+                QuantityBase{ value: self.value*rhs.value(), unit: self.definition()*rhs.definition() }
             }
         }
         impl<T:IsQuantity> Div<T> for $quantity
         {
-            type Output = Quantity;
+            type Output = QuantityBase;
 
-            fn div(self, rhs: T) -> Quantity {
-                Quantity{ value: self.value/rhs.value(), unit: self.unit/rhs.unit() }
+            fn div(self, rhs: T) -> QuantityBase {
+                QuantityBase{ value: self.value/rhs.value(), unit: self.definition()/rhs.definition() }
             }
         }
-        impl<T:IsQuantity> Add<T> for $quantity
+        impl Add<$quantity> for $quantity
         {
-            type Output=Quantity;
+            type Output=Self;
 
-            fn add(self, rhs: T) -> Quantity {
-               Quantity{ value: self.value + rhs.value(), unit: self.unit }
+            fn add(self, rhs: $quantity) -> Self {
+                let rhs_value = rhs.convert_unchecked(self.definition());
+                Self{ value: self.value + rhs_value, unit: self.unit }
             }
         }
-        impl<T:IsQuantity> Sub<T> for $quantity
+        impl Sub<$quantity> for $quantity
         {
-            type Output=Quantity;
-            fn sub(self, rhs: T) -> Quantity {
-                Quantity{ value: self.value - rhs.value(), unit: self.unit }
+            type Output=Self;
+            fn sub(self, rhs: $quantity) -> Self {
+                let rhs_value = rhs.convert_unchecked(self.definition());
+                Self{ value: self.value - rhs_value, unit: self.unit }
             }
-        }
-        impl<T:IsQuantity> AddAssign<T> for $quantity
-        {
-            fn add_assign(&mut self, rhs: T) {
-                self.value += rhs.value();
-            }
-        }
+        }       
 
-        impl<T:IsQuantity>  SubAssign<T> for $quantity
+        impl AddAssign for $quantity
         {
-            fn sub_assign(&mut self, rhs: T) {
-                self.value -= rhs.value();
+            fn add_assign(&mut self, rhs: Self) {
+                let rhs_value = rhs.convert_unchecked(self.definition());
+                self.value += rhs_value;
             }
         }
 
-        impl<T:IsQuantity>  MulAssign<T> for $quantity
+        impl SubAssign for $quantity
         {
-            fn mul_assign(&mut self, rhs: T) {
-                self.value *= rhs.value();
-                self.unit *= rhs.unit();
+            fn sub_assign(&mut self, rhs: Self) {
+                let rhs_value = rhs.convert_unchecked(self.definition());
+                self.value -= rhs_value;
             }
         }
 
-        impl<T:IsQuantity> DivAssign<T> for $quantity
+        impl Add<QuantityBase> for $quantity
         {
-            fn div_assign(&mut self, rhs: T) {
-                self.value /= rhs.value();
-                self.unit /= rhs.unit();
+            type Output=Self;
+
+            fn add(self, rhs: QuantityBase) -> Self {
+                if self.definition().base != rhs.unit.base
+                {
+                    panic!("Incompatible units added");
+                }
+                let rhs_value = rhs.convert_unchecked(self.definition());
+                Self{ value: self.value + rhs_value, unit: self.unit }
             }
         }
+        impl Sub<QuantityBase> for $quantity
+        {
+            type Output=Self;
+            fn sub(self, rhs: QuantityBase) -> Self {
+                if self.definition().base != rhs.unit.base
+                {
+                    panic!("Incompatible units subtracted");
+                }
+                let rhs_value = rhs.convert_unchecked(self.definition());
+                Self{ value: self.value - rhs_value, unit: self.unit }
+            }
+        }       
+
+        impl AddAssign<QuantityBase> for $quantity
+        {
+            fn add_assign(&mut self, rhs: QuantityBase) {
+                if self.definition().base != rhs.unit.base
+                {
+                    panic!("Incompatible units subtracted");
+                }
+                let rhs_value = rhs.convert_unchecked(self.definition());
+                self.value += rhs_value;
+            }
+        }
+
+        impl SubAssign<QuantityBase> for $quantity
+        {
+            fn sub_assign(&mut self, rhs: QuantityBase) {
+                if self.definition().base != rhs.unit.base
+                {
+                    panic!("Incompatible units subtracted");
+                }
+                let rhs_value = rhs.convert_unchecked(self.definition());
+                self.value -= rhs_value;
+            }
+        }
+
 
     }
 }
@@ -156,16 +221,13 @@ macro_rules! quantity {
     ) => {
         #[cfg(feature="utoipa")]
         use utoipa::ToSchema;
-        use core::ops::{Deref, DerefMut};
-        use once_cell::sync::Lazy;
-        use strum_macros::EnumIter;
-        use $crate::Quantity;
-        use $crate::units_base::{Unit, UnitBase};
+        use $crate::errors::RuntimeUnitError;
+        use $crate::QuantityBase;
+        use $crate::units_base::{UnitDefinition, UnitBase};
         paste::paste!{
         $(#[$quantity_attr])*
         #[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
         #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
-        #[derive(EnumIter)]
         #[allow(non_camel_case_types)]         
         #[allow(clippy::eq_op)]
         #[cfg_attr(feature="utoipa", derive(ToSchema))]        
@@ -173,34 +235,46 @@ macro_rules! quantity {
         {
             $($unit,)+
         }
-        }
+        }        
         paste::paste! { 
+            pub(crate) const [<$quantity:upper _UNIT_BASE>]: UnitBase = crate::units_base::UOMDimensions::to_unit_base(($($crate::units_base::UOMDimensions::$dimension,)+));
+            $(pub(crate) const [<$quantity:upper _ $unit:upper _conversion:upper>]: f64 = $conversion;)+
         impl [<$quantity Unit>] 
         {
+            
             /// get the UnitBase for this type of unit
-            pub(crate) fn unit_base() -> UnitBase
+            pub(crate) const fn unit_base() -> UnitBase
             {
-                $crate::units_base::UOMDimensions::to_unit_base(($($crate::units_base::UOMDimensions::$dimension,)+))
+                [<$quantity:upper _UNIT_BASE>]
             }
 
-            /// Retrieve the underlying `Unit`
-            pub fn unit(&self) -> Unit
+            /// Retrieve the underlying `UnitDefinition`
+            pub const fn unit(&self) -> UnitDefinition
             {
-                Unit::from(*self)
+                match self
+                {
+                    $([<$quantity Unit>]::$unit => UnitDefinition 
+                        { 
+                            multiplier: [<$quantity:upper _ $unit:upper _conversion:upper>], 
+                            base: [<$quantity Unit>]::unit_base()
+                        },
+                    )+
+                }
+                
             }
 
             /// Get the base unit for this unit type (for length, as an example, this would be `meter`)
             pub fn base(&self) -> [<$quantity Unit>]
             {
-                $(if $conversion == 1.0 { return [<$quantity Unit>]::$unit; })+
+                $(if [<$quantity:upper _ $unit:upper _conversion:upper>] == 1.0 { return [<$quantity Unit>]::$unit; })+
                 panic!("No base unit found! for {}", stringify!($quantity));
             }
             paste::paste!{
             $(
                 #[allow(clippy::eq_op)]
-                pub fn [<get_$unit:snake>]() -> Unit
+                pub fn [<get_$unit:snake>]() -> UnitDefinition
                 {
-                    Unit{ base: [<$quantity Unit>]::unit_base(), multiplier: $conversion }
+                    UnitDefinition{ base: [<$quantity Unit>]::unit_base(), multiplier: [<$quantity:upper _ $unit:upper _conversion:upper>] }
                 })+
             }        
             #[doc = "Multiplier of unit to its base quantity."]
@@ -209,7 +283,7 @@ macro_rules! quantity {
             {
                 match self
                 {
-                    $([<$quantity Unit>]::$unit => $conversion,)+
+                    $([<$quantity Unit>]::$unit => [<$quantity:upper _ $unit:upper _conversion:upper>],)+
                 }
             }
             #[doc = "Abbreviation of unit."]
@@ -237,20 +311,16 @@ macro_rules! quantity {
                 }
             }
             #[doc = "Available units for this `[" [<$quantity Unit>] "`]."]
-            pub fn units() -> &'static Vec<&'static str>
+            pub fn units() -> &'static [&'static str]
             {
-                use strum::IntoEnumIterator;
-                static UNITS: Lazy<Vec<&'static str>> = Lazy::new(|| { 
-                    [<$quantity Unit>]::iter().map(|item|item.singular()).collect()
-                });
-                &UNITS
+                const UNITS: &[&'static str] = &[ $($singular,)+ ];                
+                UNITS
             }
             
         }
         }
         paste::paste!
         {
-            
             impl From<[<$quantity Unit>]> for $crate::Units
             {
                 fn from(value: [<$quantity Unit>]) -> Self {
@@ -262,11 +332,23 @@ macro_rules! quantity {
                     }
                 }
             }
+            impl TryFrom<$crate::Units> for [<$quantity Unit>]
+            {
+                type Error = RuntimeUnitError;
+                fn try_from(value: $crate::Units) -> Result<Self, Self::Error> 
+                {                
+                    match value
+                    {
+                        $($crate::Units::$quantity([<$quantity Unit>]::$unit) => Ok([<$quantity Unit>]::$unit),)+
+                        _ => Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Could not convert from {} to {}", value, stringify!($quantity))))
+                    }
+                }
+            }
         }
         paste::paste!
         {
             $(#[$quantity_attr])*
-            #[derive(Copy, Clone, Debug, PartialEq)]
+            #[derive(Copy, Clone, Debug)]
             #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
             #[cfg_attr(feature="utoipa", derive(ToSchema))]
             pub struct $quantity
@@ -288,35 +370,73 @@ macro_rules! quantity {
                         Self { value, unit: [<$quantity Unit>]::$unit.into() }
                     }
                 )+
-                #[doc = "Create a [`" [<Quantity>] "`] from this [`"[<$quantity>]"`]." ]
-                pub fn to_quantity(&self) -> Quantity
-                {
-                    (*self).into()
-                }
-                #[doc = "Retrieve the `Unit` associated with this [`" [<$quantity>]"`]."]   
-                pub fn unit(&self) -> Unit
+
+                #[doc = "Retrieve the `UnitDefinition` associated with this [`" [<$quantity>]"`]."]   
+                #[inline]
+                pub fn definition(&self) -> UnitDefinition
                 {
                     self.unit.into()
                 }
+                #[inline] 
+                /// Convert from one unit to another (no check is made to ensure destination unit is valid).
+                fn convert_unchecked(&self, unit: UnitDefinition) -> f64
+                {
+                    let definition = self.definition();
+                    if definition == unit
+                    {
+                        self.value
+                    }
+                    else
+                    {
+                        self.value * definition.multiplier / unit.multiplier()
+                    }
+                }
+                $(
+                    #[doc = "Convert to [`" [<$quantity Unit>] "::" [<$unit>] "`]."]                        
+                    #[inline]
+                    pub fn [<to_ $unit:snake>](&self) -> Self
+                    {                     
+                        Self { value: self.value * (self.definition().multiplier / ([<$quantity:upper _ $unit:upper _conversion:upper>])) as f64, unit: [<$quantity Unit>]::$unit }    
+                    }
+                )+
+
+                #[doc = "Convert [`" [<$quantity>] "`] to another unit of the same quantity."]                                        
+                pub fn convert(&self, unit: [<$quantity Unit>]) -> Self
+                {
+                    Self { value: self.convert_unchecked(unit.into()), unit: unit }
+                }
+                pub fn try_convert(&self, unit: $crate::Units) -> Result<Self, RuntimeUnitError>
+                {
+                    let destination_unit:  [<$quantity Unit>] = unit.try_into()?;                   
+                    Ok(self.convert(destination_unit))                    
+                }                
             }
-            impl From<$quantity> for Quantity
+            
+            impl From<$quantity> for UnitDefinition
+            {
+                #[inline]
+                fn from(value: $quantity) -> Self 
+                {
+                    paste::paste!{
+                        match value.unit
+                        {
+                            $([<$quantity Unit>]::$unit =>  [<$quantity Unit>]::[<get_$unit:snake>](),)+
+                        }   
+                    }
+                }
+            }
+            impl From<$quantity> for QuantityBase
             {    
                 fn from(quantity: $quantity) -> Self {
                     Self { value: quantity.value, unit: quantity.unit.into() }
                 }                
             }
-            impl From<$quantity> for [<$quantity Quantity>]
-            {    
-                fn from(quantity: $quantity) -> Self {
-                    Self (Quantity{ value: quantity.value, unit: quantity.unit.into() })
-                }                
-            }
             use crate::impl_quantity_ops;
-            impl_quantity_ops!([<$quantity Quantity>]);
+            impl_quantity_ops!($quantity);
         }        
         paste::paste!
         {
-            impl From<[<$quantity Unit>]> for Unit
+            impl From<[<$quantity Unit>]> for UnitDefinition
             {
                 #[inline]
                 fn from(value: [<$quantity Unit>]) -> Self 
@@ -388,60 +508,6 @@ macro_rules! quantity {
             }
         }       
         }
-        // now create Quantity element to enable conversions...        
-        paste::paste!{
-            $(#[$quantity_attr])*
-            #[derive(Copy, Clone, Debug)]
-            #[doc = "Defines storage of a given quantity of type [`" [<$quantity Unit>]"`]."]   
-            pub struct [<$quantity Quantity>](Quantity);
-            impl [<$quantity Quantity>]
-            {
-                #[doc = "Create a new quantity with a given `value` and [`" [<$quantity Unit>]"`]."]   
-                pub fn new(value: f64, unit: [<$quantity Unit>]) -> Self
-                {
-                    Self(Quantity { value, unit: unit.into() })
-                }
-                paste::paste!
-                {
-                    $(
-                        #[doc = "Convert to [`" [<$quantity Unit>] "::" [<$unit>] "`]."]                        
-                        #[inline]
-                        pub fn [<to_ $unit:snake>](&self) -> Self
-                        {                     
-                            Self(Quantity { value: self.value * (self.unit.multiplier / ($conversion)) as f64, unit: [<$quantity Unit>]::$unit.into() })    
-                        }
-                    )+
-                    $(
-                        #[doc = "Create a new [`" [<$quantity Quantity>] "`] with units of [`" [<$quantity Unit>] "::" [<$unit>] "`]."] 
-                        pub fn [<$unit:snake>](value: f64) -> Self
-                        {
-                            Self(Quantity { value, unit: [<$quantity Unit>]::$unit.into() })
-                        }
-
-                    )+
-                    
-                    #[doc = "Convert [`" [<$quantity Quantity>] "`] to another unit of the same quantity."]                                        
-                    pub fn [<convert_ $quantity:snake>](&self, unit: [<$quantity Unit>]) -> Self
-                    {
-                        Self(Quantity { value: self.convert_unit_unchecked(unit.into()), unit: unit.into() })
-                    }
-                }      
-            }
-            impl Deref for [<$quantity Quantity>]
-            {
-                type Target = Quantity;
-
-                fn deref(&self) -> &Self::Target {
-                    &self.0
-                }
-            }
-            impl DerefMut for [<$quantity Quantity>]
-            {
-                fn deref_mut(&mut self) -> &mut Self::Target {
-                    &mut self.0
-                }
-            } 
-        }
     }
 }
 
@@ -452,8 +518,8 @@ macro_rules! system {
             $($quantity:ident,)+
         }
     ) => {
-        use $crate::units_base::Unit;
-        use $crate::Quantity;
+        use $crate::units_base::UnitDefinition;
+        use $crate::QuantityBase;
         #[cfg(feature="utoipa")]
         use utoipa::ToSchema;
         use paste::paste;
@@ -463,7 +529,7 @@ macro_rules! system {
             }
            paste::paste!{#[cfg(any(feature = "" $quantity, feature="All"))]           
            pub use $crate::unit_definitions::[<$quantity:snake>]::$quantity;      
-        }
+            }
            
         )+
         pub mod quantities
@@ -472,10 +538,10 @@ macro_rules! system {
                 paste::paste!{
                     #[allow(clippy::eq_op)]
                     #[cfg(any(feature = "" $quantity, feature="All"))]                    
-                    pub use $crate::unit_definitions::[<$quantity:snake>]::[<$quantity Quantity>];           
+                    pub use $crate::unit_definitions::[<$quantity:snake>]::$quantity;           
                 }
             )+
-            pub use $crate::quantity::Quantity;
+            pub use $crate::quantity::QuantityBase;
             
         }
         pub mod units
@@ -506,7 +572,7 @@ macro_rules! system {
                 ///
                 /// Retrieve list of units available for this `UnitType`.
                 /// 
-                pub fn units(&self) -> &'static Vec<&'static str>
+                pub fn units(&self) -> &'static [&'static str]
                 {
                     match self
                     {
@@ -555,14 +621,14 @@ macro_rules! system {
                 )+
             }
 
-            impl From<Quantities> for Quantity
+            impl From<Quantities> for QuantityBase
             {
                 fn from(value: Quantities) -> Self {
                     match value
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            Quantities::$quantity(x)=>Quantity { value: x.value, unit: Unit{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()} },
+                            Quantities::$quantity(x)=>QuantityBase { value: x.value, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()} },
                         )+
                     }
                 }
@@ -575,8 +641,7 @@ macro_rules! system {
                 #[cfg_attr(feature="utoipa", derive(ToSchema))]
                 ///
                 /// A wrapper to hold all available units supported by the library. Contains utilities to convert from
-                /// a given arbitrary unit to the underlying `Quantity` that is used to perform
-                /// unit conversion calculations.
+                /// a given arbitrary unit to the underlying `QuantityBase` that is used to perform unit conversion calculations.
                 /// 
                 pub enum Units
                 {                               
@@ -586,28 +651,42 @@ macro_rules! system {
                     )+                
                 }
                 
-                impl From<Units> for $crate::units_base::Unit
+                impl From<Units> for $crate::units_base::UnitDefinition
                 {
                     fn from(value: Units) -> Self {
                         match value
                         {
                             $(
                                 #[cfg(any(feature = "" $quantity, feature="All"))]     
-                                Units::$quantity(x)=> Unit{multiplier: x.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()},
+                                Units::$quantity(x)=> UnitDefinition{multiplier: x.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()},
                             )+
                         }
                     }
                 }
+                paste::paste!{
+                    impl core::fmt::Display for Units{
+                        fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+                            match self
+                            {
+                                $(
+                                    #[cfg(any(feature = "" $quantity, feature="All"))]  
+                                    Units::$quantity(x) => write!(f, "{}", x.singular()),
+                                )+    
+                            }
+                           
+                        }
+                    }        
+                }  
             }
             impl Units
             {
                 ///
                 /// Convert a given 'value' expressed in the given `Units` intto a convertible `Quantity`
                 /// 
-                pub fn to_quantity(&self, value: f64) -> $crate::quantity::Quantity
+                pub fn to_quantity(&self, value: f64) -> $crate::quantity::QuantityBase
                 {
-                    let unit: Unit = (*self).into();
-                    $crate::quantity::Quantity { unit, value }
+                    let unit: UnitDefinition = (*self).into();
+                    $crate::quantity::QuantityBase { unit, value }
                 }
                 paste!{
 
@@ -623,11 +702,10 @@ macro_rules! system {
                             Units::$quantity(x)=>Units::$quantity(x.base()),)+
                     }
                 }     
-                
                 ///
                 /// Get list of units available for this `Units` type
                 /// 
-                pub fn units(&self) -> &'static Vec<&'static str>
+                pub fn units(&self) -> &'static [&'static str]
                 {
                     match *self
                     {
@@ -636,8 +714,8 @@ macro_rules! system {
                             Units::$quantity(_)=>[<$quantity:snake>]::[<$quantity Unit>]::units(),
                         )+
                     }
-                }      
-                }  
+                }    
+                }
             }
            
             

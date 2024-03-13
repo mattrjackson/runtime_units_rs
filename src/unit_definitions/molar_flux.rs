@@ -1,9 +1,9 @@
-//! Molar flux (base unit mole per square meter second, m⁻² · s⁻¹ · mol).
+//! Molar flux (base UnitDefinition mole per square meter second, m⁻² · s⁻¹ · mol).
 use crate::{prefix, quantity};
 quantity! {
-    /// Molar flux (base unit mole per square meter second, m⁻² · s⁻¹ · mol).
+    /// Molar flux (base UnitDefinition mole per square meter second, m⁻² · s⁻¹ · mol).
     quantity: MolarFlux; "molar flux";
-    /// Dimension of molar flux, L⁻²T⁻¹N (base unit mole per square meter second, m⁻² · s⁻¹ · mol).
+    /// Dimension of molar flux, L⁻²T⁻¹N (base UnitDefinition mole per square meter second, m⁻² · s⁻¹ · mol).
     dimension: ISQ<
         N2,     // length
         Z0,     // mass

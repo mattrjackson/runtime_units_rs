@@ -1,9 +1,9 @@
-//! Linear number density (base unit 1 per meter, m⁻¹).
+//! Linear number density (base UnitDefinition 1 per meter, m⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Linear number density (base unit 1 per meter, m⁻¹).
+    /// Linear number density (base UnitDefinition 1 per meter, m⁻¹).
     quantity: LinearNumberDensity; "linear number density";
-    /// Dimension of linear number density, L⁻¹ (base 1 unit per meter, m⁻¹).
+    /// Dimension of linear number density, L⁻¹ (base 1 UnitDefinition per meter, m⁻¹).
     dimension: ISQ<
         N1,     // length
         Z0,     // mass

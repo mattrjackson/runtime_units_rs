@@ -1,9 +1,9 @@
-//! Frequency (base unit hertz, s⁻¹).
+//! Frequency (base UnitDefinition hertz, s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Frequency (base unit hertz, s⁻¹).
+    /// Frequency (base UnitDefinition hertz, s⁻¹).
     quantity: Frequency; "frequency";
-    /// Dimension of frequency, T⁻¹ (base unit hertz, s⁻¹).
+    /// Dimension of frequency, T⁻¹ (base UnitDefinition hertz, s⁻¹).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

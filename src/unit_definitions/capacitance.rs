@@ -1,9 +1,9 @@
-//! Capacitance (base unit farad, m⁻² · kg⁻¹ · s⁴ · A²).
+//! Capacitance (base UnitDefinition farad, m⁻² · kg⁻¹ · s⁴ · A²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Capacitance (base unit farad, m⁻² · kg⁻¹ · s⁴ · A²).
+    /// Capacitance (base UnitDefinition farad, m⁻² · kg⁻¹ · s⁴ · A²).
     quantity: Capacitance; "capacitance";
-    /// Dimension of capacitance, L⁻²M⁻¹T⁴I² (base unit farad, m⁻² · kg⁻¹ · s⁴ · A²).
+    /// Dimension of capacitance, L⁻²M⁻¹T⁴I² (base UnitDefinition farad, m⁻² · kg⁻¹ · s⁴ · A²).
     dimension: ISQ<
         N2,     // length
         N1,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kilofarad: prefix!(kilo); "kF", "kilofarad", "kilofarads";
         @hectofarad: prefix!(hecto); "hF", "hectofarad", "hectofarads";
         @decafarad: prefix!(deca); "daF", "decafarad", "decafarads";
-        /// Derived unit of capacitance.
+        /// Derived UnitDefinition of capacitance.
         @farad: prefix!(none); "F", "farad", "farads";
         @decifarad: prefix!(deci); "dF", "decifarad", "decifarads";
         @centifarad: prefix!(centi); "cF", "centifarad", "centifarads";
@@ -43,7 +43,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{unit_definitions::{capacitance::CapacitanceUnit, electric_current::ElectricCurrentUnit, electric_potential::ElectricPotentialUnit, time::TimeUnit}, units_base::Unit, ElectricPotential};
+    use crate::{unit_definitions::{capacitance::CapacitanceUnit, electric_current::ElectricCurrentUnit, electric_potential::ElectricPotentialUnit, time::TimeUnit}, units_base::UnitDefinition};
 
 
     #[test]
@@ -79,8 +79,8 @@ mod tests {
        test_unit(ElectricCurrentUnit::abampere, ElectricPotentialUnit::abvolt, CapacitanceUnit::abfarad);
 
         fn test_unit(current: ElectricCurrentUnit, potential: ElectricPotentialUnit, value: CapacitanceUnit) {
-            println!("{value}: left: {:?}, right: {:?}", Into::<Unit>::into(value), Into::<Unit>::into(current) / Into::<Unit>::into(potential) * Into::<Unit>::into(TimeUnit::second));
-            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(current) / Into::<Unit>::into(potential) * Into::<Unit>::into(TimeUnit::second), 1e-12));
+            println!("{value}: left: {:?}, right: {:?}", Into::<UnitDefinition>::into(value), Into::<UnitDefinition>::into(current) / Into::<UnitDefinition>::into(potential) * Into::<UnitDefinition>::into(TimeUnit::second));
+            assert!(Into::<UnitDefinition>::into(value).approx_eq(Into::<UnitDefinition>::into(current) / Into::<UnitDefinition>::into(potential) * Into::<UnitDefinition>::into(TimeUnit::second), 1e-12));
         }
     }
 }

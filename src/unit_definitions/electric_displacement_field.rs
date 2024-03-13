@@ -1,9 +1,9 @@
-//! Electric displacement field (base unit coulomb per square meter, m⁻² · A · s).
+//! Electric displacement field (base UnitDefinition coulomb per square meter, m⁻² · A · s).
 use crate::{prefix, quantity};
 quantity! {
-    ///Electric displacement field (base unit coulomb per square meter, m⁻² · A · s).
+    ///Electric displacement field (base UnitDefinition coulomb per square meter, m⁻² · A · s).
     quantity: ElectricDisplacementField; "electric displacement field";
-    /// Dimension of electric displacement field, L⁻²TI (base unit coulomb per square meter,
+    /// Dimension of electric displacement field, L⁻²TI (base UnitDefinition coulomb per square meter,
     /// m⁻² · A · s).
     dimension: ISQ<
         N2,     // length
@@ -23,7 +23,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{unit_definitions::{area::AreaUnit, electric_charge::ElectricChargeUnit, electric_displacement_field::ElectricDisplacementFieldUnit}, units_base::Unit};
+    use crate::{unit_definitions::{area::AreaUnit, electric_charge::ElectricChargeUnit, electric_displacement_field::ElectricDisplacementFieldUnit}, units_base::UnitDefinition};
 
 
     #[test]
@@ -39,6 +39,6 @@ mod tests {
     }
     fn test_unit(charge: ElectricChargeUnit, area: AreaUnit, value: ElectricDisplacementFieldUnit)
     {
-         assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(charge) / Into::<Unit>::into(area)));
+         assert_eq!(Into::<UnitDefinition>::into(value), (Into::<UnitDefinition>::into(charge) / Into::<UnitDefinition>::into(area)));
     }
 }

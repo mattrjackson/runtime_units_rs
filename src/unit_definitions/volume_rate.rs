@@ -1,9 +1,9 @@
-//! Volume rate (base unit cubic meter per second, m³ · s⁻¹).
+//! Volume rate (base UnitDefinition cubic meter per second, m³ · s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Volume rate (base unit cubic meter per second, m³ · s⁻¹).
+    /// Volume rate (base UnitDefinition cubic meter per second, m³ · s⁻¹).
     quantity: VolumeRate; "volume rate";
-    /// Dimension of volume rate, L³T⁻¹ (base unit cubic meter per second, m³ · s⁻¹).
+    /// Dimension of volume rate, L³T⁻¹ (base UnitDefinition cubic meter per second, m³ · s⁻¹).
     dimension: ISQ<
         P3,     // length
         Z0,     // mass

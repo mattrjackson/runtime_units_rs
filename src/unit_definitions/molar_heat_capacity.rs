@@ -1,9 +1,9 @@
-//! Molar heat capacity (base unit joule per kelvin mole, m² · kg · s⁻² · K⁻¹ · mol⁻¹).
+//! Molar heat capacity (base UnitDefinition joule per kelvin mole, m² · kg · s⁻² · K⁻¹ · mol⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Molar heat capacity (base unit joule per kelvin mole, m² · kg · s⁻² · K⁻¹ · mol⁻¹).
+    /// Molar heat capacity (base UnitDefinition joule per kelvin mole, m² · kg · s⁻² · K⁻¹ · mol⁻¹).
     quantity: MolarHeatCapacity; "molar heat capacity";
-    /// Dimension of molar heat capacity, L²MT⁻²Th⁻¹N⁻¹ (base unit joule per kelvin mole,
+    /// Dimension of molar heat capacity, L²MT⁻²Th⁻¹N⁻¹ (base UnitDefinition joule per kelvin mole,
     /// m² · kg · s⁻² · K⁻¹ · mol⁻¹).
     dimension: ISQ<
         P2,     // length
@@ -34,7 +34,7 @@ quantity! {
             "hectojoules per kelvin mole";
         @decajoule_per_kelvin_mole: prefix!(deca); "daJ/(K · mol)", "decajoule per kelvin mole",
             "decajoules per kelvin mole";
-        /// Derived unit of molar heat capacity.
+        /// Derived UnitDefinition of molar heat capacity.
         @joule_per_kelvin_mole: prefix!(none); "J/(K · mol)", "joule per kelvin mole",
             "joules per kelvin mole";
         @decijoule_per_kelvin_mole: prefix!(deci); "dJ/(K · mol)", "decijoule per kelvin mole",
@@ -59,18 +59,18 @@ quantity! {
             "yoctojoules per kelvin mole";
 
         @btu_it_per_kelvin_mole: 1.055_056_E3; "Btu (IT)/(K · mol)",
-            "British thermal unit (IT) per kelvin mole",
+            "British thermal UnitDefinition (IT) per kelvin mole",
             "British thermal units (IT) per kelvin mole";
-        @btu_per_kelvin_mole: 1.054_350_E3; "Btu/(K · mol)", "British thermal unit per kelvin mole",
+        @btu_per_kelvin_mole: 1.054_350_E3; "Btu/(K · mol)", "British thermal UnitDefinition per kelvin mole",
             "British thermal units per kelvin mole";
         @btu_39_per_kelvin_mole: 1.059_67_E3; "Btu₃₉/(K · mol)",
-            "British thermal unit (39 °F) per kelvin mole",
+            "British thermal UnitDefinition (39 °F) per kelvin mole",
             "British thermal units (39 °F) per kelvin mole";
         @btu_59_per_kelvin_mole: 1.054_80_E3; "Btu₅₉/(K · mol)",
-            "British thermal unit (59 °F) per kelvin mole",
+            "British thermal UnitDefinition (59 °F) per kelvin mole",
             "British thermal units (59 °F) per kelvin mole";
         @btu_60_per_kelvin_mole: 1.054_68_E3; "Btu₆₀/(K · mol)",
-            "British thermal unit (60 °F) per kelvin mole",
+            "British thermal UnitDefinition (60 °F) per kelvin mole",
             "British thermal units (60 °F) per kelvin mole";
         @calorie_it_per_kelvin_mole: 4.186_8_E0; "cal (IT)/(K · mol)",
             "calorie (IT) per kelvin mole", "calories (IT) per kelvin mole";

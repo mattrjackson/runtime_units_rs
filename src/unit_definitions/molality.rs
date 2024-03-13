@@ -1,9 +1,9 @@
-//! Molality (base unit mole per kilogram, kg⁻¹ · mol).
+//! Molality (base UnitDefinition mole per kilogram, kg⁻¹ · mol).
 use crate::{prefix, quantity};
 quantity! {
-    /// Molality (base unit mole per kilogram, kg⁻¹ · mol).
+    /// Molality (base UnitDefinition mole per kilogram, kg⁻¹ · mol).
     quantity: Molality; "molality";
-    /// Dimension of molality, M⁻¹N (base unit mole per kilogram, kg⁻¹ · mol).
+    /// Dimension of molality, M⁻¹N (base UnitDefinition mole per kilogram, kg⁻¹ · mol).
     dimension: ISQ<
         Z0,     // length
         N1,     // mass

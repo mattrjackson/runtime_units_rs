@@ -1,9 +1,9 @@
-//! Area (base unit square meter, m²).
+//! Area (base UnitDefinition square meter, m²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Area (base unit square meter, m²).
+    /// Area (base UnitDefinition square meter, m²).
     quantity: Area; "area";
-    /// Dimension of area, L² (base unit square meter, m²).
+    /// Dimension of area, L² (base UnitDefinition square meter, m²).
     dimension: ISQ<
         P2,     // length
         Z0,     // mass
@@ -70,7 +70,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{units::{AreaUnit, LengthUnit}, units_base::Unit};
+    use crate::{units::{AreaUnit, LengthUnit}, units_base::UnitDefinition};
 
 
     #[test]
@@ -104,7 +104,7 @@ mod tests {
       
     }
     fn test_unit(length: LengthUnit, value: AreaUnit) {
-        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(length).powi(2));
+        assert_eq!(Into::<UnitDefinition>::into(value), Into::<UnitDefinition>::into(length).powi(2));
     }
 }
 

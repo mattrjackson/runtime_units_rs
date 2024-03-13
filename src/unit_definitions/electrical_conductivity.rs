@@ -1,9 +1,9 @@
-//! Electrical conductivity (base unit siemens per meter, m⁻³ · kg⁻¹ · s³ · A²).
+//! Electrical conductivity (base UnitDefinition siemens per meter, m⁻³ · kg⁻¹ · s³ · A²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Electrical conductivity (base unit siemens per meter, m⁻³ · kg⁻¹ · s³ · A²).
+    /// Electrical conductivity (base UnitDefinition siemens per meter, m⁻³ · kg⁻¹ · s³ · A²).
     quantity: ElectricalConductivity; "electrical conductivity";
-    /// Dimension of electrical conductivity, L⁻³M⁻¹T³I² (base unit siemens per meter,
+    /// Dimension of electrical conductivity, L⁻³M⁻¹T³I² (base UnitDefinition siemens per meter,
     /// m⁻³ · kg⁻¹ · s³ · A²).
     dimension: ISQ<
         N3,     // length

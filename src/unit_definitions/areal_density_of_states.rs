@@ -1,9 +1,9 @@
-//! Areal density of states (base unit 1 / square meter joule, kg⁻¹ · m⁻⁴ · s²).
+//! Areal density of states (base UnitDefinition 1 / square meter joule, kg⁻¹ · m⁻⁴ · s²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Areal density of states (base unit 1 / square meter joule, kg⁻¹ · m⁻⁴ · s²).
+    /// Areal density of states (base UnitDefinition 1 / square meter joule, kg⁻¹ · m⁻⁴ · s²).
     quantity: ArealDensityOfStates; "areal density of states";
-    /// Dimension of areal density of states, L⁻⁴M⁻¹T² (base unit 1 / square meter joule, kg⁻¹ · m⁻⁴ · s²).
+    /// Dimension of areal density of states, L⁻⁴M⁻¹T² (base UnitDefinition 1 / square meter joule, kg⁻¹ · m⁻⁴ · s²).
     dimension: ISQ<
         N4,     // length
         N1,     // mass
@@ -27,7 +27,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{units::{MassUnit, ArealDensityOfStatesUnit, EnergyUnit, TimeUnit, LengthUnit}, units_base::Unit};
+    use crate::{units::{MassUnit, ArealDensityOfStatesUnit, EnergyUnit, TimeUnit, LengthUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {
@@ -42,6 +42,6 @@ mod tests {
 
     }
     fn test_unit(value: ArealDensityOfStatesUnit, length: LengthUnit, energy: EnergyUnit) {
-        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(length).powi(-2) / Into::<Unit>::into(energy));
+        assert_eq!(Into::<UnitDefinition>::into(value), Into::<UnitDefinition>::into(length).powi(-2) / Into::<UnitDefinition>::into(energy));
     }
 }

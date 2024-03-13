@@ -1,9 +1,9 @@
-//! Power (base unit watt, m² · kg · s⁻³).
+//! Power (base UnitDefinition watt, m² · kg · s⁻³).
 use crate::{prefix, quantity};
 quantity! {
-    /// Power (base unit watt, m² · kg · s⁻³).
+    /// Power (base UnitDefinition watt, m² · kg · s⁻³).
     quantity: Power; "power";
-    /// Dimension of power, L²MT⁻³ (base unit watt, m² · kg · s⁻³).
+    /// Dimension of power, L²MT⁻³ (base UnitDefinition watt, m² · kg · s⁻³).
     dimension: ISQ<
         P2,     // length
         P1,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kilowatt: prefix!(kilo); "kW", "kilowatt", "kilowatts";
         @hectowatt: prefix!(hecto); "hW", "hectowatt", "hectowatts";
         @decawatt: prefix!(deca); "daW", "decawatt", "decawatts";
-        /// Derived unit of power.
+        /// Derived UnitDefinition of power.
         @watt: prefix!(none); "W", "watt", "watts";
         @deciwatt: prefix!(deci); "dW", "deciwatt", "deciwatts";
         @centiwatt: prefix!(centi); "cW", "centiwatt", "centiwatts";

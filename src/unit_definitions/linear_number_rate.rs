@@ -1,9 +1,9 @@
-//! Linear number rate (base unit 1 per meter second, m⁻¹ · s⁻¹).
+//! Linear number rate (base UnitDefinition 1 per meter second, m⁻¹ · s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Linear number rate (base unit 1 per meter second, m⁻¹ · s⁻¹).
+    /// Linear number rate (base UnitDefinition 1 per meter second, m⁻¹ · s⁻¹).
     quantity: LinearNumberRate; "linear number rate";
-    /// Dimension of linear number rate, L⁻¹T⁻¹ (base unit 1 per meter second, m⁻¹ · s⁻¹).
+    /// Dimension of linear number rate, L⁻¹T⁻¹ (base UnitDefinition 1 per meter second, m⁻¹ · s⁻¹).
     dimension: ISQ<
         N1,     // length
         Z0,     // mass

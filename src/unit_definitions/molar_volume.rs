@@ -1,9 +1,9 @@
-//! Molar volume (base unit cubic meter per mole, m³ · mol⁻¹).
+//! Molar volume (base UnitDefinition cubic meter per mole, m³ · mol⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Molar volume (base unit cubic meter per mole, m³ · mol⁻¹).
+    /// Molar volume (base UnitDefinition cubic meter per mole, m³ · mol⁻¹).
     quantity: MolarVolume; "molar volume";
-    /// Dimension of molar volume, L³N⁻¹ (base unit cubic meter per mole, m³ · mol⁻¹).
+    /// Dimension of molar volume, L³N⁻¹ (base UnitDefinition cubic meter per mole, m³ · mol⁻¹).
     dimension: ISQ<
         P3,     // length
         Z0,     // mass

@@ -1,4 +1,4 @@
-//! Specific heat capacity (base unit joule per kilogram kelvin, m² · s⁻² · K⁻¹).
+//! Specific heat capacity (base UnitDefinition joule per kilogram kelvin, m² · s⁻² · K⁻¹).
 //!
 //! This quantity might be used to define the heat capacity of a material. To define heat capacity
 //! of an object, use [heat capacity][hc].
@@ -12,9 +12,9 @@
 //! [hc]: ../heat_capacity/index.html
 use crate::{prefix, quantity};
 quantity! {
-    /// Specific heat capacity (base unit joule per kilogram kelvin, m² · s⁻² · K⁻¹).
+    /// Specific heat capacity (base UnitDefinition joule per kilogram kelvin, m² · s⁻² · K⁻¹).
     quantity: SpecificHeatCapacity; "specific heat capacity";
-    /// Dimension of specific heat capacity, L²T⁻²Th⁻¹ (base unit joule per kilogram kelvin, m² ·
+    /// Dimension of specific heat capacity, L²T⁻²Th⁻¹ (base UnitDefinition joule per kilogram kelvin, m² ·
     /// s⁻² · K⁻¹).
     dimension: ISQ<
         P2,     // length
@@ -28,7 +28,7 @@ quantity! {
         @square_kilometer_per_second_squared_kelvin: prefix!(kilo) * prefix!(kilo); "km²/(s² · K)",
             "square kilometer per second squared kelvin",
             "square kilometers per second squared kelvin";
-        /// The derived unit of specific heat capacity expressed in base units. Equivalent to
+        /// The derived UnitDefinition of specific heat capacity expressed in base units. Equivalent to
         /// J/(kg · K).
         @square_meter_per_second_squared_kelvin: prefix!(none); "m²/(s² · K)",
             "square meter per second squared kelvin", "square meters per second squared kelvin";
@@ -64,7 +64,7 @@ quantity! {
             "hectojoule per kilogram kelvin", "hectojoules per kilogram kelvin";
         @decajoule_per_kilogram_kelvin: prefix!(deca); "daJ/(kg · K)",
             "decajoule per kilogram kelvin", "decajoules per kilogram kelvin";
-        /// Derived unit of specific heat capacity expressed in derived units. Equivalent to
+        /// Derived UnitDefinition of specific heat capacity expressed in derived units. Equivalent to
         /// m²/(s² · K).
         @joule_per_kilogram_kelvin: prefix!(none); "J/(kg · K)",
             "joule per kilogram kelvin", "joules per kilogram kelvin";
@@ -103,22 +103,22 @@ quantity! {
             "millijoule per gram degree celsius", "millijoules per gram degree celsius";
 
         @btu_per_ounce_degree_fahrenheit: 6.694_399_058_608_398_E4; "Btu/(oz · °F)",
-            "British thermal unit per ounce degree Fahrenheit",
+            "British thermal UnitDefinition per ounce degree Fahrenheit",
             "British thermal units per ounce degree Fahrenheit";
         @btu_it_per_ounce_degree_fahrenheit: 6.698_881_674_187_076_E4; "Btu (IT)/(oz · °F)",
-            "British thermal unit (IT) per ounce degree Fahrenheit",
+            "British thermal UnitDefinition (IT) per ounce degree Fahrenheit",
             "British thermal units (IT) per ounce degree Fahrenheit";
         @btu_per_pound_degree_fahrenheit: 4.183_998_673_699_118_E3; "Btu/(lb · °F)",
-            "British thermal unit per pound degree Fahrenheit",
+            "British thermal UnitDefinition per pound degree Fahrenheit",
             "British thermal units per pound degree Fahrenheit";
         @btu_it_per_pound_degree_fahrenheit: 4.186_800_307_941_667_E3; "Btu (IT)/(lb · °F)",
-            "British thermal unit (IT) per pound degree Fahrenheit",
+            "British thermal UnitDefinition (IT) per pound degree Fahrenheit",
             "British thermal units (IT) per pound degree Fahrenheit";
         @btu_per_ton_degree_fahrenheit: 1.897_829_999_999_999_999_E0; "Btu/(t · °F)",
-            "British thermal unit per ton degree Fahrenheit",
+            "British thermal UnitDefinition per ton degree Fahrenheit",
             "British thermal units per ton degree Fahrenheit";
         @btu_it_per_ton_degree_fahrenheit: 1.899_100_799_999_999_999_E0; "Btu (IT)/(t · °F)",
-            "British thermal unit (IT) per ton degree Fahrenheit",
+            "British thermal UnitDefinition (IT) per ton degree Fahrenheit",
             "British thermal units (IT) per ton degree Fahrenheit";
 
         @calorie_per_kilogram_kelvin: 4.184_E0; "cal/(kg · K)", "calorie per kilogram kelvin",

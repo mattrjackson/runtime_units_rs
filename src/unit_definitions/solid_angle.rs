@@ -1,5 +1,5 @@
 //! Solid angle (dimensionless quantity).
-use crate::{prefix, quantity};
+use crate::quantity;
 quantity! {
     /// Solid angle (dimensionless quantity).
     quantity: SolidAngle; "solid angle";
@@ -14,8 +14,8 @@ quantity! {
         Z0>;    // luminous intensity
     kind: dyn (crate::si::marker::SolidAngleKind);
     units {
-        /// SI derived unit of solid angle is steradians. It is the solid angle subtended at the
-        /// center of a unit sphere by a unit area on its surface.
+        /// SI derived UnitDefinition of solid angle is steradians. It is the solid angle subtended at the
+        /// center of a UnitDefinition sphere by a UnitDefinition area on its surface.
         @steradian: 1.0_E0; "sr", "steradian", "steradians";
         @spat: 1.256_637_061_435_917_3_E1; "sp", "spat", "spats";
         @square_degree: 3.046_174_197_867_086_E-4; "°²", "square degree", "square degrees";

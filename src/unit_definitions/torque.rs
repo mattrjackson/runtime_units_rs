@@ -1,14 +1,14 @@
-//! Torque (aka moment of force) (base unit newton meter, kg · m² · s⁻²).
+//! Torque (aka moment of force) (base UnitDefinition newton meter, kg · m² · s⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Torque (aka moment of force) (base unit newton meter, kg · m² · s⁻²).
+    /// Torque (aka moment of force) (base UnitDefinition newton meter, kg · m² · s⁻²).
     ///
     /// Torque is a moment, the product of distance and force. Moments are inherently dependent on
     /// the distance from a fixed reference point. This library does not capture this dependency.
     /// As a consequence, there are *no compile time guarantees that only moments of the same frame
     /// can be combined*.
     quantity: Torque; "torque";
-    /// Dimension of torque, L²MT⁻² (base unit newton meter, kg · m² · s⁻²).
+    /// Dimension of torque, L²MT⁻² (base UnitDefinition newton meter, kg · m² · s⁻²).
     dimension: ISQ<
         P2,     // length
         P1,     // mass
@@ -29,7 +29,7 @@ quantity! {
         @kilonewton_meter: prefix!(kilo); "kN · m", "kilonewton meter", "kilonewton meters";
         @hectonewton_meter: prefix!(hecto); "hN · m", "hectonewton meter", "hectonewton meters";
         @decanewton_meter: prefix!(deca); "daN · m", "decanewton meter", "decanewton meters";
-        /// Derived unit of torque.
+        /// Derived UnitDefinition of torque.
         @newton_meter: prefix!(none); "N · m", "newton meter", "newton meters";
         @decinewton_meter: prefix!(deci); "dN · m", "decinewton meter", "decinewton meters";
         @centinewton_meter: prefix!(centi); "cN · m", "centinewton meter", "centinewton meters";

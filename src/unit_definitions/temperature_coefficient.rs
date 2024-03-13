@@ -1,9 +1,9 @@
-//! Temperature coefficient (base unit 1 / kelvin, K⁻¹).
+//! Temperature coefficient (base UnitDefinition 1 / kelvin, K⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Temperature coefficient (base unit 1 / kelvin, K⁻¹).
+    /// Temperature coefficient (base UnitDefinition 1 / kelvin, K⁻¹).
     quantity: TemperatureCoefficient; "temperature coefficient";
-    /// Dimension of temperature coefficient, Th⁻¹ (base unit 1 / kelvin, K⁻¹).
+    /// Dimension of temperature coefficient, Th⁻¹ (base UnitDefinition 1 / kelvin, K⁻¹).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

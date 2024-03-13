@@ -1,9 +1,9 @@
-//! Electrical conductance (base unit siemens, m⁻² · kg⁻¹ · s³ · A²).
+//! Electrical conductance (base UnitDefinition siemens, m⁻² · kg⁻¹ · s³ · A²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Electrical conductance (base unit siemens, m⁻² · kg⁻¹ · s³ · A²).
+    /// Electrical conductance (base UnitDefinition siemens, m⁻² · kg⁻¹ · s³ · A²).
     quantity: ElectricalConductance; "electrical conductance";
-    /// Dimension of electrical conductance, L⁻²M⁻¹T³I² (base unit siemens, m⁻² · kg⁻¹ · s³ · A²).
+    /// Dimension of electrical conductance, L⁻²M⁻¹T³I² (base UnitDefinition siemens, m⁻² · kg⁻¹ · s³ · A²).
     dimension: ISQ<
         N2,     // length
         N1,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kilosiemens: prefix!(kilo); "kS", "kilosiemens", "kilosiemens";
         @hectosiemens: prefix!(hecto); "hS", "hectosiemens", "hectosiemens";
         @decasiemens: prefix!(deca); "daS", "decasiemens", "decasiemens";
-        /// Derived unit of electrical conductance.
+        /// Derived UnitDefinition of electrical conductance.
         @siemens: prefix!(none); "S", "siemens", "siemens";
         @mho: prefix!(none); "℧", "mho", "mhos";
         @decisiemens: prefix!(deci); "dS", "decisiemens", "decisiemens";

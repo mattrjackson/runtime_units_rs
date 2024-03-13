@@ -1,9 +1,9 @@
-//! Force (base unit newton, kg · m · s⁻²).
+//! Force (base UnitDefinition newton, kg · m · s⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Force (base unit newton, kg · m · s⁻²).
+    /// Force (base UnitDefinition newton, kg · m · s⁻²).
     quantity: Force; "force";
-    /// Dimension of force, LMT⁻² (base unit newton, kg · m · s⁻²).
+    /// Dimension of force, LMT⁻² (base UnitDefinition newton, kg · m · s⁻²).
     dimension: ISQ<
         P1,     // length
         P1,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kilonewton: prefix!(kilo); "kN", "kilonewton", "kilonewtons";
         @hectonewton: prefix!(hecto); "hN", "hectonewton", "hectonewtons";
         @decanewton: prefix!(deca); "daN", "decanewton", "decanewtons";
-        /// Derived unit of force.
+        /// Derived UnitDefinition of force.
         @newton: prefix!(none); "N", "newton", "newtons";
         @decinewton: prefix!(deci); "dN", "decinewton", "decinewtons";
         @centinewton: prefix!(centi); "cN", "centinewton", "centinewtons";

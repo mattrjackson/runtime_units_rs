@@ -1,9 +1,9 @@
-//! Electric current (base unit ampere, A).
+//! Electric current (base UnitDefinition ampere, A).
 use crate::{prefix, quantity};
 quantity! {
-    /// Electric current (base unit ampere, A).
+    /// Electric current (base UnitDefinition ampere, A).
     quantity: ElectricCurrent; "electric current";
-    /// Dimension of electric current, I (base unit ampere, A).
+    /// Dimension of electric current, I (base UnitDefinition ampere, A).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass
@@ -23,9 +23,9 @@ quantity! {
         @kiloampere: prefix!(kilo); "kA", "kiloampere", "kiloamperes";
         @hectoampere: prefix!(hecto); "hA", "hectoampere", "hectoamperes";
         @decaampere: prefix!(deca); "daA", "decaampere", "decaamperes";
-        /// The ampere is the SI unit of electric current. It is defined by taking the fixed
+        /// The ampere is the SI UnitDefinition of electric current. It is defined by taking the fixed
         /// numerical value of the elementary charge *e* to be 1.602 176 634 × 10⁻¹⁹ when expressed
-        /// in the unit C, which is equal to A s, where the second is defined in terms of
+        /// in the UnitDefinition C, which is equal to A s, where the second is defined in terms of
         /// ∆*ν*<sub>Cs</sub>.
         @ampere: prefix!(none); "A", "ampere", "amperes";
         @deciampere: prefix!(deci); "dA", "deciampere", "deciamperes";
@@ -39,11 +39,11 @@ quantity! {
         @zeptoampere: prefix!(zepto); "zA", "zeptoampere", "zeptoamperes";
         @yoctoampere: prefix!(yocto); "yA", "yoctoampere", "yoctoamperes";
 
-        /// Atomic unit of charge (electric charge carried by a single proton) per second.
+        /// Atomic UnitDefinition of charge (electric charge carried by a single proton) per second.
         @elementary_charge_per_second: 1.602_176_634_E-19; "e/s", "elementary charge per second",
             "elementary charges per second";
         @atomic_unit_of_charge_per_second: 1.602_176_634_E-19; "a.u. of charge/s",
-            "atomic unit of charge per second", "atomic units of charge per second";
+            "atomic UnitDefinition of charge per second", "atomic units of charge per second";
         @abampere: 1.0_E1; "abA", "abampere", "abamperes";
         @gilbert: 7.957_747_E-1; "Gi", "gilbert", "gilberts";
         @statampere: 3.33564095198152E-10; "statA", "statampere", "statamperes";

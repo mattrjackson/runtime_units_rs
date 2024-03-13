@@ -1,9 +1,9 @@
-//! Specific radioactivity (base unit becquerel per kilogram, kg⁻¹ · s⁻¹).
+//! Specific radioactivity (base UnitDefinition becquerel per kilogram, kg⁻¹ · s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Specific radioactivity (base unit becquerel per kilogram, kg⁻¹ · s⁻¹).
+    /// Specific radioactivity (base UnitDefinition becquerel per kilogram, kg⁻¹ · s⁻¹).
     quantity: SpecificRadioactivity; "specific radioactivity";
-    /// Dimension of specific radioactivity, M⁻¹T⁻¹ (base unit becquerel per kilogram, kg⁻¹ · s⁻¹).
+    /// Dimension of specific radioactivity, M⁻¹T⁻¹ (base UnitDefinition becquerel per kilogram, kg⁻¹ · s⁻¹).
     dimension: ISQ<
         Z0,     // length
         N1,     // mass

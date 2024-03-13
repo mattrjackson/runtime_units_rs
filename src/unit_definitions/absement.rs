@@ -1,9 +1,9 @@
-//! Absement (base unit meter second, m · s).
+//! Absement (base UnitDefinition meter second, m · s).
 use crate::{prefix, quantity};
 quantity! {
-    /// Absement (base unit meter second, m · s).
+    /// Absement (base UnitDefinition meter second, m · s).
     quantity: Absement; "absement";
-    /// Dimension of absement, LT (base unit meter second, m · s).
+    /// Dimension of absement, LT (base UnitDefinition meter second, m · s).
     dimension: ISQ<
         P1,     // length
         Z0,     // mass
@@ -65,7 +65,7 @@ quantity! {
 #[cfg(test)]
 #[cfg(any(feature = "Absement", feature = "All"))]   
 mod tests {
-use crate::{units::{AbsementUnit, LengthUnit, TimeUnit}, units_base::{Unit, UnitBase}};
+use crate::{units::{AbsementUnit, LengthUnit, TimeUnit}, units_base::{UnitDefinition, UnitBase}};
 
 
 #[test]
@@ -102,10 +102,10 @@ fn check_units() {
 }
 
 fn test(length: LengthUnit, time: TimeUnit, absement: AbsementUnit) {
-    let unit: Unit = absement.into();
-    let length_unit: Unit = length.into();
-    let unit2: Unit = length_unit*time.into();               
-    assert!(unit == unit2);
+    let definition: UnitDefinition = absement.into();
+    let length_unit: UnitDefinition = length.into();
+    let unit2: UnitDefinition = length_unit*time.into();               
+    assert!(definition == unit2);
 }
         
 }

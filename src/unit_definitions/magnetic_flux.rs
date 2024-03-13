@@ -1,9 +1,9 @@
-//! Magnetic flux (base unit weber, m² · kg · s⁻² · A⁻¹).
+//! Magnetic flux (base UnitDefinition weber, m² · kg · s⁻² · A⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Magnetic flux (base unit weber, m² · kg · s⁻² · A⁻¹).
+    /// Magnetic flux (base UnitDefinition weber, m² · kg · s⁻² · A⁻¹).
     quantity: MagneticFlux; "magnetic flux";
-    /// Dimension of magnetic flux, L²MT⁻²I⁻¹ (base unit weber, m² · kg · s⁻² · A⁻¹).
+    /// Dimension of magnetic flux, L²MT⁻²I⁻¹ (base UnitDefinition weber, m² · kg · s⁻² · A⁻¹).
     dimension: ISQ<
         P2,     // length
         P1,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kiloweber: prefix!(kilo); "kWb", "kiloweber", "kilowebers";
         @hectoweber: prefix!(hecto); "hWb", "hectoweber", "hectowebers";
         @decaweber: prefix!(deca); "daWb", "decaweber", "decawebers";
-        /// Derived unit of magnetic flux.
+        /// Derived UnitDefinition of magnetic flux.
         @weber: prefix!(none); "Wb", "weber", "webers";
         @deciweber: prefix!(deci); "dWb", "deciweber", "deciwebers";
         @centiweber: prefix!(centi); "cWb", "centiweber", "centiwebers";

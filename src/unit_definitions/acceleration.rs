@@ -1,9 +1,9 @@
-//! Acceleration (base unit meter per second squared, m · s⁻²).
+//! Acceleration (base UnitDefinition meter per second squared, m · s⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Acceleration (base unit meter per second squared, m · s⁻²).
+    /// Acceleration (base UnitDefinition meter per second squared, m · s⁻²).
     quantity: Acceleration; "acceleration";
-    /// Dimension of acceleration, LT⁻² (base unit meter per second squared, m · s⁻²).
+    /// Dimension of acceleration, LT⁻² (base UnitDefinition meter per second squared, m · s⁻²).
     dimension: ISQ<
         P1,     // length
         Z0,     // mass
@@ -71,7 +71,7 @@ quantity! {
 #[cfg(test)]
 #[cfg(feature="Acceleration")]
 mod tests {
-    use crate::{quantities, unit_definitions::time::TimeUnit, units::{AccelerationUnit, LengthUnit}, units_base::{Unit, UnitBase}};
+    use crate::{unit_definitions::time::TimeUnit, units::{AccelerationUnit, LengthUnit}, units_base::{UnitDefinition, UnitBase}};
 
     #[test]
     fn check_dimension() {
@@ -106,8 +106,8 @@ mod tests {
         test_unit(LengthUnit::inch, TimeUnit::second, AccelerationUnit::inch_per_second_squared);
         test_unit(LengthUnit::millimeter, TimeUnit::minute, AccelerationUnit::millimeter_per_minute_squared);        
     }
-    fn test_unit(length: LengthUnit, time: TimeUnit, unit: AccelerationUnit) {
-        assert_eq!(Into::<Unit>::into(unit), Into::<Unit>::into(length)/ Into::<Unit>::into(time).powi(2));
+    fn test_unit(length: LengthUnit, time: TimeUnit, definition: AccelerationUnit) {
+        assert_eq!(Into::<UnitDefinition>::into(definition), Into::<UnitDefinition>::into(length)/ Into::<UnitDefinition>::into(time).powi(2));
     }
    
 }

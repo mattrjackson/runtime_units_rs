@@ -1,9 +1,9 @@
-//! Reciprocal length (base unit reciprocal meter, m⁻¹).
+//! Reciprocal length (base UnitDefinition reciprocal meter, m⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Reciprocal length (base unit reciprocal meter, m⁻¹).
+    /// Reciprocal length (base UnitDefinition reciprocal meter, m⁻¹).
     quantity: ReciprocalLength; "reciprocal length";
-    /// Dimension of reciprocal length, L⁻¹ (base unit reciprocal meter, m⁻¹).
+    /// Dimension of reciprocal length, L⁻¹ (base UnitDefinition reciprocal meter, m⁻¹).
     dimension: ISQ<
         N1,     // length
         Z0,     // mass

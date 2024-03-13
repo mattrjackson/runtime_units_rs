@@ -1,10 +1,10 @@
- //! Catalytic activity concentration (base unit katal per cubic meter, mol · s⁻¹ · m⁻³).
+ //! Catalytic activity concentration (base UnitDefinition katal per cubic meter, mol · s⁻¹ · m⁻³).
 use crate::{prefix, quantity};
 quantity! {
-    /// Catalytic activity concentration (base unit katal per cubic meter, mol · s⁻¹ · m⁻³).
+    /// Catalytic activity concentration (base UnitDefinition katal per cubic meter, mol · s⁻¹ · m⁻³).
     quantity: CatalyticActivityConcentration; "catalytic activity concentration";
     /// Dimension of catalytic activity concentration, L⁻³T⁻¹N
-    /// (base unit katal per cubic meter, mol · s⁻¹ · m⁻³).
+    /// (base UnitDefinition katal per cubic meter, mol · s⁻¹ · m⁻³).
     dimension: ISQ<
         N3,     // length
         Z0,     // mass
@@ -146,134 +146,134 @@ quantity! {
             "fkat/mL", "femtokatal per milliliter", "femtokatals per milliliter";
 
         @yotta_enzyme_unit_per_cubic_meter: prefix!(yotta) * prefix!(micro) / 6.0_E1; "YU/m³",
-            "yotta enzyme unit per cubic meter", "yotta enzyme units per cubic meter";
+            "yotta enzyme UnitDefinition per cubic meter", "yotta enzyme units per cubic meter";
         @zetta_enzyme_unit_per_cubic_meter: prefix!(zetta) * prefix!(micro) / 6.0_E1; "ZU/m³",
-            "zetta enzyme unit per cubic meter", "zetta enzyme units per cubic meter";
+            "zetta enzyme UnitDefinition per cubic meter", "zetta enzyme units per cubic meter";
         @exa_enzyme_unit_per_cubic_meter: prefix!(exa) * prefix!(micro) / 6.0_E1; "EU/m³",
-            "exa enzyme unit per cubic meter", "exa enzyme units per cubic meter";
+            "exa enzyme UnitDefinition per cubic meter", "exa enzyme units per cubic meter";
         @peta_enzyme_unit_per_cubic_meter: prefix!(peta) * prefix!(micro) / 6.0_E1; "PU/m³",
-            "peta enzyme unit per cubic meter", "peta enzyme units per cubic meter";
+            "peta enzyme UnitDefinition per cubic meter", "peta enzyme units per cubic meter";
         @tera_enzyme_unit_per_cubic_meter: prefix!(tera) * prefix!(micro) / 6.0_E1; "TU/m³",
-            "tera enzyme unit per cubic meter", "tera enzyme units per cubic meter";
+            "tera enzyme UnitDefinition per cubic meter", "tera enzyme units per cubic meter";
         @giga_enzyme_unit_per_cubic_meter: prefix!(giga) * prefix!(micro) / 6.0_E1; "GU/m³",
-            "giga enzyme unit per cubic meter", "giga enzyme units per cubic meter";
+            "giga enzyme UnitDefinition per cubic meter", "giga enzyme units per cubic meter";
         @mega_enzyme_unit_per_cubic_meter: prefix!(mega) * prefix!(micro) / 6.0_E1; "MU/m³",
-            "mega enzyme unit per cubic meter", "mega enzyme units per cubic meter";
+            "mega enzyme UnitDefinition per cubic meter", "mega enzyme units per cubic meter";
         @kilo_enzyme_unit_per_cubic_meter: prefix!(kilo) * prefix!(micro) / 6.0_E1; "kU/m³",
-            "kilo enzyme unit per cubic meter", "kilo enzyme units per cubic meter";
+            "kilo enzyme UnitDefinition per cubic meter", "kilo enzyme units per cubic meter";
         @hecto_enzyme_unit_per_cubic_meter: prefix!(hecto) * prefix!(micro) / 6.0_E1; "hU/m³",
-            "hecto enzyme unit per cubic meter", "hecto enzyme units per cubic meter";
+            "hecto enzyme UnitDefinition per cubic meter", "hecto enzyme units per cubic meter";
         @deca_enzyme_unit_per_cubic_meter: prefix!(deca) * prefix!(micro) / 6.0_E1; "daU/m³",
-            "deca enzyme unit per cubic meter", "deca enzyme units per cubic meter";
+            "deca enzyme UnitDefinition per cubic meter", "deca enzyme units per cubic meter";
         @enzyme_unit_per_cubic_meter: prefix!(none) * prefix!(micro) / 6.0_E1; "U/m³",
-            "enzyme unit per cubic meter", "enzyme units per cubic meter";
+            "enzyme UnitDefinition per cubic meter", "enzyme units per cubic meter";
         @deci_enzyme_unit_per_cubic_meter: prefix!(deci) * prefix!(micro) / 6.0_E1; "dU/m³",
-            "deci enzyme unit per cubic meter", "deci enzyme units per cubic meter";
+            "deci enzyme UnitDefinition per cubic meter", "deci enzyme units per cubic meter";
         @centi_enzyme_unit_per_cubic_meter: prefix!(centi) * prefix!(micro) / 6.0_E1; "cU/m³",
-            "centi enzyme unit per cubic meter", "centi enzyme units per cubic meter";
+            "centi enzyme UnitDefinition per cubic meter", "centi enzyme units per cubic meter";
         @milli_enzyme_unit_per_cubic_meter: prefix!(milli) * prefix!(micro) / 6.0_E1; "mU/m³",
-            "milli enzyme unit per cubic meter", "milli enzyme units per cubic meter";
+            "milli enzyme UnitDefinition per cubic meter", "milli enzyme units per cubic meter";
         @micro_enzyme_unit_per_cubic_meter: prefix!(micro) * prefix!(micro) / 6.0_E1; "µU/m³",
-            "micro enzyme unit per cubic meter", "micro enzyme units per cubic meter";
+            "micro enzyme UnitDefinition per cubic meter", "micro enzyme units per cubic meter";
         @nano_enzyme_unit_per_cubic_meter: prefix!(nano) * prefix!(micro) / 6.0_E1; "nU/m³",
-            "nano enzyme unit per cubic meter", "nano enzyme units per cubic meter";
+            "nano enzyme UnitDefinition per cubic meter", "nano enzyme units per cubic meter";
         @pico_enzyme_unit_per_cubic_meter: prefix!(pico) * prefix!(micro) / 6.0_E1; "pU/m³",
-            "pico enzyme unit per cubic meter", "pico enzyme units per cubic meter";
+            "pico enzyme UnitDefinition per cubic meter", "pico enzyme units per cubic meter";
         @femto_enzyme_unit_per_cubic_meter: prefix!(femto) * prefix!(micro) / 6.0_E1; "fU/m³",
-            "femto enzyme unit per cubic meter", "femto enzyme units per cubic meter";
+            "femto enzyme UnitDefinition per cubic meter", "femto enzyme units per cubic meter";
         @atto_enzyme_unit_per_cubic_meter: prefix!(atto) * prefix!(micro) / 6.0_E1; "aU/m³",
-            "atto enzyme unit per cubic meter", "atto enzyme units per cubic meter";
+            "atto enzyme UnitDefinition per cubic meter", "atto enzyme units per cubic meter";
         @zepto_enzyme_unit_per_cubic_meter: prefix!(zepto) * prefix!(micro) / 6.0_E1; "zU/m³",
-            "zepto enzyme unit per cubic meter", "zepto enzyme units per cubic meter";
+            "zepto enzyme UnitDefinition per cubic meter", "zepto enzyme units per cubic meter";
         @yocto_enzyme_unit_per_cubic_meter: prefix!(yocto) * prefix!(micro) / 6.0_E1; "yU/m³",
-            "yocto enzyme unit per cubic meter", "yocto enzyme units per cubic meter";
+            "yocto enzyme UnitDefinition per cubic meter", "yocto enzyme units per cubic meter";
 
         @kilo_enzyme_unit_per_cubic_decimeter:
             prefix!(kilo) * prefix!(micro) / 6.0_E1 / prefix!(milli); "kU/dm³",
-            "kilo enzyme unit per cubic decimeter", "kilo enzyme units per cubic decimeter";
+            "kilo enzyme UnitDefinition per cubic decimeter", "kilo enzyme units per cubic decimeter";
         @kilo_enzyme_unit_per_liter:
             prefix!(kilo) * prefix!(micro) / 6.0_E1 / prefix!(milli); "kU/L",
-            "kilo enzyme unit per liter", "kilo enzyme units per liter";
+            "kilo enzyme UnitDefinition per liter", "kilo enzyme units per liter";
         @enzyme_unit_per_cubic_decimeter:
             prefix!(none) * prefix!(micro) / 6.0_E1 / prefix!(milli); "U/dm³",
-            "enzyme unit per cubic decimeter", "enzyme units per cubic decimeter";
+            "enzyme UnitDefinition per cubic decimeter", "enzyme units per cubic decimeter";
         @enzyme_unit_per_liter:
             prefix!(none) * prefix!(micro) / 6.0_E1 / prefix!(milli); "U/L",
-            "enzyme unit per liter", "enzyme units per liter";
+            "enzyme UnitDefinition per liter", "enzyme units per liter";
         @milli_enzyme_unit_per_cubic_decimeter:
             prefix!(milli) * prefix!(micro) / 6.0_E1 / prefix!(milli); "mU/dm³",
-            "milli enzyme unit per cubic decimeter", "milli enzyme units per cubic decimeter";
+            "milli enzyme UnitDefinition per cubic decimeter", "milli enzyme units per cubic decimeter";
         @milli_enzyme_unit_per_liter:
             prefix!(milli) * prefix!(micro) / 6.0_E1 / prefix!(milli); "mU/L",
-            "milli enzyme unit per liter", "milli enzyme units per liter";
+            "milli enzyme UnitDefinition per liter", "milli enzyme units per liter";
         @micro_enzyme_unit_per_cubic_decimeter:
             prefix!(micro) * prefix!(micro) / 6.0_E1 / prefix!(milli); "μU/dm³",
-            "micro enzyme unit per cubic decimeter", "micro enzyme units per cubic decimeter";
+            "micro enzyme UnitDefinition per cubic decimeter", "micro enzyme units per cubic decimeter";
         @micro_enzyme_unit_per_liter:
             prefix!(micro) * prefix!(micro) / 6.0_E1 / prefix!(milli); "μU/L",
-            "micro enzyme unit per liter", "micro enzyme units per liter";
+            "micro enzyme UnitDefinition per liter", "micro enzyme units per liter";
         @nano_enzyme_unit_per_cubic_decimeter:
             prefix!(nano) * prefix!(micro) / 6.0_E1 / prefix!(milli); "nU/dm³",
-            "nano enzyme unit per cubic decimeter", "nano enzyme units per cubic decimeter";
+            "nano enzyme UnitDefinition per cubic decimeter", "nano enzyme units per cubic decimeter";
         @nano_enzyme_unit_per_liter:
             prefix!(nano) * prefix!(micro) / 6.0_E1 / prefix!(milli); "nU/L",
-            "nano enzyme unit per liter", "nano enzyme units per liter";
+            "nano enzyme UnitDefinition per liter", "nano enzyme units per liter";
         @pico_enzyme_unit_per_cubic_decimeter:
             prefix!(pico) * prefix!(micro) / 6.0_E1 / prefix!(milli); "pU/dm³",
-            "pico enzyme unit per cubic decimeter", "pico enzyme units per cubic decimeter";
+            "pico enzyme UnitDefinition per cubic decimeter", "pico enzyme units per cubic decimeter";
         @pico_enzyme_unit_per_liter:
             prefix!(pico) * prefix!(micro) / 6.0_E1 / prefix!(milli); "pU/L",
-            "pico enzyme unit per liter", "pico enzyme units per liter";
+            "pico enzyme UnitDefinition per liter", "pico enzyme units per liter";
         @femto_enzyme_unit_per_cubic_decimeter:
             prefix!(femto) * prefix!(micro) / 6.0_E1 / prefix!(milli); "fU/dm³",
-            "femto enzyme unit per cubic decimeter", "femto enzyme units per cubic decimeter";
+            "femto enzyme UnitDefinition per cubic decimeter", "femto enzyme units per cubic decimeter";
         @femto_enzyme_unit_per_liter:
             prefix!(femto) * prefix!(micro) / 6.0_E1 / prefix!(milli); "fU/L",
-            "femto enzyme unit per liter", "femto enzyme units per liter";
+            "femto enzyme UnitDefinition per liter", "femto enzyme units per liter";
 
         @kilo_enzyme_unit_per_deciliter:
             prefix!(kilo) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(milli);
-            "kU/dL", "kilo enzyme unit per deciliter", "kilo enzyme units per deciliter";
+            "kU/dL", "kilo enzyme UnitDefinition per deciliter", "kilo enzyme units per deciliter";
         @enzyme_unit_per_deciliter:
             prefix!(none) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(milli);
-            "U/dL", "enzyme unit per deciliter", "enzyme units per deciliter";
+            "U/dL", "enzyme UnitDefinition per deciliter", "enzyme units per deciliter";
         @milli_enzyme_unit_per_deciliter:
             prefix!(milli) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(milli);
-            "mU/dL", "milli enzyme unit per deciliter", "milli enzyme units per deciliter";
+            "mU/dL", "milli enzyme UnitDefinition per deciliter", "milli enzyme units per deciliter";
         @micro_enzyme_unit_per_deciliter:
             prefix!(micro) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(milli);
-            "μU/dL", "micro enzyme unit per deciliter", "micro enzyme units per deciliter";
+            "μU/dL", "micro enzyme UnitDefinition per deciliter", "micro enzyme units per deciliter";
         @nano_enzyme_unit_per_deciliter:
             prefix!(nano) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(milli);
-            "nU/dL", "nano enzyme unit per deciliter", "nano enzyme units per deciliter";
+            "nU/dL", "nano enzyme UnitDefinition per deciliter", "nano enzyme units per deciliter";
         @pico_enzyme_unit_per_deciliter:
             prefix!(pico) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(milli);
-            "pU/dL", "pico enzyme unit per deciliter", "pico enzyme units per deciliter";
+            "pU/dL", "pico enzyme UnitDefinition per deciliter", "pico enzyme units per deciliter";
         @femto_enzyme_unit_per_deciliter:
             prefix!(femto) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(milli);
-            "fU/dL", "femto enzyme unit per deciliter", "femto enzyme units per deciliter";
+            "fU/dL", "femto enzyme UnitDefinition per deciliter", "femto enzyme units per deciliter";
 
         @kilo_enzyme_unit_per_milliliter:
             prefix!(kilo) * prefix!(micro) / 6.0_E1 / prefix!(milli) / prefix!(milli);
-            "kU/mL", "kilo enzyme unit per milliliter", "kilo enzyme units per milliliter";
+            "kU/mL", "kilo enzyme UnitDefinition per milliliter", "kilo enzyme units per milliliter";
         @enzyme_unit_per_milliliter:
             prefix!(none) * prefix!(micro) / 6.0_E1 / prefix!(milli) / prefix!(milli);
-            "U/mL", "enzyme unit per milliliter", "enzyme units per milliliter";
+            "U/mL", "enzyme UnitDefinition per milliliter", "enzyme units per milliliter";
         @milli_enzyme_unit_per_milliliter:
             prefix!(milli) * prefix!(micro) / 6.0_E1 / prefix!(milli) / prefix!(milli);
-            "mU/mL", "milli enzyme unit per milliliter", "milli enzyme units per milliliter";
+            "mU/mL", "milli enzyme UnitDefinition per milliliter", "milli enzyme units per milliliter";
         @micro_enzyme_unit_per_milliliter:
             prefix!(micro) * prefix!(micro) / 6.0_E1 / prefix!(milli) / prefix!(milli);
-            "μU/mL", "micro enzyme unit per milliliter", "micro enzyme units per milliliter";
+            "μU/mL", "micro enzyme UnitDefinition per milliliter", "micro enzyme units per milliliter";
         @nano_enzyme_unit_per_milliliter:
             prefix!(nano) * prefix!(micro) / 6.0_E1 / prefix!(milli) / prefix!(milli);
-            "nU/mL", "nano enzyme unit per milliliter", "nano enzyme units per milliliter";
+            "nU/mL", "nano enzyme UnitDefinition per milliliter", "nano enzyme units per milliliter";
         @pico_enzyme_unit_per_milliliter:
             prefix!(pico) * prefix!(micro) / 6.0_E1 / prefix!(milli) / prefix!(milli);
-            "pU/mL", "pico enzyme unit per milliliter", "pico enzyme units per milliliter";
+            "pU/mL", "pico enzyme UnitDefinition per milliliter", "pico enzyme units per milliliter";
         @femto_enzyme_unit_per_milliliter:
             prefix!(femto) * prefix!(micro) / 6.0_E1 / prefix!(milli) / prefix!(milli);
-            "fU/mL", "femto enzyme unit per milliliter", "femto enzyme units per milliliter";
+            "fU/mL", "femto enzyme UnitDefinition per milliliter", "femto enzyme units per milliliter";
 
         @particle_per_second_cubic_meter: 1.0_E0 / 6.022_140_76_E23; "particle · s⁻¹ · m⁻³",
             "particle per second cubic meter", "particles per second cubic meter";
@@ -283,7 +283,7 @@ quantity! {
 #[cfg(test)]
 mod test {
 
-    use crate::{unit_definitions::time::TimeUnit, units::{AmountOfSubstanceUnit, CatalyticActivityUnit, LengthUnit, VolumeUnit}, units_base::Unit};
+    use crate::{unit_definitions::time::TimeUnit, units::{AmountOfSubstanceUnit, CatalyticActivityUnit, LengthUnit, VolumeUnit}, units_base::UnitDefinition};
 
     use super::CatalyticActivityConcentrationUnit;
 
@@ -410,6 +410,6 @@ mod test {
         test_unit(CatalyticActivityUnit::particle_per_second, VolumeUnit::cubic_meter, CatalyticActivityConcentrationUnit::particle_per_second_cubic_meter);
     }
     fn test_unit(activity: CatalyticActivityUnit, volume: VolumeUnit, value: CatalyticActivityConcentrationUnit) {
-        assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(activity) / Into::<Unit>::into(volume), 1e-12));
+        assert!(Into::<UnitDefinition>::into(value).approx_eq(Into::<UnitDefinition>::into(activity) / Into::<UnitDefinition>::into(volume), 1e-12));
     }
 }

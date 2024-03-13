@@ -1,5 +1,5 @@
 //! Ratio (dimensionless quantity).
-use crate::{prefix, quantity};
+use crate::quantity;
 quantity! {
     /// Ratio (dimensionless quantity).
     quantity: Ratio; "ratio";

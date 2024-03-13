@@ -1,9 +1,9 @@
-//! Electrical resistivity (base unit ohm meter, m³ · kg · s⁻³ · A⁻²).
+//! Electrical resistivity (base UnitDefinition ohm meter, m³ · kg · s⁻³ · A⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Electrical resistivity (base unit ohm meter, m³ · kg · s⁻³ · A⁻²).
+    /// Electrical resistivity (base UnitDefinition ohm meter, m³ · kg · s⁻³ · A⁻²).
     quantity: ElectricalResistivity; "electrical resistivity";
-    /// Dimension of electrical resistivity, L³MT⁻³I⁻² (base unit ohm meter, m³ · kg · s⁻³ · A⁻²).
+    /// Dimension of electrical resistivity, L³MT⁻³I⁻² (base UnitDefinition ohm meter, m³ · kg · s⁻³ · A⁻²).
     dimension: ISQ<
         P3,     // length
         P1,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kiloohm_meter: prefix!(kilo); "kΩ · m", "kiloohm meter", "kiloohm meters";
         @hectoohm_meter: prefix!(hecto); "hΩ · m", "hectoohm meter", "hectoohm meters";
         @decaohm_meter: prefix!(deca); "daΩ · m", "decaohm meter", "decaohm meters";
-        /// Derived unit of electrical resistance.
+        /// Derived UnitDefinition of electrical resistance.
         @ohm_meter: prefix!(none); "Ω · m", "ohm meter", "ohm meters";
         @deciohm_meter: prefix!(deci); "dΩ · m", "deciohm meter", "deciohm meters";
         @centiohm_meter: prefix!(centi); "cΩ · m", "centiohm meter", "centiohm meters";

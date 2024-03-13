@@ -1,9 +1,9 @@
-//! Electric charge linear density (base unit coulomb per meter, m⁻¹ · A · s).
+//! Electric charge linear density (base UnitDefinition coulomb per meter, m⁻¹ · A · s).
 use crate::{prefix, quantity};
 quantity! {
-    ///Electric charge linear density (base unit coulomb per meter, m⁻¹ · A · s).
+    ///Electric charge linear density (base UnitDefinition coulomb per meter, m⁻¹ · A · s).
     quantity: ElectricChargeLinearDensity; "electric charge linear density";
-    /// Dimension of electric charge linear density, L⁻¹TI (base unit coulomb per meter,
+    /// Dimension of electric charge linear density, L⁻¹TI (base UnitDefinition coulomb per meter,
     /// m⁻¹ · A · s).
     dimension: ISQ<
         N1,     // length
@@ -23,7 +23,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_charge_linear_density::ElectricChargeLinearDensityUnit}, units::LengthUnit, units_base::Unit};
+    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_charge_linear_density::ElectricChargeLinearDensityUnit}, units::LengthUnit, units_base::UnitDefinition};
 
     #[test]
     fn check_dimension() {
@@ -37,6 +37,6 @@ mod tests {
     }
     fn test_unit(charge: ElectricChargeUnit, length: LengthUnit, value: ElectricChargeLinearDensityUnit)
     {
-        assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(charge) / Into::<Unit>::into(length)));
+        assert_eq!(Into::<UnitDefinition>::into(value), (Into::<UnitDefinition>::into(charge) / Into::<UnitDefinition>::into(length)));
     }
 }

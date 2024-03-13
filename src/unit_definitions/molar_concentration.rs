@@ -1,9 +1,9 @@
-//! Molar concentration (base unit mole per cubic meter, mol · m⁻³).
+//! Molar concentration (base UnitDefinition mole per cubic meter, mol · m⁻³).
 use crate::{prefix, quantity};
 quantity! {
-    /// Molar concentration (base unit mole per cubic meter, mol · m⁻³).
+    /// Molar concentration (base UnitDefinition mole per cubic meter, mol · m⁻³).
     quantity: MolarConcentration; "molar concentration";
-    /// Dimension of molar concentration, L⁻³N (base unit mole per cubic meter, mol · m⁻³).
+    /// Dimension of molar concentration, L⁻³N (base UnitDefinition mole per cubic meter, mol · m⁻³).
     dimension: ISQ<
         N3,     // length
         Z0,     // mass

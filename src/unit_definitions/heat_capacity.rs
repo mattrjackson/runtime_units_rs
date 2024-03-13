@@ -1,4 +1,4 @@
-//! Heat capacity (base unit joule per kelvin, kg · m² · s⁻² · K⁻¹).
+//! Heat capacity (base UnitDefinition joule per kelvin, kg · m² · s⁻² · K⁻¹).
 //!
 //! Heat capacity has the same kind as [temperature interval][ti], as this quantity relates to
 //! change of temperature. Not of kind `TemperatureKind`, used by [thermodynamic temperature][tt].
@@ -12,9 +12,9 @@
 //! [shc]: ../specific_heat_capacity/index.html
 use crate::{prefix, quantity};
 quantity! {
-    /// Heat capacity (base unit joule per kelvin, kg · m² · s⁻² · K⁻¹).
+    /// Heat capacity (base UnitDefinition joule per kelvin, kg · m² · s⁻² · K⁻¹).
     quantity: HeatCapacity; "heat capacity";
-    /// Dimension of heat capacity, L²MT⁻²Th⁻¹ (base unit joule per kelvin, kg · m² · s⁻² · K⁻¹).
+    /// Dimension of heat capacity, L²MT⁻²Th⁻¹ (base UnitDefinition joule per kelvin, kg · m² · s⁻² · K⁻¹).
     dimension: ISQ<
         P2,     // length
         P1,     // mass
@@ -52,7 +52,7 @@ quantity! {
             "Mg · m²/(s² · K)",
             "megagram square meter per second squared kelvin",
             "megagram square meters per second squared kelvin";
-        /// The derived unit of heat capacity expressed in base units. Equivalent to J/K.
+        /// The derived UnitDefinition of heat capacity expressed in base units. Equivalent to J/K.
         @kilogram_square_meter_per_second_squared_kelvin: prefix!(kilo) / prefix!(kilo);
             "kg · m²/(s² · K)",
             "kilogram square meter per second squared kelvin",
@@ -130,7 +130,7 @@ quantity! {
             "hectojoules per kelvin";
         @decajoule_per_kelvin: prefix!(deca); "daJ/K", "decajoule per kelvin",
             "decajoules per kelvin";
-        /// Derived unit of heat capacity expressed in terms of derived unit Joule. Equivalent to
+        /// Derived UnitDefinition of heat capacity expressed in terms of derived UnitDefinition Joule. Equivalent to
         /// kg · m²/(s² · K).
         @joule_per_kelvin: prefix!(none); "J/K", "joule per kelvin", "joules per kelvin";
         @decijoule_per_kelvin: prefix!(deci); "dJ/K", "decijoule per kelvin",
@@ -162,10 +162,10 @@ quantity! {
             "millijoules per degree celsius";
 
         @btu_per_degree_fahrenheit: 1.897_830_E3; "Btu/°F",
-            "British thermal unit per degree Fahrenheit",
+            "British thermal UnitDefinition per degree Fahrenheit",
             "British thermal units per degree Fahrenheit";
         @btu_it_per_degree_fahrenheit: 1.899_100_8_E3; "Btu (IT)/°F",
-            "British thermal unit (IT) per degree Fahrenheit",
+            "British thermal UnitDefinition (IT) per degree Fahrenheit",
             "British thermal units (IT) per degree Fahrenheit";
 
         @boltzmann_constant: 1.380_649_E-23; "k", "Boltzmann constant", "Boltzmann constants";

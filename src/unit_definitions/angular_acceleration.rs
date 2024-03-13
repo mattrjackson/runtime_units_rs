@@ -1,9 +1,9 @@
-//! Angular acceleration (base unit radian per second squared, s⁻²).
+//! Angular acceleration (base UnitDefinition radian per second squared, s⁻²).
 use crate::quantity;
 quantity! {
-    /// Angular acceleration (base unit radian per second squared, s⁻²).
+    /// Angular acceleration (base UnitDefinition radian per second squared, s⁻²).
     quantity: AngularAcceleration; "angular acceleration";
-    /// Dimension of angular acceleration, T⁻² (base unit radian per second squared, s⁻²).
+    /// Dimension of angular acceleration, T⁻² (base UnitDefinition radian per second squared, s⁻²).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass
@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     kind: dyn (crate::si::marker::AngleKind);
     units {
-        /// Derived unit of angular acceleration.
+        /// Derived UnitDefinition of angular acceleration.
         @radian_per_second_squared: 1.0; "rad/s²", "radian per second squared",
             "radians per second squared";
         @degree_per_second_squared: 1.745_329_251_994_329_5_E-2; "°/s²",
@@ -24,7 +24,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{units::{AngleUnit, AngularAccelerationUnit, TimeUnit}, units_base::Unit};
+    use crate::{units::{AngleUnit, AngularAccelerationUnit, TimeUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {
@@ -38,6 +38,6 @@ mod tests {
 
     }
     fn test_unit(value: AngularAccelerationUnit, time: TimeUnit, angle: AngleUnit) {
-        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(angle) / Into::<Unit>::into(time).powi(2));
+        assert_eq!(Into::<UnitDefinition>::into(value), Into::<UnitDefinition>::into(angle) / Into::<UnitDefinition>::into(time).powi(2));
     }
 }

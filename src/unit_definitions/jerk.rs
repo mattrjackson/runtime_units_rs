@@ -1,9 +1,9 @@
-//! Jerk (base unit meter per second cubed, m · s⁻³).
+//! Jerk (base UnitDefinition meter per second cubed, m · s⁻³).
 use crate::{prefix, quantity};
 quantity! {
-    /// Jerk (base unit meter per second cubed, m · s⁻³).
+    /// Jerk (base UnitDefinition meter per second cubed, m · s⁻³).
     quantity: Jerk; "jerk";
-    /// Dimension of jerk, LT⁻³ (base unit meter per second cubed, m · s⁻³).
+    /// Dimension of jerk, LT⁻³ (base UnitDefinition meter per second cubed, m · s⁻³).
     dimension: ISQ<
         P1,     // length
         Z0,     // mass

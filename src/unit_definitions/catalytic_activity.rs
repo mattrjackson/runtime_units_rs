@@ -1,9 +1,9 @@
-//! Catalytic activity (base unit katal, mol · s⁻¹).
+//! Catalytic activity (base UnitDefinition katal, mol · s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Catalytic activity (base unit katal, mol · s⁻¹).
+    /// Catalytic activity (base UnitDefinition katal, mol · s⁻¹).
     quantity: CatalyticActivity; "catalytic activity";
-    /// Dimension of catalytic activity, T⁻¹N (base unit katal, mol · s⁻¹).
+    /// Dimension of catalytic activity, T⁻¹N (base UnitDefinition katal, mol · s⁻¹).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass
@@ -35,46 +35,46 @@ quantity! {
         @zeptokatal: prefix!(zepto); "zkat", "zeptokatal", "zeptokatals";
         @yoctokatal: prefix!(yocto); "ykat", "yoctokatal", "yoctokatals";
 
-        @yotta_enzyme_unit: prefix!(yotta) * prefix!(micro) / 6.0_E1; "YU", "yotta enzyme unit",
+        @yotta_enzyme_unit: prefix!(yotta) * prefix!(micro) / 6.0_E1; "YU", "yotta enzyme UnitDefinition",
             "yotta enzyme units";
-        @zetta_enzyme_unit: prefix!(zetta) * prefix!(micro) / 6.0_E1; "ZU", "zetta enzyme unit",
+        @zetta_enzyme_unit: prefix!(zetta) * prefix!(micro) / 6.0_E1; "ZU", "zetta enzyme UnitDefinition",
             "zetta enzyme units";
-        @exa_enzyme_unit: prefix!(exa) * prefix!(micro) / 6.0_E1; "EU", "exa enzyme unit",
+        @exa_enzyme_unit: prefix!(exa) * prefix!(micro) / 6.0_E1; "EU", "exa enzyme UnitDefinition",
             "exa enzyme units";
-        @peta_enzyme_unit: prefix!(peta) * prefix!(micro) / 6.0_E1; "PU", "peta enzyme unit",
+        @peta_enzyme_unit: prefix!(peta) * prefix!(micro) / 6.0_E1; "PU", "peta enzyme UnitDefinition",
             "peta enzyme units";
-        @tera_enzyme_unit: prefix!(tera) * prefix!(micro) / 6.0_E1; "TU", "tera enzyme unit",
+        @tera_enzyme_unit: prefix!(tera) * prefix!(micro) / 6.0_E1; "TU", "tera enzyme UnitDefinition",
             "tera enzyme units";
-        @giga_enzyme_unit: prefix!(giga) * prefix!(micro) / 6.0_E1; "GU", "giga enzyme unit",
+        @giga_enzyme_unit: prefix!(giga) * prefix!(micro) / 6.0_E1; "GU", "giga enzyme UnitDefinition",
             "giga enzyme units";
-        @mega_enzyme_unit: prefix!(mega) * prefix!(micro) / 6.0_E1; "MU", "mega enzyme unit",
+        @mega_enzyme_unit: prefix!(mega) * prefix!(micro) / 6.0_E1; "MU", "mega enzyme UnitDefinition",
             "mega enzyme units";
-        @kilo_enzyme_unit: prefix!(kilo) * prefix!(micro) / 6.0_E1; "kU", "kilo enzyme unit",
+        @kilo_enzyme_unit: prefix!(kilo) * prefix!(micro) / 6.0_E1; "kU", "kilo enzyme UnitDefinition",
             "kilo enzyme units";
-        @hecto_enzyme_unit: prefix!(hecto) * prefix!(micro) / 6.0_E1; "hU", "hecto enzyme unit",
+        @hecto_enzyme_unit: prefix!(hecto) * prefix!(micro) / 6.0_E1; "hU", "hecto enzyme UnitDefinition",
             "hecto enzyme units";
-        @deca_enzyme_unit: prefix!(deca) * prefix!(micro) / 6.0_E1; "daU", "deca enzyme unit",
+        @deca_enzyme_unit: prefix!(deca) * prefix!(micro) / 6.0_E1; "daU", "deca enzyme UnitDefinition",
             "deca enzyme units";
-        @enzyme_unit: prefix!(none) * prefix!(micro) / 6.0_E1; "U", "enzyme unit", "enzyme units";
-        @deci_enzyme_unit: prefix!(deci) * prefix!(micro) / 6.0_E1; "dU", "deci enzyme unit",
+        @enzyme_unit: prefix!(none) * prefix!(micro) / 6.0_E1; "U", "enzyme UnitDefinition", "enzyme units";
+        @deci_enzyme_unit: prefix!(deci) * prefix!(micro) / 6.0_E1; "dU", "deci enzyme UnitDefinition",
             "deci enzyme units";
-        @centi_enzyme_unit: prefix!(centi) * prefix!(micro) / 6.0_E1; "cU", "centi enzyme unit",
+        @centi_enzyme_unit: prefix!(centi) * prefix!(micro) / 6.0_E1; "cU", "centi enzyme UnitDefinition",
             "centi enzyme units";
-        @milli_enzyme_unit: prefix!(milli) * prefix!(micro) / 6.0_E1; "mU", "milli enzyme unit",
+        @milli_enzyme_unit: prefix!(milli) * prefix!(micro) / 6.0_E1; "mU", "milli enzyme UnitDefinition",
             "milli enzyme units";
-        @micro_enzyme_unit: prefix!(micro) * prefix!(micro) / 6.0_E1; "μU", "micro enzyme unit",
+        @micro_enzyme_unit: prefix!(micro) * prefix!(micro) / 6.0_E1; "μU", "micro enzyme UnitDefinition",
             "micro enzyme units";
-        @nano_enzyme_unit: prefix!(nano) * prefix!(micro) / 6.0_E1; "nU", "nano enzyme unit",
+        @nano_enzyme_unit: prefix!(nano) * prefix!(micro) / 6.0_E1; "nU", "nano enzyme UnitDefinition",
             "nano enzyme units";
-        @pico_enzyme_unit: prefix!(pico) * prefix!(micro) / 6.0_E1; "pU", "pico enzyme unit",
+        @pico_enzyme_unit: prefix!(pico) * prefix!(micro) / 6.0_E1; "pU", "pico enzyme UnitDefinition",
             "pico enzyme units";
-        @femto_enzyme_unit: prefix!(femto) * prefix!(micro) / 6.0_E1; "fU", "femto enzyme unit",
+        @femto_enzyme_unit: prefix!(femto) * prefix!(micro) / 6.0_E1; "fU", "femto enzyme UnitDefinition",
             "femto enzyme units";
-        @atto_enzyme_unit: prefix!(atto) * prefix!(micro) / 6.0_E1; "aU", "atto enzyme unit",
+        @atto_enzyme_unit: prefix!(atto) * prefix!(micro) / 6.0_E1; "aU", "atto enzyme UnitDefinition",
             "atto enzyme units";
-        @zepto_enzyme_unit: prefix!(zepto) * prefix!(micro) / 6.0_E1; "zU", "zepto enzyme unit",
+        @zepto_enzyme_unit: prefix!(zepto) * prefix!(micro) / 6.0_E1; "zU", "zepto enzyme UnitDefinition",
             "zepto enzyme units";
-        @yocto_enzyme_unit: prefix!(yocto) * prefix!(micro) / 6.0_E1; "yU", "yocto enzyme unit",
+        @yocto_enzyme_unit: prefix!(yocto) * prefix!(micro) / 6.0_E1; "yU", "yocto enzyme UnitDefinition",
             "yocto enzyme units";
 
         @particle_per_second: 1.0_E0 / 6.022_140_76_E23; "particle/s", "particle per second",
@@ -94,7 +94,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{unit_definitions::time::TimeUnit, units::{AmountOfSubstanceUnit, CatalyticActivityUnit}, units_base::Unit};
+    use crate::{unit_definitions::time::TimeUnit, units::{AmountOfSubstanceUnit, CatalyticActivityUnit}, units_base::UnitDefinition};
 
     #[test]
     fn check_dimension() {
@@ -150,7 +150,7 @@ mod tests {
         test_unit(AmountOfSubstanceUnit::standard_cubic_meter, TimeUnit::minute, CatalyticActivityUnit::standard_cubic_meter_per_minute);
 
         fn test_unit(amount: AmountOfSubstanceUnit, time: TimeUnit, value: CatalyticActivityUnit) {
-            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(amount) / Into::<Unit>::into(time), 1e-12));
+            assert!(Into::<UnitDefinition>::into(value).approx_eq(Into::<UnitDefinition>::into(amount) / Into::<UnitDefinition>::into(time), 1e-12));
         }
     }    
 }

@@ -1,9 +1,9 @@
-//! Volumetric power density (base unit watt per cubic meter, m⁻¹ · kg · s⁻³).
+//! Volumetric power density (base UnitDefinition watt per cubic meter, m⁻¹ · kg · s⁻³).
 use crate::{prefix, quantity};
 quantity! {
-    /// Volumetric power density (base unit watt per cubic meter, m⁻¹ · kg · s⁻³).
+    /// Volumetric power density (base UnitDefinition watt per cubic meter, m⁻¹ · kg · s⁻³).
     quantity: VolumetricPowerDensity; "volumetric power density";
-    /// Dimension of volumetric power density, L⁻¹MT⁻³ (base unit watt per cubic meter,
+    /// Dimension of volumetric power density, L⁻¹MT⁻³ (base UnitDefinition watt per cubic meter,
     /// m⁻¹ · kg · s⁻³).
     dimension: ISQ<
         N1,     // length

@@ -1,9 +1,9 @@
-//! Temperature gradient (base unit kelvin per meter, m⁻¹ · K).
+//! Temperature gradient (base UnitDefinition kelvin per meter, m⁻¹ · K).
 use crate::{prefix, quantity};
 quantity! {
-    /// Temperature gradient (base unit kelvin per meter, m⁻¹ · K).
+    /// Temperature gradient (base UnitDefinition kelvin per meter, m⁻¹ · K).
     quantity: TemperatureGradient; "temperature gradient";
-    /// Dimension of temperature gradient, L⁻¹Th (base unit kelvin per meter, K · m⁻¹).
+    /// Dimension of temperature gradient, L⁻¹Th (base UnitDefinition kelvin per meter, K · m⁻¹).
     dimension: ISQ<
         N1,     // length
         Z0,     // mass

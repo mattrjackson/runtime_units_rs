@@ -1,9 +1,9 @@
-//! Radiant exposure (base unit joule per square meter, kg · s⁻²).
+//! Radiant exposure (base UnitDefinition joule per square meter, kg · s⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Radiant exposure (base unit joule per square meter, kg · s⁻²).
+    /// Radiant exposure (base UnitDefinition joule per square meter, kg · s⁻²).
     quantity: RadiantExposure; "radiant exposure";
-    /// Dimension of radiant exposure, MT⁻² (base unit joule per square meter, kg · s⁻²).
+    /// Dimension of radiant exposure, MT⁻² (base UnitDefinition joule per square meter, kg · s⁻²).
     dimension: ISQ<
         Z0,     // length
         P1,     // mass
@@ -34,7 +34,7 @@ quantity! {
             "hectojoule per square meter", "hectojoules per square meter";
         @decajoule_per_square_meter: prefix!(deca); "daJ/m²",
             "decajoule per square meter", "decajoules per square meter";
-        /// Derived unit of radiant exposure.
+        /// Derived UnitDefinition of radiant exposure.
         @joule_per_square_meter: prefix!(none); "J/m²",
             "joule per square meter", "joules per square meter";
         @decijoule_per_square_meter: prefix!(deci); "dJ/m²",

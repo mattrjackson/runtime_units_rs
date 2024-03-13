@@ -1,9 +1,9 @@
-//! Volumetric heat capacity (base unit joule per cubic meter kelvin, m⁻¹ · kg · s⁻² · K⁻¹).
+//! Volumetric heat capacity (base UnitDefinition joule per cubic meter kelvin, m⁻¹ · kg · s⁻² · K⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Volumetric heat capacity (base unit joule per cubic meter kelvin, m⁻¹ · kg · s⁻² · K⁻¹).
+    /// Volumetric heat capacity (base UnitDefinition joule per cubic meter kelvin, m⁻¹ · kg · s⁻² · K⁻¹).
     quantity: VolumetricHeatCapacity; "volumetric heat capacity";
-    /// Dimension of volumetric heat capacity, L⁻¹MT⁻²Th⁻¹(base unit joule per cubic meter kelvin,
+    /// Dimension of volumetric heat capacity, L⁻¹MT⁻²Th⁻¹(base UnitDefinition joule per cubic meter kelvin,
     /// m⁻¹ · kg · s⁻² · K⁻¹).
     dimension: ISQ<
         N1,     // length

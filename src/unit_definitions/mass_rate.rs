@@ -1,9 +1,9 @@
-//! Mass rate (base unit kilogram per second, kg · s⁻¹).
+//! Mass rate (base UnitDefinition kilogram per second, kg · s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Mass rate (base unit kilogram per second, kg · s⁻¹).
+    /// Mass rate (base UnitDefinition kilogram per second, kg · s⁻¹).
     quantity: MassRate; "mass rate";
-    /// Dimension of mass rate, MT⁻¹ (base unit kilogram per second, kg · s⁻¹).
+    /// Dimension of mass rate, MT⁻¹ (base UnitDefinition kilogram per second, kg · s⁻¹).
     dimension: ISQ<
         Z0,     // length
         P1,     // mass
@@ -27,7 +27,7 @@ quantity! {
             "gigagrams per second";
         @megagram_per_second: prefix!(mega) / prefix!(kilo); "Mg/s", "megagram per second",
             "megagrams per second";
-        /// Derived unit of mass rate.
+        /// Derived UnitDefinition of mass rate.
         @kilogram_per_second: prefix!(kilo) / prefix!(kilo); "kg/s", "kilogram per second",
             "kilograms per second";
         @hectogram_per_second: prefix!(hecto) / prefix!(kilo); "hg/s", "hectogram per second",

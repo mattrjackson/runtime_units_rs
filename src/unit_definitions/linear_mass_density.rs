@@ -1,9 +1,9 @@
-//! Linear mass density (base unit kilogram per meter, m⁻¹ · kg).
+//! Linear mass density (base UnitDefinition kilogram per meter, m⁻¹ · kg).
 use crate::{prefix, quantity};
 quantity! {
-    /// Linear mass density (base unit kilogram per meter, m⁻¹ · kg).
+    /// Linear mass density (base UnitDefinition kilogram per meter, m⁻¹ · kg).
     quantity: LinearMassDensity; "linear mass density";
-    /// Dimension of linear mass density, L⁻¹M (base unit kilogram per meter, m⁻¹ · kg).
+    /// Dimension of linear mass density, L⁻¹M (base UnitDefinition kilogram per meter, m⁻¹ · kg).
     dimension: ISQ<
         N1,     // length
         P1,     // mass

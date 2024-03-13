@@ -1,9 +1,9 @@
-//! Pressure (base unit pascal, kg · m⁻¹ · s⁻²).
+//! Pressure (base UnitDefinition pascal, kg · m⁻¹ · s⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Pressure impulse (base unit pascal-sec, kg · m⁻¹ · s⁻¹).
+    /// Pressure impulse (base UnitDefinition pascal-sec, kg · m⁻¹ · s⁻¹).
     quantity: PressureImpulse; "pressure_impulse";
-    /// Dimension of pressure impulse, L⁻¹MT⁻¹ (base unit pascal-sec, kg · m⁻¹ · s⁻¹).
+    /// Dimension of pressure impulse, L⁻¹MT⁻¹ (base UnitDefinition pascal-sec, kg · m⁻¹ · s⁻¹).
     dimension: ISQ<
         N1,     // length
         P1,     // mass
@@ -24,7 +24,7 @@ quantity! {
         @kilopascal_sec : prefix!(kilo); "kPa-sec", "kilopascal-sec", "kilopascals-sec";
         @hectopascal_sec : prefix!(hecto); "hPa-sec", "hectopascal-sec", "hectopascals-sec";
         @decapascal_sec : prefix!(deca); "daPa-sec", "decapascal-sec", "decapascals-sec";
-        /// Derived unit of pressure.
+        /// Derived UnitDefinition of pressure.
         @pascal_sec : prefix!(none); "Pa-sec", "pascal-sec", "pascals-sec";
         @decipascal_sec : prefix!(deci); "dPa-sec", "decipascal-sec", "decipascals-sec";
         @centipascal_sec : prefix!(centi); "cPa-sec", "centipascal-sec", "centipascals-sec";
@@ -52,8 +52,8 @@ quantity! {
             "pounds-force seconds per square foot second";
         @pound_force_per_square_inch_sec: 6.894_757_889_515_779_E3; "lbf/in²", "pound-force second per square inch",
             "pounds-force seconds per square inch";
-        @psi_sec: 6.894_757_E3; "psi-sec", "pound-force second per square inch",
-            "pounds-force second per square inch";
+        @psi_sec: 6.894_757_E3; "psi-sec", "pound-force second per square inch second",
+            "pounds-force second per square inch second";
         @torr_sec: 1.333_224_E2; "Torr", "torr", "torr";
     }
     

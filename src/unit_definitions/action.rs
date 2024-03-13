@@ -1,9 +1,9 @@
-//! Action (base unit joule second, kg ⋅ m² ⋅ s⁻¹).
+//! Action (base UnitDefinition joule second, kg ⋅ m² ⋅ s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Action (base unit joule second, kg ⋅ m² ⋅ s⁻¹).
+    /// Action (base UnitDefinition joule second, kg ⋅ m² ⋅ s⁻¹).
     quantity: Action; "action";
-    /// Dimension of action, L²MT⁻¹ (base unit joule second, kg ⋅ m² ⋅ s⁻¹).
+    /// Dimension of action, L²MT⁻¹ (base UnitDefinition joule second, kg ⋅ m² ⋅ s⁻¹).
     dimension: ISQ<
         P2,     // length
         P1,     // mass
@@ -16,9 +16,9 @@ quantity! {
         @joule_second: prefix!(none); "J · s", "joule second", "joule seconds";
 
         /// Reduced Planck constant ħ.
-        @atomic_unit_of_action: 1.054_571_817_E-34; "ħ", "atomic unit of action",
+        @atomic_unit_of_action: 1.054_571_817_E-34; "ħ", "atomic UnitDefinition of action",
             "atomic units of action";
-        @reduced_planck_constant: 1.054_571_817_E-34; "ħ", "reduced planck constant",
+        @reduced_planck_constant: 1.054_571_817_E-34; "ħ_reduced", "reduced planck constant",
             "reduced planck constants";
         @planck_constant: 6.626_070_15_E-34; "h", "planck constant", "planck constants";
         @erg_second: 1.0_E-7; "erg · s", "erg second", "erg seconds";
@@ -31,7 +31,7 @@ quantity! {
 #[cfg(feature="Action")]
 mod test {
    
-    use crate::{quantities, units::{ActionUnit, EnergyUnit, TimeUnit}, units_base::{Unit, UnitBase}};
+    use crate::{units::{ActionUnit, EnergyUnit, TimeUnit}, units_base::UnitDefinition};
 
     #[test]
     fn check_dimension() {
@@ -45,8 +45,8 @@ mod test {
         test_unit(EnergyUnit::electronvolt, TimeUnit::second, ActionUnit::electronvolt_second);
 
     }
-    fn test_unit(energy: EnergyUnit, time: TimeUnit, unit: ActionUnit) {
-        assert_eq!(Into::<Unit>::into(unit), Into::<Unit>::into(energy) * Into::<Unit>::into(time));
+    fn test_unit(energy: EnergyUnit, time: TimeUnit, definition: ActionUnit) {
+        assert_eq!(Into::<UnitDefinition>::into(definition), Into::<UnitDefinition>::into(energy) * Into::<UnitDefinition>::into(time));
     }
 }
 

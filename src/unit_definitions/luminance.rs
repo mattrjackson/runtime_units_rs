@@ -1,9 +1,9 @@
-//! Luminance (base unit candela per square meter, cd · m⁻²).
+//! Luminance (base UnitDefinition candela per square meter, cd · m⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Luminance (base unit candela per square meter, cd · m⁻²).
+    /// Luminance (base UnitDefinition candela per square meter, cd · m⁻²).
     quantity: Luminance; "luminance";
-    /// Dimension of luminance, L⁻²J (base unit candela per square meter, cd · m⁻²).
+    /// Dimension of luminance, L⁻²J (base UnitDefinition candela per square meter, cd · m⁻²).
     dimension: ISQ<
         N2,     // length
         Z0,     // mass
@@ -33,7 +33,7 @@ quantity! {
             "hectocandelas per square meter";
         @decacandela_per_square_meter: prefix!(deca); "dacd/m²", "decacandela per square meter",
             "decacandelas per square meter";
-        /// Derived unit of luminance.
+        /// Derived UnitDefinition of luminance.
         @candela_per_square_meter: prefix!(none); "cd/m²", "candela per square meter",
             "candelas per square meter";
         @decicandela_per_square_meter: prefix!(deci); "dcd/m²", "decicandela per square meter",

@@ -1,9 +1,9 @@
-//! Electric charge areal density (base unit coulomb per square meter, m⁻² · A · s).
+//! Electric charge areal density (base UnitDefinition coulomb per square meter, m⁻² · A · s).
 use crate::{prefix, quantity};
 quantity! {
-    ///Electric charge areal density (base unit coulomb per square meter, m⁻² · A · s).
+    ///Electric charge areal density (base UnitDefinition coulomb per square meter, m⁻² · A · s).
     quantity: ElectricChargeArealDensity; "electric charge areal density";
-    /// Dimension of electric charge areal density, L⁻²TI (base unit coulomb per square meter,
+    /// Dimension of electric charge areal density, L⁻²TI (base UnitDefinition coulomb per square meter,
     /// m⁻² · A · s).
     dimension: ISQ<
         N2,     // length
@@ -24,7 +24,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{unit_definitions::{area::AreaUnit, electric_charge::ElectricChargeUnit}, units::ElectricChargeArealDensityUnit, units_base::Unit, ElectricChargeArealDensity};
+    use crate::{unit_definitions::{area::AreaUnit, electric_charge::ElectricChargeUnit}, units::ElectricChargeArealDensityUnit, units_base::UnitDefinition};
 
 
     #[test]
@@ -39,7 +39,7 @@ mod tests {
     }
     fn test_unit(charge: ElectricChargeUnit, area: AreaUnit, value: ElectricChargeArealDensityUnit)
     {
-        assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(charge) / Into::<Unit>::into(area)));
+        assert_eq!(Into::<UnitDefinition>::into(value), (Into::<UnitDefinition>::into(charge) / Into::<UnitDefinition>::into(area)));
     }
     
 }

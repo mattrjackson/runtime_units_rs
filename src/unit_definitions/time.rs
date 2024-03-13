@@ -1,11 +1,11 @@
-//! Time (base unit second, s).
+//! Time (base UnitDefinition second, s).
 
 use crate::{prefix, quantity};
 
 quantity! {
-    /// Time (base unit second, s).
+    /// Time (base UnitDefinition second, s).
     quantity: Time; "time";
-    /// Dimension of time, T (base unit second, s).
+    /// Dimension of time, T (base UnitDefinition second, s).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass
@@ -25,10 +25,10 @@ quantity! {
         @kilosecond: prefix!(kilo); "ks", "kilosecond", "kiloseconds";
         @hectosecond: prefix!(hecto); "hs", "hectosecond", "hectoseconds";
         @decasecond: prefix!(deca); "das", "decasecond", "decaseconds";
-        /// The second is the SI unit of time. It is defined by taking the fixed numerical value of
+        /// The second is the SI UnitDefinition of time. It is defined by taking the fixed numerical value of
         /// the caesium frequency ∆*ν*<sub>Cs</sub>, the unperturbed ground-state hyperfine
         /// transition frequency of the caesium 133 atom, to be 9 192 631 770 when expressed in the
-        /// unit Hz, which is equal to s⁻¹.
+        /// UnitDefinition Hz, which is equal to s⁻¹.
         @second: prefix!(none); "s", "second", "seconds";
         @decisecond: prefix!(deci); "ds", "decisecond", "deciseconds";
         @centisecond: prefix!(centi); "cs", "centisecond", "centiseconds";

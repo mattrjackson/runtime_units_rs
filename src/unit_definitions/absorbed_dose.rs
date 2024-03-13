@@ -15,7 +15,7 @@ quantity! {
         Z0>;    // luminous intensity
     kind: dyn (crate::si::marker::AbsorbedDoseKind);
     units {        
-        /// Radiation unit (defined in CGS units in 1953)
+        /// Radiation UnitDefinition (defined in CGS units in 1953)
         @rad: prefix!(centi); "rad", "rad", "rad";
 
         @yottagray: prefix!(yotta); "YGy", "yottagray", "yottagrays";
@@ -28,7 +28,7 @@ quantity! {
         @kilogray: prefix!(kilo); "kGy", "kilogray", "kilograys";
         @hectogray: prefix!(hecto); "hGy", "hectogray", "hectograys";
         @decagray: prefix!(deca); "daGy", "decagray", "decagrays";
-        /// SI derived unit of absorbed dose.
+        /// SI derived UnitDefinition of absorbed dose.
         @gray: prefix!(none); "Gy", "gray", "grays";
         @decigray: prefix!(deci); "dGy", "decigray", "decigrays";
         @centigray: prefix!(centi); "cGy", "centigray", "centigrays";
@@ -55,11 +55,11 @@ mod tests {
     #[test]
     fn check_units() {
         use crate::AbsorbedDose;
-        assert_eq!(AbsorbedDose::centigray(100.0).to_quantity(), AbsorbedDose::gray(1.0).to_quantity());
-        assert_ne!(AbsorbedDose::centigray(10.0).to_quantity(), AbsorbedDose::gray(1.0).to_quantity());
+        assert_eq!(AbsorbedDose::centigray(100.0), AbsorbedDose::gray(1.0));
+        assert_ne!(AbsorbedDose::centigray(10.0), AbsorbedDose::gray(1.0));
         
-        assert_eq!(AbsorbedDose::centigray(10.0).to_quantity(), AbsorbedDose::rad(10.0).to_quantity());
-        assert_eq!(AbsorbedDose::gray(0.1).to_quantity(), AbsorbedDose::rad(10.0).to_quantity());
-        assert_ne!(AbsorbedDose::centigray(10.0).to_quantity(), AbsorbedDose::rad(100.0).to_quantity());
+        assert_eq!(AbsorbedDose::centigray(10.0), AbsorbedDose::rad(10.0));
+        assert_eq!(AbsorbedDose::gray(0.1), AbsorbedDose::rad(10.0));
+        assert_ne!(AbsorbedDose::centigray(10.0), AbsorbedDose::rad(100.0));
     }    
 }

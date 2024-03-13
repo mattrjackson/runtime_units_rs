@@ -9,6 +9,24 @@
 ### Removed
 ### Fixed
 -->
+
+## [0.2.0] — 2024-03-13
+
+### Security
+### Added
+Added `to_unit` method for `UnitTypes` to allow conversion from an `&str` to `Units`.
+Added ability to convert from individual unit enumerations (e.g. `LengthUnit`) to `Units`.
+Added additional documentation to many methods.
+### Changed
+Major refactor to clean up messy data structures:
+1. `Quantity` has been renamed to `QuantityBase`. This still represents the base data structure used to handle unit conversions.
+2. Renamed `Unit` to `UnitDefinition`, to more accurately reflect what the data structure represents.
+3. Corrected bug in serde dependency (added derive feature flag dependency).
+### Deprecated
+### Removed
+Removed Quantity-suffixed data structures (e.g. `LengthQuantity`) and merged its capabilities into the  quantity enumerations (e.g. `Length`, `Area`, etc.). 
+Refactored and removed dependencies on once-cell and strum.
+
 ## [0.1.6] — 2024-03-12
 
 ### Security

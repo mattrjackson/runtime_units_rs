@@ -1,9 +1,9 @@
-//! Volumetric number rate (base unit 1 per cubic meter second, m⁻³ · s⁻¹).
+//! Volumetric number rate (base UnitDefinition 1 per cubic meter second, m⁻³ · s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Volumetric number rate (base unit 1 per cubic meter second, m⁻³ · s⁻¹).
+    /// Volumetric number rate (base UnitDefinition 1 per cubic meter second, m⁻³ · s⁻¹).
     quantity: VolumetricNumberRate; "volumetric number rate";
-    /// Dimension of volumetric number rate, L⁻³T⁻¹ (base unit 1 per cubic meter second, m⁻³ · s⁻¹).
+    /// Dimension of volumetric number rate, L⁻³T⁻¹ (base UnitDefinition 1 per cubic meter second, m⁻³ · s⁻¹).
     dimension: ISQ<
         N3,     // length
         Z0,     // mass

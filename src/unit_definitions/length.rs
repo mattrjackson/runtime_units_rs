@@ -1,11 +1,11 @@
-//! Length (base unit meter, m).
+//! Length (base UnitDefinition meter, m).
 
 use crate::{prefix, quantity};
 
 quantity! {
-    /// Length (base unit meter, m).
+    /// Length (base UnitDefinition meter, m).
     quantity: Length; "length";
-    /// Dimension of length, L (base unit meter, m).
+    /// Dimension of length, L (base UnitDefinition meter, m).
     dimension: ISQ<
         P1,     // length
         Z0,     // mass
@@ -25,8 +25,8 @@ quantity! {
         @kilometer: prefix!(kilo); "km", "kilometer", "kilometers";
         @hectometer: prefix!(hecto); "hm", "hectometer", "hectometers";
         @decameter: prefix!(deca); "dam", "decameter", "decameters";
-        /// The meter is the SI unit of length. It is defined by taking the fixed numerical value
-        /// of the speed of light in vacuum *c* to be 299 792 458 when expressed in the unit m s⁻¹,
+        /// The meter is the SI UnitDefinition of length. It is defined by taking the fixed numerical value
+        /// of the speed of light in vacuum *c* to be 299 792 458 when expressed in the UnitDefinition m s⁻¹,
         /// where the second is defined in terms of the caesium frequency ∆*ν*<sub>Cs</sub>.
         @meter: prefix!(none); "m", "meter", "meters";
         @decimeter: prefix!(deci); "dm", "decimeter", "decimeters";
@@ -42,10 +42,10 @@ quantity! {
 
         @angstrom: 1.0_E-10; "Å", "ångström", "ångströms";
         @bohr_radius: 5.291_772_109_03_E-11; "a₀", "bohr radius", "bohr radiuses";
-        /// Atomic unit of length (Bohr radius).
-        @atomic_unit_of_length: 5.291_772_109_03_E-11; "a.u. of length", "atomic unit of length",
+        /// Atomic UnitDefinition of length (Bohr radius).
+        @atomic_unit_of_length: 5.291_772_109_03_E-11; "a.u. of length", "atomic UnitDefinition of length",
             "atomic units of length";
-        @astronomical_unit: 1.495_979_E11; "ua", "astronomical unit", "astronomical units";
+        @astronomical_unit: 1.495_979_E11; "ua", "astronomical UnitDefinition", "astronomical units";
         @chain: 2.011_684_E1; "ch", "chain", "chains";
         @fathom: 1.828_804_E0; "fathom", "fathom", "fathoms";
         @fermi: 1.0_E-15; "fermi", "fermi", "fermis";

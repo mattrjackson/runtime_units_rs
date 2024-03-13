@@ -1,9 +1,9 @@
-//! Mass density (base unit kilogram per cubic meter, kg · m⁻³).
+//! Mass density (base UnitDefinition kilogram per cubic meter, kg · m⁻³).
 use crate::{prefix, quantity};
 quantity! {
-    /// Mass density (base unit kilogram per cubic meter, kg · m⁻³).
+    /// Mass density (base UnitDefinition kilogram per cubic meter, kg · m⁻³).
     quantity: MassDensity; "mass density";
-    /// Dimension of mass density, L⁻³M (base unit kilogram per cubic meter, kg · m⁻³).
+    /// Dimension of mass density, L⁻³M (base UnitDefinition kilogram per cubic meter, kg · m⁻³).
     dimension: ISQ<
         N3,     // length
         P1,     // mass
@@ -27,7 +27,7 @@ quantity! {
             "gigagram per cubic meter", "gigagrams per cubic meter";
         @megagram_per_cubic_meter: prefix!(mega) / prefix!(kilo); "Mg/m³",
             "megagram per cubic meter", "megagrams per cubic meter";
-        /// Derived unit of density.
+        /// Derived UnitDefinition of density.
         @kilogram_per_cubic_meter: prefix!(kilo) / prefix!(kilo); "kg/m³",
             "kilogram per cubic meter", "kilograms per cubic meter";
         @hectogram_per_cubic_meter: prefix!(hecto) / prefix!(kilo); "hg/m³",

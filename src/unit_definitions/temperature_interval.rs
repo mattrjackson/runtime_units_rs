@@ -1,4 +1,4 @@
-//! Temperature interval (base unit kelvin, K).
+//! Temperature interval (base UnitDefinition kelvin, K).
 //!
 //! Temperature interval has the same dimensions as [thermodynamic temperature][tt] but is not
 //! directly comparable. See [thermodynamic temperature][tt] for a full explanation.
@@ -8,9 +8,9 @@
 //use crate::units::thermodynamic_temperature::ThermodynamicTemperature;
 use crate::{prefix, quantity};
 quantity! {
-    /// Temperature interval (base unit kelvin, K).
+    /// Temperature interval (base UnitDefinition kelvin, K).
     quantity: TemperatureInterval; "temperature interval";
-    /// Dimension of temperature interval, Th (base unit kelvin, K).
+    /// Dimension of temperature interval, Th (base UnitDefinition kelvin, K).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass
@@ -30,9 +30,9 @@ quantity! {
         @kilokelvin: prefix!(kilo); "kK", "kilokelvin", "kilokelvins";
         @hectokelvin: prefix!(hecto); "hK", "hectokelvin", "hectokelvins";
         @decakelvin: prefix!(deca); "daK", "decakelvin", "decakelvins";
-        /// The kelvin is the SI unit of thermodynamic temperature. It is defined by taking the
+        /// The kelvin is the SI UnitDefinition of thermodynamic temperature. It is defined by taking the
         /// fixed numerical value of the Boltzmann constant *k* to be 1.380 649 × 10⁻²³ when
-        /// expressed in the unit J K⁻¹, which is equal to kg m² s⁻² K⁻¹, where the kilogram, meter,
+        /// expressed in the UnitDefinition J K⁻¹, which is equal to kg m² s⁻² K⁻¹, where the kilogram, meter,
         /// and second are defined in terms of *h*, *c*, and ∆*ν*<sub>Cs</sub>.
         @kelvin: prefix!(none); "K", "kelvin", "kelvins";
         @decikelvin: prefix!(deci); "dK", "decikelvin", "decikelvins";

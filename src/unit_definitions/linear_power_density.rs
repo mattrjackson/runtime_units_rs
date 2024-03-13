@@ -1,9 +1,9 @@
-//! Linear power density (base unit watt per meter, m · kg · s⁻³).
+//! Linear power density (base UnitDefinition watt per meter, m · kg · s⁻³).
 use crate::{prefix, quantity};
 quantity! {
-    /// Linear power density (base unit watt per meter, m · kg · s⁻³).
+    /// Linear power density (base UnitDefinition watt per meter, m · kg · s⁻³).
     quantity: LinearPowerDensity; "linear power density";
-    /// Dimension of linear power density, LMT⁻³ (base unit watt per meter, m · kg · s⁻³).
+    /// Dimension of linear power density, LMT⁻³ (base UnitDefinition watt per meter, m · kg · s⁻³).
     dimension: ISQ<
         P1,     // length
         P1,     // mass

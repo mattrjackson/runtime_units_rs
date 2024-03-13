@@ -1,9 +1,9 @@
-//! Volume (base unit cubic meter, m³).
+//! Volume (base UnitDefinition cubic meter, m³).
 use crate::{prefix, quantity};
 quantity! {
-    /// Volume (base unit cubic meter, m³).
+    /// Volume (base UnitDefinition cubic meter, m³).
     quantity: Volume; "volume";
-    /// Dimension of volume, L³ (base unit cubic meter, m³).
+    /// Dimension of volume, L³ (base UnitDefinition cubic meter, m³).
     dimension: ISQ<
         P3,     // length
         Z0,     // mass

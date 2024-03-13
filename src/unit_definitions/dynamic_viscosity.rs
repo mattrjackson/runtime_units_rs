@@ -1,9 +1,9 @@
-//! Dynamic viscosity (base unit pascal second, kg · m⁻¹ · s⁻¹).
+//! Dynamic viscosity (base UnitDefinition pascal second, kg · m⁻¹ · s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Dynamic viscosity (base unit pascal second, kg · m⁻¹ · s⁻¹).
+    /// Dynamic viscosity (base UnitDefinition pascal second, kg · m⁻¹ · s⁻¹).
     quantity: DynamicViscosity; "dynamic viscosity";
-    /// Dimension of dynamic viscosity, L⁻¹MT⁻¹ (base unit pascal second, kg · m⁻¹ · s⁻¹).
+    /// Dimension of dynamic viscosity, L⁻¹MT⁻¹ (base UnitDefinition pascal second, kg · m⁻¹ · s⁻¹).
     dimension: ISQ<
         N1,     // length
         P1,     // mass
@@ -39,7 +39,7 @@ quantity! {
 
 #[cfg(test)]
 mod test {
-    use crate::{unit_definitions::{dynamic_viscosity::DynamicViscosityUnit, time::TimeUnit}, units::{LengthUnit, MassUnit, PressureUnit}, units_base::Unit};
+    use crate::{unit_definitions::{dynamic_viscosity::DynamicViscosityUnit, time::TimeUnit}, units::{LengthUnit, MassUnit, PressureUnit}, units_base::UnitDefinition};
 
 
     #[test]
@@ -70,10 +70,10 @@ mod test {
     }
     fn test_unit(pressure: PressureUnit, time: TimeUnit, value: DynamicViscosityUnit)
     {
-        assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(pressure) * Into::<Unit>::into(time), 1e-12));
+        assert!(Into::<UnitDefinition>::into(value).approx_eq(Into::<UnitDefinition>::into(pressure) * Into::<UnitDefinition>::into(time), 1e-12));
     }
     fn test_unit_mlt(mass: MassUnit, length: LengthUnit, time: TimeUnit, value: DynamicViscosityUnit) {
-        assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(mass) / Into::<Unit>::into(length) / Into::<Unit>::into(time), 1e-12));
+        assert!(Into::<UnitDefinition>::into(value).approx_eq(Into::<UnitDefinition>::into(mass) / Into::<UnitDefinition>::into(length) / Into::<UnitDefinition>::into(time), 1e-12));
     }
 }
 

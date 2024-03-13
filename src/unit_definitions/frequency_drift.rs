@@ -1,11 +1,11 @@
-//! Frequency drift (base unit hertz per second, s⁻²).
+//! Frequency drift (base UnitDefinition hertz per second, s⁻²).
 //!
 //! Typical application: Frequency slope in FMCW radars.
 use crate::{prefix, quantity};
 quantity! {
-    /// Frequency drift (base unit hertz per second, s⁻²).
+    /// Frequency drift (base UnitDefinition hertz per second, s⁻²).
     quantity: FrequencyDrift; "frequency drift";
-    /// Dimension of frequency drift, T⁻² (base unit hertz per second, s⁻²).
+    /// Dimension of frequency drift, T⁻² (base UnitDefinition hertz per second, s⁻²).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

@@ -1,9 +1,9 @@
-//! Areal mass density (base unit kilogram per square meter, m⁻² · kg).
+//! Areal mass density (base UnitDefinition kilogram per square meter, m⁻² · kg).
 use crate::{prefix, quantity};
 quantity! {
-    /// Areal mass density (base unit kilogram per square meter, m⁻² · kg).
+    /// Areal mass density (base UnitDefinition kilogram per square meter, m⁻² · kg).
     quantity: ArealMassDensity; "areal mass density";
-    /// Dimension of areal mass density, L⁻²M (base unit kilogram per square meter, m⁻² · kg).
+    /// Dimension of areal mass density, L⁻²M (base UnitDefinition kilogram per square meter, m⁻² · kg).
     dimension: ISQ<
         N2,     // length
         P1,     // mass
@@ -27,7 +27,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{units::{MassUnit, ArealMassDensityUnit, LengthUnit}, units_base::Unit};
+    use crate::{units::{MassUnit, ArealMassDensityUnit, LengthUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {
@@ -43,6 +43,6 @@ mod tests {
 
     }
     fn test_unit(value: ArealMassDensityUnit, length: LengthUnit, mass: MassUnit) {
-        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(mass) / Into::<Unit>::into(length).powi(2));
+        assert_eq!(Into::<UnitDefinition>::into(value), Into::<UnitDefinition>::into(mass) / Into::<UnitDefinition>::into(length).powi(2));
     }
 }

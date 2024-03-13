@@ -1,9 +1,9 @@
-//! Electric charge (base unit coulomb, A · s).
+//! Electric charge (base UnitDefinition coulomb, A · s).
 use crate::{prefix, quantity};
 quantity! {
-    /// Electric charge (base unit coulomb, A · s).
+    /// Electric charge (base UnitDefinition coulomb, A · s).
     quantity: ElectricCharge; "electric charge";
-    /// Dimension of electric charge, TI (base unit coulomb, A · s).
+    /// Dimension of electric charge, TI (base UnitDefinition coulomb, A · s).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kilocoulomb: prefix!(kilo); "kC", "kilocoulomb", "kilocoulombs";
         @hectocoulomb: prefix!(hecto); "hC", "hectocoulomb", "hectocoulombs";
         @decacoulomb: prefix!(deca); "daC", "decacoulomb", "decacoulombs";
-        /// Derived unit of electric charge.
+        /// Derived UnitDefinition of electric charge.
         @coulomb: prefix!(none); "C", "coulomb", "coulombs";
         @decicoulomb: prefix!(deci); "dC", "decicoulomb", "decicoulombs";
         @centicoulomb: prefix!(centi); "cC", "centicoulomb", "centicoulombs";
@@ -49,7 +49,7 @@ quantity! {
 
         /// Electric charge carried by a single proton.
         @elementary_charge: 1.602_176_634_E-19; "e", "elementary charge", "elementary charges";
-        @atomic_unit_of_charge: 1.602_176_634_E-19; "a.u. of charge", "atomic unit of charge",
+        @atomic_unit_of_charge: 1.602_176_634_E-19; "a.u. of charge", "atomic UnitDefinition of charge",
             "atomic units of charge";
         @abcoulomb: 1.0_E1; "abC", "abcoulomb", "abcoulombs";
         @faraday: 9.648_531_E4; "F", "faraday", "faradays";
@@ -60,7 +60,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_current::ElectricCurrentUnit, time::TimeUnit}, units_base::Unit};
+    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_current::ElectricCurrentUnit, time::TimeUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {
@@ -100,6 +100,6 @@ mod tests {
     }
     fn test_unit(current: ElectricCurrentUnit, time: TimeUnit, value: ElectricChargeUnit)
     {
-        assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(current) * Into::<Unit>::into(time)));
+        assert_eq!(Into::<UnitDefinition>::into(value), (Into::<UnitDefinition>::into(current) * Into::<UnitDefinition>::into(time)));
     }
 }

@@ -2,28 +2,28 @@ use core::fmt::Debug;
 use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use crate::errors::RuntimeUnitError;
-use crate::units_base::Unit;
+use crate::units_base::UnitDefinition;
 use crate::Units;
 
 pub(crate) trait IsQuantity
 {
     fn value(&self) -> f64;
-    fn unit(&self) -> Unit;
+    fn definition(&self) -> UnitDefinition;
 }
 
 #[doc = "A quantity of a unit, supports converting from one unit to another." ]
 #[derive(Copy, Clone)]
-pub struct Quantity
+pub struct QuantityBase
 {
     pub(crate) value: f64,
-    pub(crate) unit: Unit
+    pub(crate) unit: UnitDefinition
 }
-impl Quantity
+impl QuantityBase
 {
     ///
     /// Create a new instance of `Quantity` with a given `value` and `unit` 
     ///
-    pub fn new(value: f64, unit: Unit) -> Self
+    pub fn new(value: f64, unit: UnitDefinition) -> Self
     {        
         Self { value, unit }
     }
@@ -41,7 +41,7 @@ impl Quantity
     /// Retrieve a unit with a corresponding multiplier
     /// 
     #[inline]
-    pub fn unit(&self) -> Unit
+    pub fn definition(&self) -> UnitDefinition
     {
         self.unit
     }
@@ -50,12 +50,12 @@ impl Quantity
     /// Convert a quantity from one unit to another
     ///
     #[inline]
-    pub fn convert(&self, unit: Units) -> Result<Quantity, RuntimeUnitError>
+    pub fn convert(&self, unit: Units) -> Result<QuantityBase, RuntimeUnitError>
     {
         self.convert_unit(unit.into())
     }    
     #[inline]
-    pub fn convert_unit(&self, unit: Unit) -> Result<Quantity, RuntimeUnitError>
+    pub fn convert_unit(&self, unit: UnitDefinition) -> Result<QuantityBase, RuntimeUnitError>
     {
         if self.unit == unit
         {
@@ -76,7 +76,7 @@ impl Quantity
 
     #[inline] 
     /// Convert from one unit to another (no check is made to ensure destination unit is valid).
-    pub(crate) fn convert_unit_unchecked(&self, unit: Unit) -> f64
+    pub(crate) fn convert_unchecked(&self, unit: UnitDefinition) -> f64
     {
         if self.unit == unit
         {
@@ -89,78 +89,78 @@ impl Quantity
     }
 
 }
-impl Debug for Quantity
+impl Debug for QuantityBase
 {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result 
     {
-        write!(f, "{} {:?}", self.value(), self.unit())
+        write!(f, "{} {:?}", self.value(), self.definition())
     }
 }
-impl Mul<f64> for Quantity
+impl Mul<f64> for QuantityBase
 {
-    type Output = Quantity;
+    type Output = QuantityBase;
 
     fn mul(self, rhs: f64) -> Self::Output {
         Self{ value: self.value*rhs, unit: self.unit }
     }
 }
 
-impl Div<f64> for Quantity
+impl Div<f64> for QuantityBase
 {
-    type Output = Quantity;
+    type Output = QuantityBase;
 
     fn div(self, rhs: f64) -> Self::Output {
         Self{ value: self.value/rhs, unit: self.unit }
     }
 }
-impl Mul<Quantity> for Quantity
+impl Mul<QuantityBase> for QuantityBase
 {
-    type Output = Quantity;
+    type Output = QuantityBase;
 
-    fn mul(self, rhs: Quantity) -> Self::Output {
+    fn mul(self, rhs: QuantityBase) -> Self::Output {
         Self{ value: self.value*rhs.value, unit: self.unit*rhs.unit }
     }
 }
-impl Div<Quantity> for Quantity
+impl Div<QuantityBase> for QuantityBase
 {
-    type Output = Quantity;
+    type Output = QuantityBase;
 
-    fn div(self, rhs: Quantity) -> Self::Output {
+    fn div(self, rhs: QuantityBase) -> Self::Output {
         Self{ value: self.value/rhs.value, unit: self.unit/rhs.unit }
     }
 }
-impl Add<Quantity> for Quantity
+impl Add<QuantityBase> for QuantityBase
 {
-    type Output=Quantity;
+    type Output=QuantityBase;
 
-    fn add(self, rhs: Quantity) -> Self::Output {
+    fn add(self, rhs: QuantityBase) -> Self::Output {
         Self { value: self.value + rhs.value, unit: self.unit }
     }
 }
-impl Sub<Quantity> for Quantity
+impl Sub<QuantityBase> for QuantityBase
 {
-    type Output=Quantity;
+    type Output=QuantityBase;
 
-    fn sub(self, rhs: Quantity) -> Self::Output {
+    fn sub(self, rhs: QuantityBase) -> Self::Output {
         Self { value: self.value - rhs.value, unit: self.unit }
     }
 }
 
-impl AddAssign for Quantity
+impl AddAssign for QuantityBase
 {
     fn add_assign(&mut self, rhs: Self) {
         self.value += rhs.value;
     }
 }
 
-impl SubAssign for Quantity
+impl SubAssign for QuantityBase
 {
     fn sub_assign(&mut self, rhs: Self) {
         self.value -= rhs.value;
     }
 }
 
-impl MulAssign for Quantity
+impl MulAssign for QuantityBase
 {
     fn mul_assign(&mut self, rhs: Self) {
         self.value *= rhs.value;
@@ -169,7 +169,7 @@ impl MulAssign for Quantity
 }
 
 
-impl DivAssign for Quantity
+impl DivAssign for QuantityBase
 {
     fn div_assign(&mut self, rhs: Self) {
         self.value /= rhs.value;
@@ -177,19 +177,34 @@ impl DivAssign for Quantity
     }
 }
 
+impl<T:IsQuantity> Mul<T> for QuantityBase
+{
+    type Output = QuantityBase;
+    fn mul(self, rhs: T) -> QuantityBase {
+        QuantityBase{ value: self.value*rhs.value(), unit: self.definition()*rhs.definition() }
+    }
+}
+impl<T:IsQuantity> Div<T> for QuantityBase
+{
+    type Output = QuantityBase;
+
+    fn div(self, rhs: T) -> QuantityBase {
+        QuantityBase{ value: self.value/rhs.value(), unit: self.definition()/rhs.definition() }
+    }
+}
 ///
 /// This only compares magnitudes...
 /// 
-impl PartialOrd<Quantity> for Quantity
+impl PartialOrd<QuantityBase> for QuantityBase
 {
-    fn partial_cmp(&self, other: &Quantity) -> Option<core::cmp::Ordering> {
-        self.convert_unit_unchecked(other.unit).partial_cmp(&other.value)
+    fn partial_cmp(&self, other: &QuantityBase) -> Option<core::cmp::Ordering> {
+        self.convert_unchecked(other.unit).partial_cmp(&other.value)
     }
 }
 
-impl PartialEq for Quantity
+impl PartialEq for QuantityBase
 {
     fn eq(&self, other: &Self) -> bool {
-        self.unit.base == other.unit.base && self.convert_unit_unchecked(other.unit) == other.value
+        self.unit.base == other.unit.base && self.convert_unchecked(other.unit) == other.value
     }
 }

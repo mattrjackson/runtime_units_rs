@@ -1,9 +1,9 @@
-//! [Curvature](https://en.wikipedia.org/wiki/Curvature) (base unit radian per meter, m⁻¹).
-use crate::{prefix, quantity};
+//! [Curvature](https://en.wikipedia.org/wiki/Curvature) (base UnitDefinition radian per meter, m⁻¹).
+use crate::quantity;
 quantity! {
-    /// Curvature (base unit radian per meter, m⁻¹).
+    /// Curvature (base UnitDefinition radian per meter, m⁻¹).
     quantity: Curvature; "curvature";
-    /// Dimension of curvature, L⁻¹ (base unit radian per meter, m⁻¹).
+    /// Dimension of curvature, L⁻¹ (base UnitDefinition radian per meter, m⁻¹).
     dimension: ISQ<
         N1,     // length
         Z0,     // mass
@@ -26,7 +26,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{unit_definitions::{angle::AngleUnit, curvature::CurvatureUnit}, units::LengthUnit, units_base::Unit};
+    use crate::{unit_definitions::{angle::AngleUnit, curvature::CurvatureUnit}, units::LengthUnit, units_base::UnitDefinition};
 
 
     #[test]
@@ -42,7 +42,7 @@ mod tests {
         test_unit(AngleUnit::degree, LengthUnit::millimeter, CurvatureUnit::degree_per_millimeter);
     }
     fn test_unit(angle: AngleUnit, length: LengthUnit, value: CurvatureUnit) {
-        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(angle) / Into::<Unit>::into(length));
+        assert_eq!(Into::<UnitDefinition>::into(value), Into::<UnitDefinition>::into(angle) / Into::<UnitDefinition>::into(length));
     }
 
 }

@@ -1,9 +1,9 @@
-//! Volumetric density of states (base unit 1 / cubic meter joule, kg⁻¹ · m⁻⁵ · s²).
+//! Volumetric density of states (base UnitDefinition 1 / cubic meter joule, kg⁻¹ · m⁻⁵ · s²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Volumetric density of states (base unit 1 / cubic meter joule, kg⁻¹ · m⁻⁵ · s²).
+    /// Volumetric density of states (base UnitDefinition 1 / cubic meter joule, kg⁻¹ · m⁻⁵ · s²).
     quantity: VolumetricDensityOfStates; "volumetric density of states";
-    /// Dimension of volumetric density of states, L⁻⁵M⁻¹T² (base unit 1 / cubic meter joule,
+    /// Dimension of volumetric density of states, L⁻⁵M⁻¹T² (base UnitDefinition 1 / cubic meter joule,
     /// kg⁻¹ · m⁻⁵ · s²).
     dimension: ISQ<
         N5,     // length

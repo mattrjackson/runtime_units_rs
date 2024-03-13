@@ -1,9 +1,9 @@
-//! Volumetric number density (base unit 1 per cubic meter, m⁻³).
+//! Volumetric number density (base UnitDefinition 1 per cubic meter, m⁻³).
 use crate::{prefix, quantity};
 quantity! {
-    /// Volumetric number density (base unit 1 per cubic meter, m⁻³).
+    /// Volumetric number density (base UnitDefinition 1 per cubic meter, m⁻³).
     quantity: VolumetricNumberDensity; "volumetric number density";
-    /// Dimension of volumetric number density, L⁻³ (base unit 1 per cubic meter, m⁻³).
+    /// Dimension of volumetric number density, L⁻³ (base UnitDefinition 1 per cubic meter, m⁻³).
     dimension: ISQ<
         N3,     // length
         Z0,     // mass

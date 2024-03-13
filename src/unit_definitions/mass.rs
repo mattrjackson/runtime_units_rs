@@ -1,9 +1,9 @@
-//! Mass (base unit kilogram, kg).
+//! Mass (base UnitDefinition kilogram, kg).
 use crate::{prefix, quantity};
 quantity! {
-    /// Mass (base unit kilogram, kg).
+    /// Mass (base UnitDefinition kilogram, kg).
     quantity: Mass; "mass";
-    /// Mass dimension, M (base unit kilogram, kg).
+    /// Mass dimension, M (base UnitDefinition kilogram, kg).
     dimension: ISQ<
         Z0,     // length
         P1,     // mass
@@ -20,8 +20,8 @@ quantity! {
         @teragram: prefix!(tera) / prefix!(kilo); "Tg", "teragram", "teragrams";
         @gigagram: prefix!(giga) / prefix!(kilo); "Gg", "gigagram", "gigagrams";
         @megagram: prefix!(mega) / prefix!(kilo); "Mg", "megagram", "megagrams";
-        /// The kilogram is the SI unit of mass. It is defined by taking the fixed numerical value
-        /// of the Planck constant *h* to be 6.626 070 15 × 10⁻³⁴ when expressed in the unit J s,
+        /// The kilogram is the SI UnitDefinition of mass. It is defined by taking the fixed numerical value
+        /// of the Planck constant *h* to be 6.626 070 15 × 10⁻³⁴ when expressed in the UnitDefinition J s,
         /// which is equal to kg m² s⁻¹, where the meter and the second are defined in terms of *c*
         /// and ∆*ν*<sub>Cs</sub>.
         @kilogram: prefix!(kilo) / prefix!(kilo); "kg", "kilogram", "kilograms";
@@ -40,7 +40,7 @@ quantity! {
         @yoctogram: prefix!(yocto) / prefix!(kilo); "yg", "yoctogram", "yoctograms";
 
         @carat: 2.0_E-4; "ct", "carat", "carats";
-        /// Unified atomic mass unit.
+        /// Unified atomic mass UnitDefinition.
         @dalton: 1.660_539_066_60_E-27; "Da", "dalton", "daltons";
         @grain: 6.479_891_E-5; "gr", "grain", "grains";
         @hundredweight_long: 5.080_235_E1; "cwt long", "hundredweight (long)", "hundredweight (long)";

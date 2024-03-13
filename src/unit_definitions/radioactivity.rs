@@ -1,9 +1,9 @@
-//! Radioactivity (base unit becquerel, s⁻¹).
+//! Radioactivity (base UnitDefinition becquerel, s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Radioactivity (base unit becquerel, s⁻¹).
+    /// Radioactivity (base UnitDefinition becquerel, s⁻¹).
     quantity: Radioactivity; "radioactivity";
-    /// Dimension of radioactivity, T⁻¹ (base unit becquerel, s⁻¹).
+    /// Dimension of radioactivity, T⁻¹ (base UnitDefinition becquerel, s⁻¹).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

@@ -1,9 +1,9 @@
-//! Electric charge volumetric density (base unit coulomb per cubic meter, m⁻³ · A · s).
+//! Electric charge volumetric density (base UnitDefinition coulomb per cubic meter, m⁻³ · A · s).
 use crate::{prefix, quantity};
 quantity! {
-    ///Electric charge volumetric density (base unit coulomb per cubic meter, m⁻³ · A · s).
+    ///Electric charge volumetric density (base UnitDefinition coulomb per cubic meter, m⁻³ · A · s).
     quantity: ElectricChargeVolumetricDensity; "electric charge volumetric density";
-    /// Dimension of electric charge volumetric density, TIL⁻³ (base unit coulomb per cubic meter,
+    /// Dimension of electric charge volumetric density, TIL⁻³ (base UnitDefinition coulomb per cubic meter,
     /// m⁻³ · A · s).
     dimension: ISQ<
         N3,     // length
@@ -26,7 +26,7 @@ quantity! {
 #[cfg(test)]
 mod tests 
 {
-    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_charge_volumetric_density::ElectricChargeVolumetricDensityUnit, volume::VolumeUnit}, units_base::Unit};
+    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_charge_volumetric_density::ElectricChargeVolumetricDensityUnit, volume::VolumeUnit}, units_base::UnitDefinition};
 
     #[test]
     fn check_dimension() {
@@ -40,6 +40,6 @@ mod tests
     }
     fn test_unit(charge: ElectricChargeUnit, volume: VolumeUnit, value: ElectricChargeVolumetricDensityUnit)
     {
-        assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(charge) / Into::<Unit>::into(volume), 1e-12));
+        assert!(Into::<UnitDefinition>::into(value).approx_eq(Into::<UnitDefinition>::into(charge) / Into::<UnitDefinition>::into(volume), 1e-12));
     }
 }

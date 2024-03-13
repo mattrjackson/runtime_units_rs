@@ -1,9 +1,9 @@
-//! Surface electric current density (base unit ampere per meter, ). 
+//! Surface electric current density (base UnitDefinition ampere per meter, ). 
 use crate::{prefix, quantity};
 quantity! {
-    /// Surface electric current density (base unit ampere per meter, m⁻¹ · A).
+    /// Surface electric current density (base UnitDefinition ampere per meter, m⁻¹ · A).
     quantity: SurfaceElectricCurrentDensity; "surface electric current density";
-    /// Dimension of surface electric current density, IL⁻¹ (base unit ampere per meter, m⁻¹ · A).
+    /// Dimension of surface electric current density, IL⁻¹ (base UnitDefinition ampere per meter, m⁻¹ · A).
     dimension: ISQ<
         N1,     // length
         Z0,     // mass

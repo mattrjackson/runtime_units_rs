@@ -1,9 +1,9 @@
-//! Momentum (base unit kilogram meter per second, kg · m · s⁻¹).
+//! Momentum (base UnitDefinition kilogram meter per second, kg · m · s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Momentum (base unit kilogram meter per second, kg · m · s⁻¹).
+    /// Momentum (base UnitDefinition kilogram meter per second, kg · m · s⁻¹).
     quantity: Momentum; "momentum";
-    /// Dimension of momentum, LMT⁻¹ (base unit kilogram meter per second, kg · m · s⁻¹).
+    /// Dimension of momentum, LMT⁻¹ (base UnitDefinition kilogram meter per second, kg · m · s⁻¹).
     dimension: ISQ<
         P1,     // length
         P1,     // mass
@@ -27,7 +27,7 @@ quantity! {
             "gigagram meter per second", "gigagram meters per second";
         @megagram_meter_per_second: prefix!(mega) / prefix!(kilo); "Mg · m/s",
             "megagram meter per second", "megagram meters per second";
-        /// Derived unit of momentum.
+        /// Derived UnitDefinition of momentum.
         @kilogram_meter_per_second: prefix!(kilo) / prefix!(kilo); "kg · m/s",
             "kilogram meter per second", "kilogram meters per second";
         @hectogram_meter_per_second: prefix!(hecto) / prefix!(kilo); "hg · m/s",

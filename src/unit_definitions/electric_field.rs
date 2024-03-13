@@ -1,9 +1,9 @@
-//! Electric field (base unit volt per meter, m ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
+//! Electric field (base UnitDefinition volt per meter, m ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Electric field (base unit volt per meter, m ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
+    /// Electric field (base UnitDefinition volt per meter, m ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
     quantity: ElectricField; "electric field";
-    /// Dimension of electric field, LMT⁻³I⁻¹ (base unit volt per meter, m ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
+    /// Dimension of electric field, LMT⁻³I⁻¹ (base UnitDefinition volt per meter, m ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
     dimension: ISQ<
         P1,     // length
         P1,     // mass
@@ -27,16 +27,16 @@ quantity! {
             "megavolt per centimeter", "megavolts per centimeter";
         @volt_per_mil: prefix!(none) / 2.54_E-5; "V/mil", "volt per mil", "volts per mil";
 
-        /// Hartree atomic unit of electric field Eₕ / (e ⋅ a₀), where Eₕ is Hartree energy, e is
+        /// Hartree atomic UnitDefinition of electric field Eₕ / (e ⋅ a₀), where Eₕ is Hartree energy, e is
         /// elementary charge, and a₀ is Bohr radius.
         @atomic_unit_of_electric_field: 5.142_206_747_632_595_E11; "a.u. of electric field",
-            "atomic unit of electric field", "atomic units of electric field";
+            "atomic UnitDefinition of electric field", "atomic units of electric field";
     }
 }
 
 #[cfg(test)]
 mod test {
-    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_field::ElectricFieldUnit, electric_potential::ElectricPotentialUnit, energy::EnergyUnit}, units::LengthUnit, units_base::Unit};
+    use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_field::ElectricFieldUnit, electric_potential::ElectricPotentialUnit, energy::EnergyUnit}, units::LengthUnit, units_base::UnitDefinition};
 
     #[test]
     fn check_dimension() {
@@ -56,7 +56,7 @@ mod test {
     }
     fn test_unit(potential: ElectricPotentialUnit, length: LengthUnit, value: ElectricFieldUnit)
     {
-         assert_eq!(Into::<Unit>::into(value), (Into::<Unit>::into(potential) / Into::<Unit>::into(length)));
+         assert_eq!(Into::<UnitDefinition>::into(value), (Into::<UnitDefinition>::into(potential) / Into::<UnitDefinition>::into(length)));
     }
 
     #[test]
@@ -67,7 +67,7 @@ mod test {
 
         fn test(energy: EnergyUnit, charge: ElectricChargeUnit, length: LengthUnit, efield: ElectricFieldUnit)
         {
-            assert_eq!(Into::<Unit>::into(efield), Into::<Unit>::into(energy) / Into::<Unit>::into(charge) / Into::<Unit>::into(length));
+            assert_eq!(Into::<UnitDefinition>::into(efield), Into::<UnitDefinition>::into(energy) / Into::<UnitDefinition>::into(charge) / Into::<UnitDefinition>::into(length));
         }
     }
 }

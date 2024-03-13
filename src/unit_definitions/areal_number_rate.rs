@@ -1,9 +1,9 @@
-//! Areal number rate (base unit 1 per square meter second, m⁻² · s⁻¹).
+//! Areal number rate (base UnitDefinition 1 per square meter second, m⁻² · s⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Areal number rate (base unit 1 per square meter second, m⁻² · s⁻¹).
+    /// Areal number rate (base UnitDefinition 1 per square meter second, m⁻² · s⁻¹).
     quantity: ArealNumberRate; "areal number rate";
-    /// Dimension of areal number rate, L⁻²T⁻¹ (base unit 1 per square meter second, m⁻² · s⁻¹).
+    /// Dimension of areal number rate, L⁻²T⁻¹ (base UnitDefinition 1 per square meter second, m⁻² · s⁻¹).
     dimension: ISQ<
         N2,     // length
         Z0,     // mass
@@ -41,7 +41,7 @@ quantity! {
 
 #[cfg(test)]
 mod test {
-    use crate::{unit_definitions::{areal_number_rate::ArealNumberRateUnit, time::TimeUnit}, units::{AreaUnit, LengthUnit}, units_base::Unit};
+    use crate::{unit_definitions::{areal_number_rate::ArealNumberRateUnit, time::TimeUnit}, units::{AreaUnit, LengthUnit}, units_base::UnitDefinition};
 
    
 
@@ -66,7 +66,7 @@ mod test {
         test_unit(ArealNumberRateUnit::per_square_yard_second, AreaUnit::square_yard, TimeUnit::second);
 
         fn test_unit(value: ArealNumberRateUnit, area: AreaUnit, time: TimeUnit) {
-            assert!(Into::<Unit>::into(value).approx_eq(Into::<Unit>::into(area).powi(-1) / Into::<Unit>::into(time) , 1e-12));
+            assert!(Into::<UnitDefinition>::into(value).approx_eq(Into::<UnitDefinition>::into(area).powi(-1) / Into::<UnitDefinition>::into(time) , 1e-12));
         }
     }
 }

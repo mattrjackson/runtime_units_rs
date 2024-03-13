@@ -1,9 +1,9 @@
-//! Inductance (base unit henry, m² · kg · s⁻² · A⁻²).
+//! Inductance (base UnitDefinition henry, m² · kg · s⁻² · A⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Inductance (base unit henry, m² · kg · s⁻² · A⁻²).
+    /// Inductance (base UnitDefinition henry, m² · kg · s⁻² · A⁻²).
     quantity: Inductance; "inductance";
-    /// Dimension of inductance, L²MT⁻²I⁻² (base unit henry, m² · kg · s⁻² · A⁻²).
+    /// Dimension of inductance, L²MT⁻²I⁻² (base UnitDefinition henry, m² · kg · s⁻² · A⁻²).
     dimension: ISQ<
         P2,     // length
         P1,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kilohenry: prefix!(kilo); "kH", "kilohenry", "kilohenries";
         @hectohenry: prefix!(hecto); "hH", "hectohenry", "hectohenries";
         @decahenry: prefix!(deca); "daH", "decahenry", "decahenries";
-        /// Derived unit of inductance.
+        /// Derived UnitDefinition of inductance.
         @henry: prefix!(none); "H", "henry", "henries";
         @decihenry: prefix!(deci); "dH", "decihenry", "decihenries";
         @centihenry: prefix!(centi); "cH", "centihenry", "centihenries";

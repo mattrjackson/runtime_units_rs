@@ -1,4 +1,4 @@
-//! Thermal conductivity (base unit watt per meter kelvin, kg · m · s⁻³ · K⁻¹).
+//! Thermal conductivity (base UnitDefinition watt per meter kelvin, kg · m · s⁻³ · K⁻¹).
 //!
 //! Thermal conductivity has the same kind as [temperature interval][ti], as this quantity relates
 //! to change of temperature. Not of kind `TemperatureKind`, used by [thermodynamic
@@ -8,9 +8,9 @@
 //! [tt]: ../thermodynamic_temperature/index.html
 use crate::{prefix, quantity};
 quantity! {
-    /// Thermal conductivity (base unit watt per meter kelvin, kg · m · s⁻³ · K⁻¹).
+    /// Thermal conductivity (base UnitDefinition watt per meter kelvin, kg · m · s⁻³ · K⁻¹).
     quantity: ThermalConductivity; "thermal conductivity";
-    /// Dimension of thermal conductivity, LMT⁻³Th⁻¹ (base unit watt per meter kelvin, kg · m · s⁻³
+    /// Dimension of thermal conductivity, LMT⁻³Th⁻¹ (base UnitDefinition watt per meter kelvin, kg · m · s⁻³
     /// · K⁻¹).
     dimension: ISQ<
         P1,     // length
@@ -35,7 +35,7 @@ quantity! {
             "gigagram meter per second cubed kelvin", "gigagrams meter per second cubed kelvin";
         @megagram_meter_per_second_cubed_kelvin: prefix!(mega) / prefix!(kilo); "Mg · m/(s³ · K)",
             "megagram meter per second cubed kelvin", "megagrams meter per second cubed kelvin";
-        /// Derived unit of thermal conductivity in base units. Equivalent to W/(m · K).
+        /// Derived UnitDefinition of thermal conductivity in base units. Equivalent to W/(m · K).
         @kilogram_meter_per_second_cubed_kelvin: prefix!(kilo) / prefix!(kilo); "kg · m/(s³ · K)",
             "kilogram meter per second cubed kelvin", "kilograms meter per second cubed kelvin";
         @hectogram_meter_per_second_cubed_kelvin: prefix!(hecto) / prefix!(kilo); "hg · m/(s³ · K)",
@@ -87,7 +87,7 @@ quantity! {
             "hectowatt per meter kelvin", "hectowatts per meter kelvin";
         @decawatt_per_meter_kelvin: prefix!(deca); "daW/(m · K)",
             "decawatt per meter kelvin", "decawatts per meter kelvin";
-        /// Derived unit of thermal conductivity in derived units. Equivalent to kg · m/(s³ · K).
+        /// Derived UnitDefinition of thermal conductivity in derived units. Equivalent to kg · m/(s³ · K).
         @watt_per_meter_kelvin: prefix!(none); "W/(m · K)",
             "watt per meter kelvin", "watts per meter kelvin";
         @deciwatt_per_meter_kelvin: prefix!(deci); "dW/(m · K)",
@@ -117,7 +117,7 @@ quantity! {
             "kilograms meter per second cubed degree celsius";
         @kilowatt_per_meter_degree_celsius: prefix!(kilo); "kW/(m · °C)",
             "kilowatt per meter degree celsius", "kilowatts per meter degree celsius";
-        /// Derived unit of thermal conductivity in derived units. Equivalent to kg · m/(s³ · K).
+        /// Derived UnitDefinition of thermal conductivity in derived units. Equivalent to kg · m/(s³ · K).
         @watt_per_meter_degree_celsius: prefix!(none); "W/(m · °C)",
             "watt per meter degree celsius", "watts per meter degree celsius";
         @milliwatt_per_meter_degree_celsius: prefix!(milli); "mW/(m · °C)",

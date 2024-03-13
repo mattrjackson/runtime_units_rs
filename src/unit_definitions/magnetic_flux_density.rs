@@ -1,9 +1,9 @@
-//! Magnetic flux density (base unit tesla, kg · s⁻² · A⁻¹).
+//! Magnetic flux density (base UnitDefinition tesla, kg · s⁻² · A⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Magnetic flux density (base unit tesla, kg · s⁻² · A⁻¹).
+    /// Magnetic flux density (base UnitDefinition tesla, kg · s⁻² · A⁻¹).
     quantity: MagneticFluxDensity; "magnetic flux density";
-    /// Dimension of magnetic flux density, MT⁻²I⁻¹ (base unit tesla, kg · s⁻² · A⁻¹).
+    /// Dimension of magnetic flux density, MT⁻²I⁻¹ (base UnitDefinition tesla, kg · s⁻² · A⁻¹).
     dimension: ISQ<
         Z0,     // length
         P1,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kilotesla: prefix!(kilo); "kT", "kilotesla", "kiloteslas";
         @hectotesla: prefix!(hecto); "hT", "hectotesla", "hectoteslas";
         @decatesla: prefix!(deca); "daT", "decatesla", "decateslas";
-        /// Derived unit of magnetic flux density.
+        /// Derived UnitDefinition of magnetic flux density.
         @tesla: prefix!(none); "T", "tesla", "teslas";
         @decitesla: prefix!(deci); "dT", "decitesla", "deciteslas";
         @centitesla: prefix!(centi); "cT", "centitesla", "centiteslas";

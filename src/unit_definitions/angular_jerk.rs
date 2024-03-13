@@ -1,9 +1,9 @@
-//! Angular jerk (base unit radian per second cubed, s⁻³).
+//! Angular jerk (base UnitDefinition radian per second cubed, s⁻³).
 use crate::quantity;
 quantity! {
-    /// Angular jerk (base unit radian per second cubed, s⁻³).
+    /// Angular jerk (base UnitDefinition radian per second cubed, s⁻³).
     quantity: AngularJerk; "angular jerk";
-    /// Dimension of angular jerk, T⁻³ (base unit radian per second cubed, s⁻³).
+    /// Dimension of angular jerk, T⁻³ (base UnitDefinition radian per second cubed, s⁻³).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass
@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     kind: dyn (crate::si::marker::AngleKind);
     units {
-        /// Derived unit of angular jerk.
+        /// Derived UnitDefinition of angular jerk.
         @radian_per_second_cubed: 1.0; "rad/s³", "radian per second cubed",
             "radians per second cubed";
         @degree_per_second_cubed: 1.745_329_251_994_329_5_E-2; "°/s³",
@@ -23,7 +23,7 @@ quantity! {
 }
 #[cfg(test)]
 mod tests {
-    use crate::{units::{AngleUnit, AngularJerkUnit, TimeUnit}, units_base::Unit};
+    use crate::{units::{AngleUnit, AngularJerkUnit, TimeUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {
@@ -37,6 +37,6 @@ mod tests {
 
     }
     fn test_unit(value: AngularJerkUnit, time: TimeUnit, angle: AngleUnit) {
-        assert_eq!(Into::<Unit>::into(value), Into::<Unit>::into(angle) / Into::<Unit>::into(time).powi(3));
+        assert_eq!(Into::<UnitDefinition>::into(value), Into::<UnitDefinition>::into(angle) / Into::<UnitDefinition>::into(time).powi(3));
     }
 }

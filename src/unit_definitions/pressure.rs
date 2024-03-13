@@ -1,9 +1,9 @@
-//! Pressure (base unit pascal, kg · m⁻¹ · s⁻²).
+//! Pressure (base UnitDefinition pascal, kg · m⁻¹ · s⁻²).
 use crate::{prefix, quantity};
 quantity! {
-    /// Pressure (base unit pascal, kg · m⁻¹ · s⁻²).
+    /// Pressure (base UnitDefinition pascal, kg · m⁻¹ · s⁻²).
     quantity: Pressure; "pressure";
-    /// Dimension of pressure, L⁻¹MT⁻² (base unit pascal, kg · m⁻¹ · s⁻²).
+    /// Dimension of pressure, L⁻¹MT⁻² (base UnitDefinition pascal, kg · m⁻¹ · s⁻²).
     dimension: ISQ<
         N1,     // length
         P1,     // mass
@@ -23,7 +23,7 @@ quantity! {
         @kilopascal: prefix!(kilo); "kPa", "kilopascal", "kilopascals";
         @hectopascal: prefix!(hecto); "hPa", "hectopascal", "hectopascals";
         @decapascal: prefix!(deca); "daPa", "decapascal", "decapascals";
-        /// Derived unit of pressure.
+        /// Derived UnitDefinition of pressure.
         @pascal: prefix!(none); "Pa", "pascal", "pascals";
         @decipascal: prefix!(deci); "dPa", "decipascal", "decipascals";
         @centipascal: prefix!(centi); "cPa", "centipascal", "centipascals";
@@ -85,8 +85,7 @@ quantity! {
             "pounds-force per square foot";
         @pound_force_per_square_inch: 6.894_757_889_515_779_E3; "lbf/in²", "pound-force per square inch",
             "pounds-force per square inch";
-        @psi: 6.894_757_E3; "psi", "pound-force per square inch",
-            "pounds-force per square inch";
+        @psi: 6.894_757_889_515_779_E3; "psi", "pound-force per square inch", "pounds-force per square inch";
         @torr: 1.333_224_E2; "Torr", "torr", "torr";
     }
 }

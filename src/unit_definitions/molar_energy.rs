@@ -1,9 +1,9 @@
-//! Molar energy (base unit joule per mole, kg · m² · s⁻² · mol⁻¹).
+//! Molar energy (base UnitDefinition joule per mole, kg · m² · s⁻² · mol⁻¹).
 use crate::{prefix, quantity};
 quantity! {
-    /// Molar energy (base unit joule per mole, kg · m² · s⁻² · mol⁻¹).
+    /// Molar energy (base UnitDefinition joule per mole, kg · m² · s⁻² · mol⁻¹).
     quantity: MolarEnergy; "molar energy";
-    /// Dimension of molar energy, L²MT⁻²N⁻¹ (base unit joule per mole, kg · m² · s⁻² · mol⁻¹).
+    /// Dimension of molar energy, L²MT⁻²N⁻¹ (base UnitDefinition joule per mole, kg · m² · s⁻² · mol⁻¹).
     dimension: ISQ<
         P2,     // length
         P1,     // mass
@@ -18,7 +18,7 @@ quantity! {
             "kg · m²/(s² · mol)", "kilogram square meter per second squared mole",
             "kilograms square meter per second squared mole";
 
-        // Molar energy is commonly expressed in terms of derived unit joule
+        // Molar energy is commonly expressed in terms of derived UnitDefinition joule
         @yottajoule_per_mole: prefix!(yotta); "YJ/mol", "yottajoule per mole",
             "yottajoules per mole";
         @zettajoule_per_mole: prefix!(zetta); "ZJ/mol", "zettajoule per mole",
@@ -32,7 +32,7 @@ quantity! {
         @hectojoule_per_mole: prefix!(hecto); "hJ/mol", "hectojoule per mole",
             "hectojoules per mole";
         @decajoule_per_mole: prefix!(deca); "daJ/mol", "decajoule per mole", "decajoules per mole";
-        /// The derived unit of molar energy. Equivalent to kg · m²/(s² · mol).
+        /// The derived UnitDefinition of molar energy. Equivalent to kg · m²/(s² · mol).
         @joule_per_mole: prefix!(none); "J/mol", "joule per mole", "joules per mole";
         @decijoule_per_mole: prefix!(deci); "dJ/mol", "decijoule per mole", "decijoules per mole";
         @centijoule_per_mole: prefix!(centi); "cJ/mol", "centijoule per mole",
@@ -71,15 +71,15 @@ quantity! {
         @microwatt_hour_per_mole: 3.6_E-3; "µW · h/mol", "microwatt hour per mole",
             "microwatt hours per mole";
 
-        @btu_it_per_mole: 1.055_056_E3; "Btu (IT)/mol", "British thermal unit (IT) per mole",
+        @btu_it_per_mole: 1.055_056_E3; "Btu (IT)/mol", "British thermal UnitDefinition (IT) per mole",
             "British thermal units (IT) per mole";
-        @btu_per_mole: 1.054_350_E3; "Btu/mol", "British thermal unit per mole",
+        @btu_per_mole: 1.054_350_E3; "Btu/mol", "British thermal UnitDefinition per mole",
             "British thermal units per mole";
-        @btu_39_per_mole: 1.059_67_E3; "Btu₃₉/mol", "British thermal unit (39 °F) per mole",
+        @btu_39_per_mole: 1.059_67_E3; "Btu₃₉/mol", "British thermal UnitDefinition (39 °F) per mole",
             "British thermal units (39 °F) per mole";
-        @btu_59_per_mole: 1.054_80_E3; "Btu₅₉/mol", "British thermal unit (59 °F) per mole",
+        @btu_59_per_mole: 1.054_80_E3; "Btu₅₉/mol", "British thermal UnitDefinition (59 °F) per mole",
             "British thermal units (59 °F) per mole";
-        @btu_60_per_mole: 1.054_68_E3; "Btu₆₀/mol", "British thermal unit (60 °F) per mole",
+        @btu_60_per_mole: 1.054_68_E3; "Btu₆₀/mol", "British thermal UnitDefinition (60 °F) per mole",
             "British thermal units (60 °F) per mole";
         @calorie_it_per_mole: 4.186_8_E0; "cal (IT)/mol", "calorie (IT) per mole",
             "calories (IT) per mole";
