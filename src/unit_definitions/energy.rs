@@ -92,7 +92,7 @@ quantity! {
 #[cfg(test)]
 #[cfg(feature="Energy")]
 mod tests {
-    use crate::{units::{MassUnit, LengthUnit, EnergyUnit, TimeUnit}, units_base::{UnitDefinition, UnitBase}};
+    use crate::{units::{MassUnit, LengthUnit, EnergyUnit, TimeUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {

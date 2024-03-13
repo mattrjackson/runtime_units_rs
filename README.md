@@ -4,9 +4,12 @@ The goal for this library is to serve as a run-time Rust library for working wit
 Much of the code (particularly the unit definitions) were adapted from the excellent uom library (https://github.com/iliekturtles/uom). This library was designed to support cases where compile time analysis isn't a great fit. This can presently handle conversions of everything supported by uom except temperature (temperature intervals are supported).  
 
 ## Usage
+
+An example of including all units and serialization support:
+
 ```toml
 [dependencies]
-runtime_units = { version = "0.1.5", features = ["All", "serde"] }
+runtime_units = { version = "0.2", features = ["All", "serde"] }
 ```
 no_std is supported if the `std` feature flag is removed.
 
