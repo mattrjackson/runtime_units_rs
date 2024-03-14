@@ -30,14 +30,14 @@ mod test
     #[cfg(all(any(feature="All", all(feature="Time", feature="Length", feature="Velocity", feature="Acceleration", feature="Force", feature="Mass")), feature="std"))]
     fn check_ops()
     {
-        use crate::{quantity::QuantityBase, Acceleration, Force, Length, Mass, Time, Velocity}; 
+        use crate::{quantity::Quantity, Acceleration, Force, Length, Mass, Time, Velocity}; 
         // Check equality operator
         assert_eq!(Force::newton(1.0), Force::millinewton(1000.0));
         assert_ne!(Force::nanonewton(1.0), Force::newton(100.0));
 
         // Test Add trait for both a quantity and Quantity Base
         assert_eq!(Length::meter(1.0) + Length::centimeter(100.0), Length::meter(2.0));
-        assert_eq!(Length::meter(1.0) + QuantityBase::from(Length::centimeter(100.0)), Length::centimeter(2.0e2));
+        assert_eq!(Length::meter(1.0) + Quantity::from(Length::centimeter(100.0)), Length::centimeter(2.0e2));
         
         // Test Sub trait for Quantity and Quantity Base
         assert_eq!(Length::meter(1.0) - Velocity::meter_per_second(1.0)*Time::second(0.5), Length::centimeter(50.0));
@@ -48,13 +48,13 @@ mod test
 
         // Test add assign trait for both a quantity and Quantity Base
         let mut length_add_assign = Length::meter(5.0);
-        length_add_assign += QuantityBase::from(Length::centimeter(200.0));
+        length_add_assign += Quantity::from(Length::centimeter(200.0));
         length_add_assign += Length::kilometer(0.003);
         assert_eq!(length_add_assign, Length::meter(10.0));
 
         // Test Sub trait for both a quantity and Quantity Base
         let mut length_sub_assign = Length::centimeter(100.0);
-        length_sub_assign -= QuantityBase::from(Length::meter(0.5));
+        length_sub_assign -= Quantity::from(Length::meter(0.5));
         length_sub_assign -= Length::centimeter(50.0);
         assert_eq!(length_sub_assign, Length::megameter(0.0));
 
@@ -89,10 +89,10 @@ mod test
     fn test_convert_unit_type_to_units()
     {       
         
-        use crate::{quantities::QuantityBase, units::LengthUnit, Length, Time, UnitTypes};
+        use crate::{quantities::Quantity, units::LengthUnit, Length, Time, UnitTypes};
 
         let unit_type = UnitTypes::Length;
-        let _result = QuantityBase::from(Length::meter(5.0)) / QuantityBase::from(Time::second(1.0));
+        let _result = Quantity::from(Length::meter(5.0)) / Quantity::from(Time::second(1.0));
         assert_eq!(unit_type.to_unit("m").unwrap(),crate::Units::Length(LengthUnit::meter));
         assert_eq!(unit_type.to_unit("meter").unwrap(), crate::Units::Length(LengthUnit::meter));
         assert_ne!(unit_type.to_unit("meter").unwrap(), crate::Units::Length(LengthUnit::kilometer));        
@@ -101,10 +101,10 @@ mod test
     #[cfg(any(feature="All", feature="Length"))]
     fn test_quantities_to_base_quantity()
     {
-        use crate::{quantity::QuantityBase, Length, Quantities};
+        use crate::{quantity::Quantity, Length, Quantities};
 
         let quantity = Quantities::Length(Length::meter(10.0));
-        assert_eq!(QuantityBase::from(quantity), QuantityBase::from(Length::centimeter(1e3)));
+        assert_eq!(Quantity::from(quantity), Quantity::from(Length::centimeter(1e3)));
     }
     #[test]
     #[cfg(any(feature="All", feature="Length"))]

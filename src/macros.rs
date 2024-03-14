@@ -84,14 +84,14 @@ macro_rules! impl_quantity_ops {
             }
         }
 
-        impl PartialEq<QuantityBase> for $quantity
+        impl PartialEq<Quantity> for $quantity
         {
-            fn eq(&self, other: &QuantityBase) -> bool {
-                QuantityBase::from(*self).eq(other)
+            fn eq(&self, other: &Quantity) -> bool {
+                Quantity::from(*self).eq(other)
             }
         }
         
-        impl PartialEq<$quantity> for QuantityBase
+        impl PartialEq<$quantity> for Quantity
         {
             fn eq(&self, other: &$quantity) -> bool {
                 *other == *self
@@ -107,17 +107,17 @@ macro_rules! impl_quantity_ops {
 
         impl<T:IsQuantity> Mul<T> for $quantity
         {
-            type Output = QuantityBase;
-            fn mul(self, rhs: T) -> QuantityBase {
-                QuantityBase{ value: self.value*rhs.value(), unit: self.definition()*rhs.definition() }
+            type Output = Quantity;
+            fn mul(self, rhs: T) -> Quantity {
+                Quantity{ value: self.value*rhs.value(), unit: self.definition()*rhs.definition() }
             }
         }
         impl<T:IsQuantity> Div<T> for $quantity
         {
-            type Output = QuantityBase;
+            type Output = Quantity;
 
-            fn div(self, rhs: T) -> QuantityBase {
-                QuantityBase{ value: self.value/rhs.value(), unit: self.definition()/rhs.definition() }
+            fn div(self, rhs: T) -> Quantity {
+                Quantity{ value: self.value/rhs.value(), unit: self.definition()/rhs.definition() }
             }
         }
         impl Add<$quantity> for $quantity
@@ -154,11 +154,11 @@ macro_rules! impl_quantity_ops {
             }
         }
 
-        impl Add<QuantityBase> for $quantity
+        impl Add<Quantity> for $quantity
         {
             type Output=Self;
 
-            fn add(self, rhs: QuantityBase) -> Self {
+            fn add(self, rhs: Quantity) -> Self {
                 if self.definition().base != rhs.unit.base
                 {
                     panic!("Incompatible units added");
@@ -167,10 +167,10 @@ macro_rules! impl_quantity_ops {
                 Self{ value: self.value + rhs_value, unit: self.unit }
             }
         }
-        impl Sub<QuantityBase> for $quantity
+        impl Sub<Quantity> for $quantity
         {
             type Output=Self;
-            fn sub(self, rhs: QuantityBase) -> Self {
+            fn sub(self, rhs: Quantity) -> Self {
                 if self.definition().base != rhs.unit.base
                 {
                     panic!("Incompatible units subtracted");
@@ -180,9 +180,9 @@ macro_rules! impl_quantity_ops {
             }
         }       
 
-        impl AddAssign<QuantityBase> for $quantity
+        impl AddAssign<Quantity> for $quantity
         {
-            fn add_assign(&mut self, rhs: QuantityBase) {
+            fn add_assign(&mut self, rhs: Quantity) {
                 if self.definition().base != rhs.unit.base
                 {
                     panic!("Incompatible units subtracted");
@@ -192,9 +192,9 @@ macro_rules! impl_quantity_ops {
             }
         }
 
-        impl SubAssign<QuantityBase> for $quantity
+        impl SubAssign<Quantity> for $quantity
         {
-            fn sub_assign(&mut self, rhs: QuantityBase) {
+            fn sub_assign(&mut self, rhs: Quantity) {
                 if self.definition().base != rhs.unit.base
                 {
                     panic!("Incompatible units subtracted");
@@ -222,7 +222,7 @@ macro_rules! quantity {
         #[cfg(feature="utoipa")]
         use utoipa::ToSchema;
         use $crate::errors::RuntimeUnitError;
-        use $crate::QuantityBase;
+        use $crate::Quantity;
         use $crate::units_base::{UnitDefinition, UnitBase};
         paste::paste!{
         $(#[$quantity_attr])*
@@ -331,6 +331,21 @@ macro_rules! quantity {
                         )+
                     }
                 }
+            }            
+            impl TryFrom<UnitDefinition> for [<$quantity Unit>]
+            {
+                type Error = RuntimeUnitError;                
+                #[allow(unreachable_patterns)]
+                fn try_from(value: UnitDefinition) -> Result<Self, Self::Error> 
+                {
+                    match value
+                    {
+                        $(
+                            UnitDefinition { base: [<$quantity:upper _UNIT_BASE>], multiplier: [<$quantity:upper _ $unit:upper _conversion:upper>] } => Ok([<$quantity Unit>]::$unit),
+                        )+
+                        _ =>  Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Could not convert from {:?} to {}", value, stringify!($quantity))))
+                    }
+                }
             }
             impl TryFrom<$crate::Units> for [<$quantity Unit>]
             {
@@ -345,6 +360,7 @@ macro_rules! quantity {
                 }
             }
         }
+        
         paste::paste!
         {
             $(#[$quantity_attr])*
@@ -370,6 +386,13 @@ macro_rules! quantity {
                         Self { value, unit: [<$quantity Unit>]::$unit.into() }
                     }
                 )+
+
+                #[doc = "Retrieve the value associated with this [`" [<$quantity>]"`]."]   
+                #[inline]
+                pub fn value(&self) -> f64
+                {
+                    self.value
+                }
 
                 #[doc = "Retrieve the `UnitDefinition` associated with this [`" [<$quantity>]"`]."]   
                 #[inline]
@@ -425,11 +448,17 @@ macro_rules! quantity {
                     }
                 }
             }
-            impl From<$quantity> for QuantityBase
+            impl From<$quantity> for Quantity
             {    
                 fn from(quantity: $quantity) -> Self {
                     Self { value: quantity.value, unit: quantity.unit.into() }
                 }                
+            }
+            impl From<Quantity> for $quantity
+            {
+                fn from(quantity: Quantity) -> $quantity {
+                    $quantity { value: quantity.value, unit: [<$quantity Unit>]::try_from(quantity.unit).unwrap() }
+                } 
             }
             use crate::impl_quantity_ops;
             impl_quantity_ops!($quantity);
@@ -519,7 +548,7 @@ macro_rules! system {
         }
     ) => {
         use $crate::units_base::UnitDefinition;
-        use $crate::QuantityBase;
+        use $crate::Quantity;
         #[cfg(feature="utoipa")]
         use utoipa::ToSchema;
         use paste::paste;
@@ -541,7 +570,7 @@ macro_rules! system {
                     pub use $crate::unit_definitions::[<$quantity:snake>]::$quantity;           
                 }
             )+
-            pub use $crate::quantity::QuantityBase;
+            pub use $crate::quantity::Quantity;
             
         }
         pub mod units
@@ -621,14 +650,14 @@ macro_rules! system {
                 )+
             }
 
-            impl From<Quantities> for QuantityBase
+            impl From<Quantities> for Quantity
             {
                 fn from(value: Quantities) -> Self {
                     match value
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            Quantities::$quantity(x)=>QuantityBase { value: x.value, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()} },
+                            Quantities::$quantity(x)=>Quantity { value: x.value, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()} },
                         )+
                     }
                 }
@@ -641,7 +670,7 @@ macro_rules! system {
                 #[cfg_attr(feature="utoipa", derive(ToSchema))]
                 ///
                 /// A wrapper to hold all available units supported by the library. Contains utilities to convert from
-                /// a given arbitrary unit to the underlying `QuantityBase` that is used to perform unit conversion calculations.
+                /// a given arbitrary unit to the underlying `Quantity` that is used to perform unit conversion calculations.
                 /// 
                 pub enum Units
                 {                               
@@ -683,10 +712,10 @@ macro_rules! system {
                 ///
                 /// Convert a given 'value' expressed in the given `Units` intto a convertible `Quantity`
                 /// 
-                pub fn to_quantity(&self, value: f64) -> $crate::quantity::QuantityBase
+                pub fn to_quantity(&self, value: f64) -> $crate::quantity::Quantity
                 {
                     let unit: UnitDefinition = (*self).into();
-                    $crate::quantity::QuantityBase { unit, value }
+                    $crate::quantity::Quantity { unit, value }
                 }
                 paste!{
 

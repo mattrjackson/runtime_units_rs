@@ -64,3 +64,6 @@ fn example()
 ```
 # Performance
 Currently conversions on my laptop cost < 1 nsec if converting between the same quantity, and up to 3 nsec using the convert method from `Quantity`. 
+
+# API Stability
+This library is still a work in progress. Expect futher changes to the API as it matures.

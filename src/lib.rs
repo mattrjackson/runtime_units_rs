@@ -1,4 +1,4 @@
-use quantity::QuantityBase;
+use quantity::Quantity;
 
 
 pub mod errors;
@@ -29,7 +29,7 @@ mod tests;
 //     }
 
 //     let quantity = Quantities::Acceleration(Acceleration::centimeter_per_second_squared(10.0));
-//     assert_eq!(velocity, QuantityBase::from(quantity) * Time::second(100.0));
+//     assert_eq!(velocity, Quantity::from(quantity) * Time::second(100.0));
 
 //     // Get a unit type from a string
 //     let _units = UnitTypes::Length.to_unit("m").unwrap();

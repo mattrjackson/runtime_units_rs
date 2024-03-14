@@ -10,6 +10,22 @@
 ### Fixed
 -->
 
+## [0.2.1] — 2024-03-13
+
+Small bugfixes to correct integration issues I ran into.
+
+### Security
+### Added
+Added `unit()` method for quantities.
+Added `unit_mut()` and `definition_mut()` methods for `Quantity`.
+Added `From<UnitDefinition>` for unit quantity enumerations. 
+Allow conversion from `Quantity` back to a specialized quantity (e.g. `Length`)
+### Changed
+Changed `QuantityBase` back to `Quantity`. 
+### Deprecated
+### Removed
+
+
 ## [0.2.0] — 2024-03-13
 
 ### Security

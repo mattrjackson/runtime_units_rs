@@ -30,7 +30,7 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
-    use crate::{quantity::QuantityBase, unit_definitions::{electric_charge::ElectricChargeUnit, electric_dipole_moment::{ElectricDipoleMoment, ElectricDipoleMomentUnit}, length::Length}, units::LengthUnit, units_base::UnitDefinition, ElectricCharge};
+    use crate::{quantity::Quantity, unit_definitions::{electric_charge::ElectricChargeUnit, electric_dipole_moment::{ElectricDipoleMoment, ElectricDipoleMomentUnit}, length::Length}, units::LengthUnit, units_base::UnitDefinition, ElectricCharge};
     #[test]
     fn check_dimension() {
         assert_eq!(ElectricDipoleMomentUnit::unit_base(), ElectricChargeUnit::unit_base() * LengthUnit::unit_base());
