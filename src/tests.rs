@@ -107,6 +107,15 @@ mod test
         assert_eq!(Quantity::from(quantity), Quantity::from(Length::centimeter(1e3)));
     }
     #[test]
+    #[cfg(any(feature="All", feature ="Energy"))]
+    fn test_quantities_to_string()
+    {
+        use crate::{Energy, Quantities};
+        let quantity = Quantities::Energy(Energy::joule(10.3));
+        let string = quantity.to_string();
+        assert_eq!(string, "10.3 J");
+    }
+    #[test]
     #[cfg(any(feature="All", feature="Length"))]
     fn available_units()
     {

@@ -10,6 +10,15 @@
 ### Fixed
 -->
 
+## [0.2.2] — 2024-03-19
+
+### Security
+### Added
+Added `to_string` implementation for `Quantities`.
+### Changed
+### Deprecated
+### Removed
+
 ## [0.2.1] — 2024-03-13
 
 Small bugfixes to correct integration issues I ran into.

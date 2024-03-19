@@ -662,6 +662,19 @@ macro_rules! system {
                     }
                 }
             }
+            impl ToString for Quantities
+            {
+                fn to_string(&self) -> String 
+                {
+                    match self
+                    {
+                        $(
+                            #[cfg(any(feature = "" $quantity, feature="All"))]   
+                            Quantities::$quantity(x) => format!("{} {}", x.value(), x.unit.abbreviation()),
+                        )+
+                    }                        
+                }
+            }
             
             paste::paste!{     
                 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
