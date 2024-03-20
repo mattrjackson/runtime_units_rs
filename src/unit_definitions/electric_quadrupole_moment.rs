@@ -27,7 +27,7 @@ quantity! {
 
 #[cfg(test)]
 mod test {
-    use crate::{unit_definitions::{area::AreaUnit, electric_charge::ElectricChargeUnit, electric_quadrupole_moment::ElectricQuadrupoleMomentUnit}, units::LengthUnit, units_base::UnitDefinition};
+    use crate::{unit_definitions::{area::AreaUnit, electric_charge::ElectricChargeUnit, electric_quadrupole_moment::ElectricQuadrupoleMomentUnit}, units_base::UnitDefinition};
 
 
     #[test]

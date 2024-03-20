@@ -10,6 +10,16 @@
 ### Fixed
 -->
 
+## [0.2.3] — 2024-03-20
+
+### Security
+### Added
+Added `try_convert` and `unit` methods to `Quantities`.
+### Changed
+### Deprecated
+### Removed
+Removed unused imports in several unit tests.
+
 ## [0.2.2] — 2024-03-19
 
 ### Security

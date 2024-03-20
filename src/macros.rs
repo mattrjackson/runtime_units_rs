@@ -548,6 +548,7 @@ macro_rules! system {
         }
     ) => {
         use $crate::units_base::UnitDefinition;
+        use $crate::errors::RuntimeUnitError;
         use $crate::Quantity;
         #[cfg(feature="utoipa")]
         use utoipa::ToSchema;
@@ -649,7 +650,39 @@ macro_rules! system {
                     $quantity($quantity),
                 )+
             }
+            impl Quantities
+            {                
+                /// Get the `Units` enumeration associated with a given `Quantities` enumeration.
+                pub fn unit(&self) -> Units
+                {
+                    match self
+                    {
+                        $(
+                            #[cfg(any(feature = "" $quantity, feature="All"))]   
+                            Quantities::$quantity(x)=> $crate::Units::from(x.unit),
+                        )+
+                    }
+                }
+                /// Try to convert to the unit specified by a given `Units` enumeration.
+                pub fn try_convert(&self, unit: Units) -> Result<Quantities, RuntimeUnitError>
+                {   
+                    match self
+                    {
+                        $(
+                            #[cfg(any(feature = "" $quantity, feature="All"))]   
+                            Quantities::$quantity(x)=> {
+                                Ok(Quantities::$quantity(x.try_convert(unit)?))
+                            },
+                        )+
+                    }
+                }
 
+                /// Get the value associated with quantity.
+                pub fn value(&self) -> f64
+                {
+                    Quantity::from(*self).value()
+                }
+            }
             impl From<Quantities> for Quantity
             {
                 fn from(value: Quantities) -> Self {

@@ -99,12 +99,37 @@ mod test
     }
     #[test]
     #[cfg(any(feature="All", feature="Length"))]
+    /// Test `UnitTypes` -> `Units`
+    fn test_convert_length()
+    {               
+        use crate::{quantities::Quantity, units::LengthUnit, Length, UnitTypes};
+        let unit_type = UnitTypes::Length;
+        let _result = Quantity::from(Length::meter(5.0));
+        assert_eq!(unit_type.to_unit("m").unwrap(),crate::Units::Length(LengthUnit::meter));
+        assert_eq!(unit_type.to_unit("meter").unwrap(), crate::Units::Length(LengthUnit::meter));
+        assert_ne!(unit_type.to_unit("meter").unwrap(), crate::Units::Length(LengthUnit::kilometer));        
+    }
+    #[test]
+    #[cfg(any(feature="All", feature="Length"))]
     fn test_quantities_to_base_quantity()
     {
         use crate::{quantity::Quantity, Length, Quantities};
 
         let quantity = Quantities::Length(Length::meter(10.0));
         assert_eq!(Quantity::from(quantity), Quantity::from(Length::centimeter(1e3)));
+    }
+    #[test]
+    #[cfg(any(feature="All", all(feature="Length", feature="Time")))]
+    fn test_quantities_conversion()
+    {
+        use crate::{units::LengthUnit, Length, Quantities, Time, Units};
+
+        let length = Quantities::Length(Length::kilometer(1.0));
+        let time = Quantities::Time(Time::millisecond(100.0));
+        
+        assert!(length.try_convert(time.unit()).is_err());
+        assert!(length.try_convert(Units::Length(LengthUnit::meter)).is_ok());
+        assert_eq!(length.try_convert(Units::Length(LengthUnit::meter)).unwrap().value(), 1.0e3);
     }
     #[test]
     #[cfg(any(feature="All", feature ="Energy"))]
