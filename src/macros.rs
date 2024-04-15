@@ -677,10 +677,38 @@ macro_rules! system {
                     }
                 }
 
+                /// Create a new quantity from a given value and unit
+                pub fn new(value: f64, unit: Units) -> Quantities
+                {
+                    match unit
+                    {
+                        $(
+                            #[cfg(any(feature = "" $quantity, feature="All"))]   
+                            Units::$quantity(x)=> {                                
+                                Quantities::$quantity($quantity::new(value, x))
+                            },
+                        )+
+                    }
+                }
                 /// Get the value associated with quantity.
                 pub fn value(&self) -> f64
                 {
                     Quantity::from(*self).value()
+                }
+            }
+            /// A means to create a default quantity with a given set of units.
+            impl From<Units> for Quantities
+            {
+                fn from(value: Units) -> Self 
+                {    
+                    match value
+                    {
+                        $(
+                            #[cfg(any(feature = "" $quantity, feature="All"))]   
+                            Units::$quantity(x)=>Quantities::$quantity( quantities::$quantity::new(0.0, x)),
+                        )+
+                    }                
+                    
                 }
             }
             impl From<Quantities> for Quantity
@@ -756,7 +784,7 @@ macro_rules! system {
             impl Units
             {
                 ///
-                /// Convert a given 'value' expressed in the given `Units` intto a convertible `Quantity`
+                /// Convert a given 'value' expressed in the given `Units` into a convertible `Quantity`
                 /// 
                 pub fn to_quantity(&self, value: f64) -> $crate::quantity::Quantity
                 {

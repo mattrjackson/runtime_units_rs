@@ -10,6 +10,16 @@
 ### Fixed
 -->
 
+## [0.2.4] — 2024-04-15
+
+### Security
+### Added
+Implemented `From<Units>` for `Quantities` to allow creation of a default unit from the quantity.
+Added `new` method for `Quantities` to permit construction for a given value and `Units`. 
+### Changed
+### Deprecated
+### Removed
+
 ## [0.2.3] — 2024-03-20
 
 ### Security

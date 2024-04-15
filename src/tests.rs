@@ -83,6 +83,28 @@ mod test
         let length = LengthUnit::meter;
         let _units: Units = length.into();
     }
+
+    #[test]
+    #[cfg(any(feature="All", feature="Length"))]
+    fn test_quantities_creation()
+    {
+        use crate::{units::LengthUnit, Length, Quantities, Units};
+
+        let units = Units::Length(LengthUnit::angstrom);
+        let quantity: crate::quantities::Quantity = Quantities::new(1.0, units).into();
+        assert_eq!(quantity, Length::angstrom(1.0));
+    }
+    #[test]
+    #[cfg(any(feature="All", feature="Length"))]
+    /// Test From<Units> for Quantities
+    fn test_quantities_from_units()
+    {
+        use crate::{units::LengthUnit, Quantities, Units};
+
+        let units = Units::Length(LengthUnit::angstrom);
+        let quantity = Quantities::from(units);        
+        assert_eq!(quantity.value(), 0.0);
+    }
     #[test]
     #[cfg(any(feature="All", all(feature="Length", feature="Time")))]
     /// Test `UnitTypes` -> `Units`
