@@ -9,7 +9,7 @@ An example of including all units and serialization support:
 
 ```toml
 [dependencies]
-runtime_units = { version = "0.2", features = ["All", "serde"] }
+runtime_units = { version = "0.2.5", features = ["All", "serde"] }
 ```
 no_std is supported if the `std` feature flag is removed.
 
@@ -67,3 +67,5 @@ Currently conversions on my laptop cost < 1 nsec if converting between the same 
 
 # API Stability
 This library is still a work in progress. Expect futher changes to the API as it matures.
+
+Pull requests are welcome. For the most part conversions are based on UOM data.
