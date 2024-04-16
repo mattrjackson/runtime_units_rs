@@ -550,6 +550,7 @@ macro_rules! system {
         use $crate::units_base::UnitDefinition;
         use $crate::errors::RuntimeUnitError;
         use $crate::Quantity;
+        use $crate::units::*;
         #[cfg(feature="utoipa")]
         use utoipa::ToSchema;
         use paste::paste;
@@ -750,7 +751,7 @@ macro_rules! system {
                 {                               
                     $(
                         #[cfg(any(feature = "" $quantity, feature="All"))]                 
-                        $quantity([<$quantity:snake>]::[<$quantity Unit>]),
+                        $quantity([<$quantity Unit>]),
                     )+                
                 }
                 
