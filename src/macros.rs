@@ -220,7 +220,7 @@ macro_rules! quantity {
         }
     ) => {
         #[cfg(feature="utoipa")]
-        use utoipa::ToSchema;
+        use utoipa::{ToSchema, schema};
         use $crate::errors::RuntimeUnitError;
         use $crate::Quantity;
         use $crate::units_base::{UnitDefinition, UnitBase};
@@ -552,7 +552,7 @@ macro_rules! system {
         use $crate::Quantity;
         use $crate::units::*;
         #[cfg(feature="utoipa")]
-        use utoipa::ToSchema;
+        use utoipa::{ToSchema, schema};
         use paste::paste;
         paste::paste!{$(            
            paste::paste!{#[cfg(any(feature = "" $quantity, feature="All"))]
@@ -648,6 +648,7 @@ macro_rules! system {
             {
                 $(
                     #[cfg(any(feature = "" $quantity, feature="All"))]   
+                    #[cfg_attr(feature="utoipa", schema(title = "" $quantity))]
                     $quantity($quantity),
                 )+
             }
@@ -659,7 +660,7 @@ macro_rules! system {
                     match self
                     {
                         $(
-                            #[cfg(any(feature = "" $quantity, feature="All"))]   
+                            #[cfg(any(feature = "" $quantity, feature="All"))]                               
                             Quantities::$quantity(x)=> $crate::Units::from(x.unit),
                         )+
                     }
@@ -750,7 +751,8 @@ macro_rules! system {
                 pub enum Units
                 {                               
                     $(
-                        #[cfg(any(feature = "" $quantity, feature="All"))]                 
+                        #[cfg(any(feature = "" $quantity, feature="All"))]    
+                        #[cfg_attr(feature="utoipa", schema(title = "" [<$quantity Unit>]))]                                                     
                         $quantity([<$quantity Unit>]),
                     )+                
                 }
