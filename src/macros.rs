@@ -231,7 +231,7 @@ macro_rules! quantity {
         #[allow(non_camel_case_types)]         
         #[allow(clippy::eq_op)]
         #[cfg_attr(feature="utoipa", derive(ToSchema))]        
-        #[cfg_attr(feature="utoipa", schema(title = "" $quantity))]
+        #[cfg_attr(feature="utoipa", schema(title = "" [<$quantity UnitI>]))]
         pub enum [<$quantity Unit>]
         {
             $($unit,)+
@@ -368,7 +368,7 @@ macro_rules! quantity {
             #[derive(Copy, Clone, Debug)]
             #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
             #[cfg_attr(feature="utoipa", derive(ToSchema))]
-            #[cfg_attr(feature="utoipa", schema(title = "" $quantity))]
+            #[cfg_attr(feature="utoipa", schema(title = "" [<$quantity I>]))]
             pub struct $quantity
             {
                 pub value: f64,
