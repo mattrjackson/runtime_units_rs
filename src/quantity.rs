@@ -5,10 +5,29 @@ use crate::errors::RuntimeUnitError;
 use crate::units_base::UnitDefinition;
 use crate::Units;
 
-pub(crate) trait IsQuantity
+impl crate::traits::Quantity for Quantity
 {
-    fn value(&self) -> f64;
-    fn definition(&self) -> UnitDefinition;
+    fn unit(&self) -> UnitDefinition {
+        self.definition()
+    }
+
+    fn convert(&self, unit: UnitDefinition)  -> Quantity
+    {
+        Quantity { value: self.value() * self.definition().convert_unchecked(unit).multiplier, unit }
+    }
+    
+    fn try_convert_mut(&mut self, unit: UnitDefinition) -> Result<(), RuntimeUnitError> {
+        self.value *= self.definition().try_convert(unit)?.multiplier;
+        Ok(())
+    }
+    
+    fn convert_mut(&mut self, unit: UnitDefinition) {
+        self.value *= self.unit.convert_unchecked(unit).multiplier;
+    }
+    
+    fn try_convert(&mut self, unit: UnitDefinition) -> Result<Quantity, RuntimeUnitError> {
+        Ok(Quantity { value : self.value * self.unit.try_convert(unit)?.multiplier, unit })
+    }
 }
 
 #[doc = "A quantity of a unit, supports converting from one unit to another." ]
@@ -185,6 +204,13 @@ impl MulAssign for Quantity
     }
 }
 
+impl MulAssign<f64> for Quantity
+{
+    fn mul_assign(&mut self, rhs: f64) {
+        self.value *= rhs;
+    }
+}
+
 
 impl DivAssign for Quantity
 {
@@ -194,19 +220,10 @@ impl DivAssign for Quantity
     }
 }
 
-impl<T:IsQuantity> Mul<T> for Quantity
+impl DivAssign<f64> for Quantity
 {
-    type Output = Quantity;
-    fn mul(self, rhs: T) -> Quantity {
-        Quantity{ value: self.value*rhs.value(), unit: self.definition()*rhs.definition() }
-    }
-}
-impl<T:IsQuantity> Div<T> for Quantity
-{
-    type Output = Quantity;
-
-    fn div(self, rhs: T) -> Quantity {
-        Quantity{ value: self.value/rhs.value(), unit: self.definition()/rhs.definition() }
+    fn div_assign(&mut self, rhs: f64) {
+        self.value /= rhs;
     }
 }
 ///

@@ -1,6 +1,8 @@
 use core::{fmt::Display,  ops::{Div, DivAssign, Mul, MulAssign}};
 use bitfield_struct::bitfield;
 
+use crate::errors::RuntimeUnitError;
+
 #[bitfield(u64)]
 #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(PartialEq, Eq, Hash)]
@@ -249,8 +251,8 @@ impl UnitBase
 #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct UnitDefinition
 {
-    pub base: UnitBase,
-    pub multiplier: f64
+    pub(crate) base: UnitBase,
+    pub(crate) multiplier: f64
 }
 impl Eq for UnitDefinition{}
 impl UnitDefinition
@@ -279,6 +281,30 @@ impl UnitDefinition
     pub fn approx_eq(&self, other: UnitDefinition, rel_error: f64) -> bool
     {
         other.base == self.base && if self.multiplier == 0.0 { (self.multiplier-other.multiplier).abs()} else { (1.0-other.multiplier/self.multiplier).abs() } <= rel_error 
+    }
+    #[doc="Convert one unit to another"]
+    pub fn try_convert(&self, unit: Self) -> Result<Self, RuntimeUnitError>
+    {
+        if unit.base == self.base
+        {
+            Ok(self.convert_unchecked(unit))
+        }
+        else
+        {
+            Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Could not convert from base units of {} to {}", self.unit_string(), unit.unit_string())))
+        }
+    }
+    #[doc="Convert one unit to another"]
+    pub fn convert_unchecked(&self, unit: Self) -> Self
+    {
+        if *self == unit
+        {
+            *self
+        }
+        else 
+        {
+            UnitDefinition { base: self.base, multiplier: self.multiplier / unit.multiplier() }
+        }
     }
 }
 impl Mul<UnitDefinition> for UnitDefinition

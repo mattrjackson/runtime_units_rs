@@ -10,6 +10,17 @@
 ### Fixed
 -->
 
+## [0.30] — 2024-04-16
+
+### TODO ###
+### Security
+### Added
+### Changed
+Correcting bug in utoipa derive for `Units`.
+### Deprecated
+### Removed
+
+
 ## [0.2.5] — 2024-04-16
 
 ### Security
