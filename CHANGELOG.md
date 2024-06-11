@@ -12,9 +12,9 @@
 
 ## [0.30] — 2024-04-16
 
-### TODO ###
 ### Security
 ### Added
+SliceQuantity and Unit Type-specific quantities to hold array of vector data with an associated unit.
 ### Changed
 Correcting bug in utoipa derive for `Units`.
 ### Deprecated

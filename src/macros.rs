@@ -603,7 +603,14 @@ macro_rules! quantity {
 
             impl_quantity_ops!($quantity);
             impl_quantity_slice!($quantity);
-
+            use crate::slice_quantity::SliceQuantity;
+            impl<T: Clone+Slice<f64>> From<[<$quantity Slice>]<T>> for SliceQuantity<T>
+            {
+                fn from(input: [<$quantity Slice>]<T>) -> Self 
+                {
+                    SliceQuantity{ unit: input.unit.definition(), values: input.values }
+                }
+            }
         }        
         paste::paste!
         {
