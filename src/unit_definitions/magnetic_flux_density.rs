@@ -43,6 +43,7 @@ quantity! {
 
 // #[cfg(test)]
 // mod tests {
+// use crate::traits::Unit;
 //     storage_types! {
 //         use crate::si::area as a;
 //         use crate::si::magnetic_flux as f;

@@ -9,7 +9,7 @@ An example of including all units and serialization support:
 
 ```toml
 [dependencies]
-runtime_units = { version = "0.2.5", features = ["All", "serde"] }
+runtime_units = { version = "0.3.0", features = ["All", "serde"] }
 ```
 no_std is supported if the `std` feature flag is removed.
 
@@ -17,9 +17,10 @@ Individual unit types are supported as features, allowing you to pare down the l
 
 ## Quantities and Units
 
-This library consists of two sets of data structures:
+This library consists of three sets of data structures:
 1. Unit data structures. These store data regarding unit itself, and the storage of the unit definition itself (e.g. the dimensions of the unit, and the conversion factor to convert a given unit to its base quantity). These can be serialized (if serde is enabled), and converted to a utoipa schema (if the utoipa feature flag is enabled). 
-2. Quantity data structures. These store a scalar value and an associated unit. Also serializable like the units, and most math operations can be performed on them directly (e.g. scalar Mul/Div, multipliying quantites by each other, equality operators).
+2. Scalar Quantity data structures. These store a scalar value and an associated unit. Also serializable like the units, and most math operations can be performed on them directly (e.g. scalar Mul/Div, multipliying quantites by each other, equality operators).
+3. Array Quantity data structures. These store an array and an associated unit. Analogous to (2). 
 
 # More details:
 

@@ -25,12 +25,13 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+use crate::traits::Unit;
     use crate::{unit_definitions::{electric_current::ElectricCurrentUnit, electric_current_density::ElectricCurrentDensityUnit}, units::AreaUnit, units_base::UnitDefinition};
 
     
     #[test]
     fn check_dimension() {
-        assert_eq!(ElectricCurrentDensityUnit::unit_base(), ElectricCurrentUnit::unit_base() / AreaUnit::unit_base());
+        assert_eq!(ElectricCurrentDensityUnit::base(), ElectricCurrentUnit::base() / AreaUnit::base());
     }
 
     #[test]

@@ -35,22 +35,123 @@ macro_rules! prefix {
     (kibi) => { 1024.0 };
 }
 #[macro_export]
+macro_rules! impl_quantity_slice {
+    ($quantity:ident) =>
+    {
+        paste::paste!
+        {
+        use $crate::traits::Slice;       
+
+        use core::ops::{Mul, Div, Add, Sub, AddAssign, SubAssign, MulAssign, DivAssign };
+        impl<T: Clone+Slice<f64>> Div<f64> for [<$quantity Slice>]<T>
+        {
+            type Output = [<$quantity Slice>]<T>;
+
+            fn div(self, rhs: f64) -> Self::Output {
+                let mut result = self.clone();
+                for val in result.values.as_mut_slice()
+                {  
+                *val /= rhs;
+                }
+                result
+            }
+        }
+
+
+        impl<T: Clone+Slice<f64>> Mul<f64> for [<$quantity Slice>]<T>
+        {
+            type Output = [<$quantity Slice>]<T>;
+
+            fn mul(self, rhs: f64) -> Self::Output {
+                let mut result = self.clone();
+                for val in result.values.as_mut_slice()
+                {  
+                *val *= rhs;
+                }
+                result
+            }
+        }
+        impl<T: Clone+Slice<f64>> DivAssign<f64> for [<$quantity Slice>]<T>
+        {
+
+            fn div_assign(&mut self, rhs: f64) {        
+                for val in self.values.as_mut_slice()
+                {  
+                *val /= rhs;
+                }
+            }
+        }
+        impl<T: Clone+Slice<f64>> MulAssign<f64> for [<$quantity Slice>]<T>
+        {
+
+            fn mul_assign(&mut self, rhs: f64) {        
+                for val in self.values.as_mut_slice()
+                {  
+                *val *= rhs;
+                }
+            }
+        }
+        use $crate::traits::Unit;
+        impl<T: Clone+Slice<f64>> AddAssign<[<$quantity Slice>]<T>> for [<$quantity Slice>]<T>
+        {
+
+            fn add_assign(&mut self, rhs: [<$quantity Slice>]<T>) {            
+                if rhs.values.len() != self.values.len()
+                {
+                    panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
+                }
+                let factor = rhs.unit.definition().convert_unchecked(self.unit.definition()).multiplier;
+                for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
+                {  
+                *val += rhs*factor;
+                }
+            }
+        }
+        impl<T: Clone+Slice<f64>> SubAssign<[<$quantity Slice>]<T>> for [<$quantity Slice>]<T>
+        {
+
+            fn sub_assign(&mut self, rhs: [<$quantity Slice>]<T>) {            
+                if rhs.values.len() != self.values.len()
+                {
+                    panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
+                }
+                let factor = rhs.unit.convert_unchecked(self.unit).multiplier;
+                for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
+                {  
+                *val -= rhs*factor;
+                }
+            }
+        }
+
+        impl<T: Clone+Slice<f64>> crate::traits::FixedQuantity<[<$quantity Unit>]> for [<$quantity Slice>]<T>
+        {
+            fn unit(&self) -> [<$quantity Unit>] {
+                self.unit
+            }
+
+            fn convert(&self, unit: [<$quantity Unit>]) -> Self 
+            {
+                let mut result = self.clone();
+                result.convert_mut(unit);
+                return result;
+            }
+
+            fn convert_mut(&mut self, unit: [<$quantity Unit>]) {
+                let factor = self.unit.definition().convert_unchecked(unit.definition()).multiplier();
+                for val in self.values.as_mut_slice().iter_mut()
+                {
+                    *val *= factor;
+                }            
+            }
+        }
+    }
+    }
+}  
+#[macro_export]
 macro_rules! impl_quantity_ops {   
     ($quantity:ident) =>
     {
-        use core::ops::{Mul, Div, Add, Sub, AddAssign, SubAssign, MulAssign, DivAssign };
-        use $crate::quantity::IsQuantity;
-        impl IsQuantity for $quantity
-        {        
-            fn value(&self) -> f64 {
-                self.value
-            }
-        
-            fn definition(&self) -> UnitDefinition {
-                self.unit.into()
-            }
-        }
-        
+        use crate::traits::IsScalarQuantity;
         impl Mul<f64> for $quantity
         {
             type Output = $quantity;
@@ -105,21 +206,22 @@ macro_rules! impl_quantity_ops {
             }
         }
 
-        impl<T:IsQuantity> Mul<T> for $quantity
+        impl<T:IsScalarQuantity> Mul<T> for $quantity
         {
             type Output = Quantity;
             fn mul(self, rhs: T) -> Quantity {
-                Quantity{ value: self.value*rhs.value(), unit: self.definition()*rhs.definition() }
+                Quantity{ value: self.value*rhs.value(), unit: self.definition()*rhs.unit() }
             }
         }
-        impl<T:IsQuantity> Div<T> for $quantity
+        impl<T:IsScalarQuantity> Div<T> for $quantity
         {
             type Output = Quantity;
 
             fn div(self, rhs: T) -> Quantity {
-                Quantity{ value: self.value/rhs.value(), unit: self.definition()/rhs.definition() }
+                Quantity{ value: self.value/rhs.value(), unit: self.definition()/rhs.unit() }
             }
         }
+
         impl Add<$quantity> for $quantity
         {
             type Output=Self;
@@ -220,7 +322,7 @@ macro_rules! quantity {
         }
     ) => {
         #[cfg(feature="utoipa")]
-        use utoipa::ToSchema;
+        use utoipa::{ToSchema, schema};
         use $crate::errors::RuntimeUnitError;
         use $crate::Quantity;
         use $crate::units_base::{UnitDefinition, UnitBase};
@@ -231,6 +333,7 @@ macro_rules! quantity {
         #[allow(non_camel_case_types)]         
         #[allow(clippy::eq_op)]
         #[cfg_attr(feature="utoipa", derive(ToSchema))]        
+        #[cfg_attr(feature="utoipa", schema(title = "" [<$quantity Unit>]))]
         pub enum [<$quantity Unit>]
         {
             $($unit,)+
@@ -239,42 +342,15 @@ macro_rules! quantity {
         paste::paste! { 
             pub(crate) const [<$quantity:upper _UNIT_BASE>]: UnitBase = crate::units_base::UOMDimensions::to_unit_base(($($crate::units_base::UOMDimensions::$dimension,)+));
             $(pub(crate) const [<$quantity:upper _ $unit:upper _conversion:upper>]: f64 = $conversion;)+
+        
         impl [<$quantity Unit>] 
         {
-            
-            /// get the UnitBase for this type of unit
-            pub(crate) const fn unit_base() -> UnitBase
-            {
-                [<$quantity:upper _UNIT_BASE>]
-            }
-
-            /// Retrieve the underlying `UnitDefinition`
-            pub const fn unit(&self) -> UnitDefinition
-            {
-                match self
-                {
-                    $([<$quantity Unit>]::$unit => UnitDefinition 
-                        { 
-                            multiplier: [<$quantity:upper _ $unit:upper _conversion:upper>], 
-                            base: [<$quantity Unit>]::unit_base()
-                        },
-                    )+
-                }
-                
-            }
-
-            /// Get the base unit for this unit type (for length, as an example, this would be `meter`)
-            pub fn base(&self) -> [<$quantity Unit>]
-            {
-                $(if [<$quantity:upper _ $unit:upper _conversion:upper>] == 1.0 { return [<$quantity Unit>]::$unit; })+
-                panic!("No base unit found! for {}", stringify!($quantity));
-            }
             paste::paste!{
             $(
                 #[allow(clippy::eq_op)]
                 pub fn [<get_$unit:snake>]() -> UnitDefinition
                 {
-                    UnitDefinition{ base: [<$quantity Unit>]::unit_base(), multiplier: [<$quantity:upper _ $unit:upper _conversion:upper>] }
+                    UnitDefinition{ base: [<$quantity:upper _UNIT_BASE>], multiplier: [<$quantity:upper _ $unit:upper _conversion:upper>] }
                 })+
             }        
             #[doc = "Multiplier of unit to its base quantity."]
@@ -315,9 +391,23 @@ macro_rules! quantity {
             {
                 const UNITS: &[&'static str] = &[ $($singular,)+ ];                
                 UNITS
-            }
-            
+            }            
         }
+        impl $crate::traits::Unit for [<$quantity Unit>] 
+        {
+              /// Return unit definition for this Unit Type
+                fn definition(&self) -> UnitDefinition
+                {
+                    match self
+                    {                    
+                        $([<$quantity Unit>]::$unit=>[<$quantity Unit>]::[<get_$unit:snake>](),)+
+                    }
+                }
+                fn base() -> UnitBase
+                {
+                    [<$quantity:upper _UNIT_BASE>]
+                }                
+            }        
         }
         paste::paste!
         {
@@ -363,15 +453,19 @@ macro_rules! quantity {
         
         paste::paste!
         {
+            use $crate::traits::FixedQuantity;
             $(#[$quantity_attr])*
             #[derive(Copy, Clone, Debug)]
             #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
             #[cfg_attr(feature="utoipa", derive(ToSchema))]
+            #[cfg_attr(feature="utoipa", schema(title = "" [<$quantity>]))]
+            #[doc = "Scalar storage of a quantity (f64 and [`" [<$quantity Unit>]"`])."]   
             pub struct $quantity
             {
                 pub value: f64,
                 pub unit: [<$quantity Unit>]   
             }
+          
             impl $quantity
             {
                 #[doc = "Create a new [`" [<$quantity Unit>]"`]."]   
@@ -434,6 +528,25 @@ macro_rules! quantity {
                     Ok(self.convert(destination_unit))                    
                 }                
             }
+            impl FixedQuantity<[<$quantity Unit>]> for $quantity
+            {                
+                fn unit(&self) -> [<$quantity Unit>]
+                {
+                    self.unit
+                }
+                /// Convert from this unit to another (creates a copy). No validation of base unit is made.
+                fn convert(&self, unit: [<$quantity Unit>]) -> Self
+                {
+                    Self { value: self.convert_unchecked(unit.into()), unit: unit }
+                }
+                /// Convert from this unit to another (modifies current quantity). No validation of base unit is made.
+                fn convert_mut(&mut self, unit: [<$quantity Unit>])
+                {
+                    self.value = self.convert_unchecked(unit.into());
+                }
+            }
+
+            
             
             impl From<$quantity> for UnitDefinition
             {
@@ -460,8 +573,67 @@ macro_rules! quantity {
                     $quantity { value: quantity.value, unit: [<$quantity Unit>]::try_from(quantity.unit).unwrap() }
                 } 
             }
-            use crate::impl_quantity_ops;
+            impl $crate::traits::IsScalarQuantity for $quantity
+            {
+                fn value(&self) -> f64
+                {
+                    self.value
+                }
+
+                fn unit(&self) -> UnitDefinition
+                {
+                    self.unit.into()
+                }
+            }
+            use crate::impl_quantity_ops;            
+            
+            #[derive(Clone, Debug)]
+            #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
+            #[cfg_attr(feature="utoipa", derive(ToSchema))]            
+            #[cfg_attr(feature="utoipa", aliases([<$quantity Vec>]=[<$quantity Slice>]<Vec<f64>>))]
+            #[doc = "Array storage (must implement `Slice`) for a series of values and [`" [<$quantity Unit>]"`]. Utoipa alias has been implemented for `Vec<f64>`."]   
+            pub struct [<$quantity Slice>]<T: Clone+Slice<f64>>
+            {
+                pub unit: [<$quantity Unit>],
+                pub values: T
+            }
+            use crate::impl_quantity_slice;
+            impl<T: Clone+Slice<f64>> [<$quantity Slice>]<T>
+            {
+                #[doc = "Create a new vector of [`" [<$quantity Unit>]"`]."]   
+                pub fn new(values: T, unit: [<$quantity Unit>]) -> Self
+                {
+                    Self{values, unit}
+                }
+                $(
+                    #[doc = "Create a new [`" [<$quantity>] "`] with units of [`" [<$quantity Unit>] "::" [<$unit>] "`]."] 
+                    pub fn [<$unit:snake>](values: T) -> Self
+                    {
+                        Self{ values, unit: [<$quantity Unit>]::$unit.into() }
+                    }
+                )+
+                $(
+                    #[doc = "Convert to [`" [<$quantity Unit>] "::" [<$unit>] "`]."]                        
+                    #[inline]
+                    pub fn [<to_ $unit:snake>](&self) -> Self
+                    {                     
+                        let mut r = self.clone();
+                        r.convert_mut([<$quantity Unit>]::$unit);
+                        r
+                    }
+                )+
+            }
+
             impl_quantity_ops!($quantity);
+            impl_quantity_slice!($quantity);
+            use crate::slice_quantity::SliceQuantity;
+            impl<T: Clone+Slice<f64>> From<[<$quantity Slice>]<T>> for SliceQuantity<T>
+            {
+                fn from(input: [<$quantity Slice>]<T>) -> Self 
+                {
+                    SliceQuantity{ unit: input.unit.definition(), values: input.values }
+                }
+            }
         }        
         paste::paste!
         {
@@ -552,15 +724,19 @@ macro_rules! system {
         use $crate::Quantity;
         use $crate::units::*;
         #[cfg(feature="utoipa")]
-        use utoipa::ToSchema;
+        use utoipa::{ToSchema, schema};
         use paste::paste;
         paste::paste!{$(            
            paste::paste!{#[cfg(any(feature = "" $quantity, feature="All"))]
            mod [<$quantity:snake>];
             }
-           paste::paste!{#[cfg(any(feature = "" $quantity, feature="All"))]           
-           pub use $crate::unit_definitions::[<$quantity:snake>]::$quantity;      
-            }
+           paste::paste!{#[cfg(any(feature = "" $quantity, feature="All"))]       
+           pub use $crate::unit_definitions::[<$quantity:snake>]::[<$quantity Slice>];}          
+           paste::paste!{#[cfg(any(feature = "" $quantity, feature="All"))]       
+           pub use $crate::unit_definitions::[<$quantity:snake>]::$quantity;}
+           #[cfg(any(feature = "" $quantity, feature="All"))]                                             
+           #[cfg(feature="utoipa")]
+           pub use $crate::unit_definitions::[<$quantity:snake>]::[<$quantity Vec>];
            
         )+
         pub mod quantities
@@ -569,7 +745,7 @@ macro_rules! system {
                 paste::paste!{
                     #[allow(clippy::eq_op)]
                     #[cfg(any(feature = "" $quantity, feature="All"))]                    
-                    pub use $crate::unit_definitions::[<$quantity:snake>]::$quantity;           
+                    pub use $crate::unit_definitions::[<$quantity:snake>]::$quantity;                         
                 }
             )+
             pub use $crate::quantity::Quantity;
@@ -648,6 +824,7 @@ macro_rules! system {
             {
                 $(
                     #[cfg(any(feature = "" $quantity, feature="All"))]   
+                    #[cfg_attr(feature="utoipa", schema(title = "" $quantity))]
                     $quantity($quantity),
                 )+
             }
@@ -659,7 +836,7 @@ macro_rules! system {
                     match self
                     {
                         $(
-                            #[cfg(any(feature = "" $quantity, feature="All"))]   
+                            #[cfg(any(feature = "" $quantity, feature="All"))]                               
                             Quantities::$quantity(x)=> $crate::Units::from(x.unit),
                         )+
                     }
@@ -719,7 +896,7 @@ macro_rules! system {
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            Quantities::$quantity(x)=>Quantity { value: x.value, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()} },
+                            Quantities::$quantity(x)=>Quantity { value: x.value, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]} },
                         )+
                     }
                 }
@@ -750,7 +927,8 @@ macro_rules! system {
                 pub enum Units
                 {                               
                     $(
-                        #[cfg(any(feature = "" $quantity, feature="All"))]                 
+                        #[cfg(any(feature = "" $quantity, feature="All"))]    
+                        #[cfg_attr(feature="utoipa", schema(title = "" [<$quantity Unit>]))]                                                     
                         $quantity([<$quantity Unit>]),
                     )+                
                 }
@@ -762,7 +940,7 @@ macro_rules! system {
                         {
                             $(
                                 #[cfg(any(feature = "" $quantity, feature="All"))]     
-                                Units::$quantity(x)=> UnitDefinition{multiplier: x.multiplier(), base: [<$quantity:snake>]::[<$quantity Unit>]::unit_base()},
+                                Units::$quantity(x)=> UnitDefinition{multiplier: x.multiplier(), base: [<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]},
                             )+
                         }
                     }
@@ -793,19 +971,7 @@ macro_rules! system {
                     $crate::quantity::Quantity { unit, value }
                 }
                 paste!{
-
-                ///
-                /// Get the base unit for this particular unit type (e.g. `LengthUnit` this would be `LengthUnit::meter`)
-                /// 
-                pub fn base(&self) -> Units
-                {
-                    match *self
-                    {
-                        $(
-                            #[cfg(any(feature = "" $quantity, feature="All"))]  
-                            Units::$quantity(x)=>Units::$quantity(x.base()),)+
-                    }
-                }     
+     
                 ///
                 /// Get list of units available for this `Units` type
                 /// 

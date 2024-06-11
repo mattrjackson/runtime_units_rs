@@ -21,12 +21,13 @@ quantity! {
 
 #[cfg(test)]
 mod test {
+    use crate::traits::Unit;
     use crate::{unit_definitions::{electric_flux::ElectricFluxUnit, electric_potential::ElectricPotentialUnit}, units::LengthUnit, units_base::UnitDefinition};
 
 
     #[test]
     fn check_dimension() {
-        assert_eq!(ElectricFluxUnit::unit_base(), ElectricPotentialUnit::unit_base() * LengthUnit::unit_base());
+        assert_eq!(ElectricFluxUnit::base(), ElectricPotentialUnit::base() * LengthUnit::base());
     }
 
     #[test]

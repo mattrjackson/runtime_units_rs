@@ -1,6 +1,10 @@
 #[cfg(test)]
 mod test
-{   
+{
+
+    use crate::units::TimeUnit;
+    use crate::{units::LengthUnit, units_base::UnitDefinition};
+   
     #[test]
     #[cfg(all(any(feature="All", all(feature="Time", feature="Length", feature="Velocity", feature="Acceleration")), feature="std", feature="serde"))]
     fn test_unit_serialization()
@@ -178,5 +182,19 @@ mod test
     {
         use serde_json::json;
         println!("{}",json!(crate::Length::new(1.0, crate::units::LengthUnit::centimeter)));
+    }
+   
+    
+
+    #[test]
+    fn test_vector_quantity()
+    {
+        use crate::LengthSlice;
+        let length_meters = LengthSlice::meter(vec![1.0, 2.0, 3.0]);        
+        let length_centimeters = length_meters.to_centimeter();
+        for (&val_m, &val_cm) in length_meters.values.iter().zip(&length_centimeters.values)
+        {
+            assert_eq!(val_m*100.0, val_cm);
+        }        
     }
 }

@@ -27,11 +27,12 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+use crate::traits::Unit;
     use crate::{units::{MassUnit, ArealDensityOfStatesUnit, EnergyUnit, TimeUnit, LengthUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {
-        assert_eq!(ArealDensityOfStatesUnit::unit_base(),  MassUnit::unit_base().powi(-1) * TimeUnit::unit_base().powi(2) / LengthUnit::unit_base().powi(4));
+        assert_eq!(ArealDensityOfStatesUnit::base(),  MassUnit::base().powi(-1) * TimeUnit::base().powi(2) / LengthUnit::base().powi(4));
     }
 
    #[test]

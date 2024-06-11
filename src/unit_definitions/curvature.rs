@@ -26,12 +26,13 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+use crate::traits::Unit;
     use crate::{unit_definitions::{angle::AngleUnit, curvature::CurvatureUnit}, units::LengthUnit, units_base::UnitDefinition};
 
 
     #[test]
     fn check_dimension() {
-        assert_eq!(CurvatureUnit::unit_base(), AngleUnit::unit_base() / LengthUnit::unit_base());
+        assert_eq!(CurvatureUnit::base(), AngleUnit::base() / LengthUnit::base());
     }
 
     #[test]

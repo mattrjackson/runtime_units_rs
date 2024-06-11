@@ -39,12 +39,13 @@ quantity! {
 
 #[cfg(test)]
 mod test {
+    use crate::traits::Unit;
     use crate::{unit_definitions::{dynamic_viscosity::DynamicViscosityUnit, time::TimeUnit}, units::{LengthUnit, MassUnit, PressureUnit}, units_base::UnitDefinition};
 
 
     #[test]
     fn check_dimension() {
-        assert_eq!(DynamicViscosityUnit::unit_base(), PressureUnit::unit_base() * TimeUnit::unit_base());
+        assert_eq!(DynamicViscosityUnit::base(), PressureUnit::base() * TimeUnit::base());
     }
 
     #[test]

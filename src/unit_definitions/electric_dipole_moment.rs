@@ -30,10 +30,11 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+use crate::traits::Unit;
     use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_dipole_moment::{ElectricDipoleMoment, ElectricDipoleMomentUnit}, length::Length}, units::LengthUnit, units_base::UnitDefinition, ElectricCharge};
     #[test]
     fn check_dimension() {
-        assert_eq!(ElectricDipoleMomentUnit::unit_base(), ElectricChargeUnit::unit_base() * LengthUnit::unit_base());
+        assert_eq!(ElectricDipoleMomentUnit::base(), ElectricChargeUnit::base() * LengthUnit::base());
     }
 
     #[test]

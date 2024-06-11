@@ -71,11 +71,12 @@ quantity! {
 #[cfg(test)]
 #[cfg(feature="Acceleration")]
 mod tests {
+use crate::traits::Unit;
     use crate::{unit_definitions::time::TimeUnit, units::{AccelerationUnit, LengthUnit}, units_base::{UnitDefinition, UnitBase}};
 
     #[test]
     fn check_dimension() {
-        assert_eq!(AccelerationUnit::unit_base(), UnitBase::new_length()/UnitBase::new_time().powi(2));
+        assert_eq!(AccelerationUnit::base(), UnitBase::new_length()/UnitBase::new_time().powi(2));
     }
     #[test]
     fn check_units() {

@@ -94,11 +94,12 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+use crate::traits::Unit;
     use crate::{unit_definitions::time::TimeUnit, units::{AmountOfSubstanceUnit, CatalyticActivityUnit}, units_base::UnitDefinition};
 
     #[test]
     fn check_dimension() {
-        assert_eq!(CatalyticActivityUnit::unit_base(),  AmountOfSubstanceUnit::unit_base() / TimeUnit::unit_base());
+        assert_eq!(CatalyticActivityUnit::base(),  AmountOfSubstanceUnit::base() / TimeUnit::base());
     }
 
 

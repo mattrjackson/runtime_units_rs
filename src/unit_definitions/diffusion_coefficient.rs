@@ -31,13 +31,14 @@ quantity! {
 
 #[cfg(test)]
 mod test {
+    use crate::traits::Unit;
     use crate::{unit_definitions::{diffusion_coefficient::DiffusionCoefficientUnit, time::TimeUnit}, units::AreaUnit, units_base::UnitDefinition};
 
 
 
     #[test]
     fn check_dimension() {
-        assert_eq!(DiffusionCoefficientUnit::unit_base(), AreaUnit::unit_base() / TimeUnit::unit_base());
+        assert_eq!(DiffusionCoefficientUnit::base(), AreaUnit::base() / TimeUnit::base());
     }
 
     #[test]

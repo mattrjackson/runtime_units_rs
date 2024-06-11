@@ -23,11 +23,12 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+use crate::traits::Unit;
     use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_charge_linear_density::ElectricChargeLinearDensityUnit}, units::LengthUnit, units_base::UnitDefinition};
 
     #[test]
     fn check_dimension() {
-        assert_eq!(ElectricChargeLinearDensityUnit::unit_base(), ElectricChargeUnit::unit_base() / LengthUnit::unit_base());
+        assert_eq!(ElectricChargeLinearDensityUnit::base(), ElectricChargeUnit::base() / LengthUnit::base());
     }
 
     #[test]

@@ -86,11 +86,12 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+use crate::traits::Unit;
     use crate::{unit_definitions::energy::EnergyUnit, units::{AvailableEnergyUnit, MassUnit}, units_base::UnitDefinition};
 
     #[test]
     fn check_dimension() {
-        assert_eq!(AvailableEnergyUnit::unit_base(),  EnergyUnit::unit_base() / MassUnit::unit_base());
+        assert_eq!(AvailableEnergyUnit::base(),  EnergyUnit::base() / MassUnit::base());
     }
 
     #[test]

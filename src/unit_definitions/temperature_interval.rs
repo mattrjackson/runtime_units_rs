@@ -91,6 +91,7 @@ quantity! {
 
 // #[cfg(test)]
 // mod tests {
+// use crate::traits::Unit;
 //     storage_types! {
 //         use crate::si::quantities::*;
 //         use crate::si::temperature_interval as ti;

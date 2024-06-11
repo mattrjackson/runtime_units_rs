@@ -60,11 +60,12 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+use crate::traits::Unit;
     use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_current::ElectricCurrentUnit, time::TimeUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {
-        assert_eq!(ElectricChargeUnit::unit_base(), ElectricCurrentUnit::unit_base() * TimeUnit::unit_base());
+        assert_eq!(ElectricChargeUnit::base(), ElectricCurrentUnit::base() * TimeUnit::base());
     }
 
     #[test]

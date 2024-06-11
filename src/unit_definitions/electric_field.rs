@@ -36,11 +36,12 @@ quantity! {
 
 #[cfg(test)]
 mod test {
+    use crate::traits::Unit;
     use crate::{unit_definitions::{electric_charge::ElectricChargeUnit, electric_field::ElectricFieldUnit, electric_potential::ElectricPotentialUnit, energy::EnergyUnit}, units::LengthUnit, units_base::UnitDefinition};
 
     #[test]
     fn check_dimension() {
-        assert_eq!(ElectricFieldUnit::unit_base(), ElectricPotentialUnit::unit_base() / LengthUnit::unit_base());
+        assert_eq!(ElectricFieldUnit::base(), ElectricPotentialUnit::base() / LengthUnit::base());
     }
 
     #[test]

@@ -175,6 +175,7 @@ impl_ops!(Sub, sub, -, SubAssign, sub_assign, -=, Diff);
 
 #[cfg(test)]
 mod tests {
+use crate::traits::Unit;
     use crate::si::quantities::*;
     use crate::si::temperature_interval as ti;
     use crate::si::thermodynamic_temperature as tt;

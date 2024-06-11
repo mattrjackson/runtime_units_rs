@@ -30,12 +30,12 @@ quantity! {
 #[cfg(test)]
 #[cfg(feature="Action")]
 mod test {
-   
+    use crate::traits::Unit;
     use crate::{units::{ActionUnit, EnergyUnit, TimeUnit}, units_base::UnitDefinition};
 
     #[test]
     fn check_dimension() {
-        assert_eq!(ActionUnit::unit_base(), EnergyUnit::unit_base()*TimeUnit::unit_base());
+        assert_eq!(ActionUnit::base(), EnergyUnit::base()*TimeUnit::base());
     }
 
     #[test]

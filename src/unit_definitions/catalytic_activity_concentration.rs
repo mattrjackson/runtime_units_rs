@@ -282,14 +282,14 @@ quantity! {
 
 #[cfg(test)]
 mod test {
-
+    use crate::traits::Unit;
     use crate::{unit_definitions::time::TimeUnit, units::{AmountOfSubstanceUnit, CatalyticActivityUnit, LengthUnit, VolumeUnit}, units_base::UnitDefinition};
 
     use super::CatalyticActivityConcentrationUnit;
 
     #[test]
     fn check_dimension() {
-        assert_eq!(CatalyticActivityConcentrationUnit::unit_base(),  AmountOfSubstanceUnit::unit_base() / TimeUnit::unit_base() / LengthUnit::unit_base().powi(3));
+        assert_eq!(CatalyticActivityConcentrationUnit::base(),  AmountOfSubstanceUnit::base() / TimeUnit::base() / LengthUnit::base().powi(3));
     }
 
     #[test]

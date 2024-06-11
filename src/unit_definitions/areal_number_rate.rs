@@ -41,13 +41,14 @@ quantity! {
 
 #[cfg(test)]
 mod test {
+    use crate::traits::Unit;
     use crate::{unit_definitions::{areal_number_rate::ArealNumberRateUnit, time::TimeUnit}, units::{AreaUnit, LengthUnit}, units_base::UnitDefinition};
 
    
 
     #[test]
     fn check_dimension() {
-        assert_eq!(ArealNumberRateUnit::unit_base(),  LengthUnit::unit_base().powi(-2) / TimeUnit::unit_base());
+        assert_eq!(ArealNumberRateUnit::base(),  LengthUnit::base().powi(-2) / TimeUnit::base());
     }
 
     #[test]

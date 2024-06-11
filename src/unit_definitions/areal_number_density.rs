@@ -44,12 +44,13 @@ quantity! {
 
 #[cfg(test)]
 mod test {
+    use crate::traits::Unit;
     use crate::{unit_definitions::areal_number_density::ArealNumberDensityUnit, units::{AreaUnit, LengthUnit}, units_base::UnitDefinition};
    
 
     #[test]
     fn check_dimension() {
-        assert_eq!(ArealNumberDensityUnit::unit_base(),  LengthUnit::unit_base().powi(-2));
+        assert_eq!(ArealNumberDensityUnit::base(),  LengthUnit::base().powi(-2));
     }
 
     #[test]

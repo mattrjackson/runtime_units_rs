@@ -22,12 +22,13 @@ quantity! {
 
 #[cfg(test)]
 mod test {
+    use crate::traits::Unit;
     use crate::{unit_definitions::{capacitance::CapacitanceUnit, electric_permittivity::ElectricPermittivityUnit}, units::LengthUnit, units_base::UnitDefinition};
 
 
     #[test]
     fn check_dimension() {
-        assert_eq!(ElectricPermittivityUnit::unit_base(), CapacitanceUnit::unit_base() / LengthUnit::unit_base());
+        assert_eq!(ElectricPermittivityUnit::base(), CapacitanceUnit::base() / LengthUnit::base());
     }
 
     #[test]

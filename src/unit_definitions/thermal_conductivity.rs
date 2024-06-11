@@ -127,6 +127,7 @@ quantity! {
 
 // #[cfg(test)]
 // mod tests {
+// use crate::traits::Unit;
 //     storage_types! {
 //         use crate::num::One;
 //         use crate::si::length as l;

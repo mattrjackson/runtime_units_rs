@@ -176,6 +176,7 @@ quantity! {
 
 // #[cfg(test)]
 // mod tests {
+// use crate::traits::Unit;
 //     storage_types! {
 //         use crate::num::{FromPrimitive, One};
 //         use crate::si::quantities::*;

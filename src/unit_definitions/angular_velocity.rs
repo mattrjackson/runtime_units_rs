@@ -28,11 +28,12 @@ quantity! {
 }
 #[cfg(test)]
 mod tests {
+use crate::traits::Unit;
     use crate::{units::{AngleUnit, AngularVelocityUnit, TimeUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {
-        assert_eq!(AngularVelocityUnit::unit_base(), AngleUnit::unit_base() / TimeUnit::unit_base());
+        assert_eq!(AngularVelocityUnit::base(), AngleUnit::base() / TimeUnit::base());
     }
 
     #[test]

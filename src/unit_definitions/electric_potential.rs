@@ -43,11 +43,12 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+use crate::traits::Unit;
     use crate::{unit_definitions::{electric_current::ElectricCurrentUnit, electric_potential::ElectricPotentialUnit, time::TimeUnit}, units::{LengthUnit, MassUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {
-        assert_eq!(ElectricPotentialUnit::unit_base(),  LengthUnit::unit_base().powi(2) * MassUnit::unit_base() / ElectricCurrentUnit::unit_base() / TimeUnit::unit_base().powi(3));
+        assert_eq!(ElectricPotentialUnit::base(),  LengthUnit::base().powi(2) * MassUnit::base() / ElectricCurrentUnit::base() / TimeUnit::base().powi(3));
     }
 
     #[test]

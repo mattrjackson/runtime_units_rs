@@ -65,12 +65,13 @@ quantity! {
 #[cfg(test)]
 #[cfg(any(feature = "Absement", feature = "All"))]   
 mod tests {
+use crate::traits::Unit;
 use crate::{units::{AbsementUnit, LengthUnit, TimeUnit}, units_base::{UnitDefinition, UnitBase}};
 
 
 #[test]
 fn check_dimension() {
-assert!(AbsementUnit::unit_base() == UnitBase::new_length()*UnitBase::new_time());
+assert!(AbsementUnit::base() == UnitBase::new_length()*UnitBase::new_time());
 }
 
 #[test]

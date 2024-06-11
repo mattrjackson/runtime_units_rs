@@ -92,11 +92,12 @@ quantity! {
 #[cfg(test)]
 #[cfg(feature="Energy")]
 mod tests {
+use crate::traits::Unit;
     use crate::{units::{MassUnit, LengthUnit, EnergyUnit, TimeUnit}, units_base::UnitDefinition};
     
     #[test]
     fn check_dimension() {
-        assert_eq!(EnergyUnit::unit_base(), MassUnit::unit_base()*LengthUnit::unit_base().powi(2) / TimeUnit::unit_base().powi(2));
+        assert_eq!(EnergyUnit::base(), MassUnit::base()*LengthUnit::base().powi(2) / TimeUnit::base().powi(2));
     }
 
     #[test]

@@ -48,6 +48,7 @@ quantity! {
 
 // #[cfg(test)]
 // mod tests {
+// use crate::traits::Unit;
 //     storage_types! {
 //         use crate::lib::f64::consts::PI;
 //         use crate::num::{FromPrimitive, One};
