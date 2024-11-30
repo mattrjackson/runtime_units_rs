@@ -17,7 +17,7 @@ system!(
         ArealMassDensity,
         ArealNumberDensity,
         ArealNumberRate,
-        AvailableEnergy,
+        SpecificEnergy,
         Capacitance,
         CatalyticActivity,
         CatalyticActivityConcentration,

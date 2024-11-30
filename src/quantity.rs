@@ -31,6 +31,7 @@ impl crate::traits::Quantity for Quantity
 }
 
 #[doc = "A quantity of a unit, supports converting from one unit to another." ]
+#[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Copy, Clone)]
 pub struct Quantity
 {

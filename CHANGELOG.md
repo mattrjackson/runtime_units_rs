@@ -10,6 +10,17 @@
 ### Fixed
 -->
 
+
+## [0.31] — 2024-11-30
+
+### Security
+### Added
+Add serialization support for `Quantity`.
+### Changed
+Changed `AvailableEnergy` to more customary name of `SpecificEnergy`.
+### Deprecated
+### Removed
+
 ## [0.30] — 2024-04-16
 
 ### Security
