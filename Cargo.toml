@@ -1,6 +1,6 @@
 [package]
 name = "runtime_units"
-version = "0.3.1"
+version = "0.4.0"
 edition = "2021"
 license = "MIT"
 keywords =  ["units", "measurement", "SI", "dimensional-analysis"]
@@ -22,11 +22,22 @@ debug = true
 
 
 [features]
-default = ["std", "Length", "Mass", "Angle", "Luminance", "TemperatureInterval", "AmountOfSubstance", "ElectricCurrent", "Time"]
+default = ["std", "Dimensionless", "Length", "Mass", "Angle", "Luminance", "TemperatureInterval", "AmountOfSubstance", "ElectricCurrent", "Time"]
 serde = ["dep:serde", "dep:serde_json"]
 std = []
 utoipa = ["dep:utoipa", "std"]
-All = ["Absement","AbsorbedDose","Acceleration","Action","AmountOfSubstance","Angle","AngularAcceleration","AngularJerk","AngularVelocity","ArealDensityOfStates","ArealMassDensity","ArealNumberDensity","ArealNumberRate","Area","SpecificEnergy","Capacitance","CatalyticActivityConcentration","CatalyticActivity","Curvature","DiffusionCoefficient","DoseEquivalent","DynamicViscosity","ElectricalConductance","ElectricalConductivity","ElectricalMobility","ElectricalResistance","ElectricalResistivity","ElectricChargeArealDensity","ElectricChargeLinearDensity","ElectricCharge","ElectricChargeVolumetricDensity","ElectricCurrentDensity","ElectricCurrent","ElectricDipoleMoment","ElectricDisplacementField","ElectricField","ElectricFlux","ElectricPermittivity","ElectricPotential","ElectricQuadrupoleMoment","Energy","Force","FrequencyDrift","Frequency","HeatCapacity","HeatFluxDensity","HeatTransfer","Inductance","InformationRate","Information","Jerk","Length","LinearDensityOfStates","LinearMassDensity","LinearNumberDensity","LinearNumberRate","LinearPowerDensity","Luminance","LuminousIntensity","MagneticFieldStrength","MagneticFluxDensity","MagneticFlux","MagneticMoment","MagneticPermeability","MassConcentration","MassDensity","MassFlux","MassRate","Mass","Molality","MolarConcentration","MolarEnergy","MolarFlux","MolarHeatCapacity","MolarMass","MolarRadioactivity","MolarVolume","MomentOfInertia","Momentum","Power","PressureImpulse","Pressure","RadiantExposure","Radioactivity","Ratio","ReciprocalLength","SolidAngle","SpecificArea","SpecificHeatCapacity","SpecificRadioactivity","SpecificVolume","SurfaceElectricCurrentDensity","TemperatureCoefficient","TemperatureGradient","TemperatureInterval","ThermalConductivity","ThermodynamicTemperature","Time","Torque","Velocity","VolumeRate","Volume","VolumetricDensityOfStates","VolumetricHeatCapacity","VolumetricNumberDensity","VolumetricNumberRate","VolumetricPowerDensity"]
+All = ["Absement","AbsorbedDose","Acceleration","Action","AmountOfSubstance","Angle","AngularAcceleration","AngularJerk","AngularVelocity","ArealDensityOfStates",
+        "ArealMassDensity","ArealNumberDensity","ArealNumberRate","Area","SpecificEnergy","Capacitance","CatalyticActivityConcentration","CatalyticActivity","Curvature",
+        "DiffusionCoefficient", "Dimensionless", "DoseEquivalent","DynamicViscosity","ElectricalConductance","ElectricalConductivity","ElectricalMobility","ElectricalResistance",
+        "ElectricalResistivity","ElectricChargeArealDensity","ElectricChargeLinearDensity","ElectricCharge","ElectricChargeVolumetricDensity","ElectricCurrentDensity",
+        "ElectricCurrent","ElectricDipoleMoment","ElectricDisplacementField","ElectricField","ElectricFlux","ElectricPermittivity","ElectricPotential","ElectricQuadrupoleMoment",
+        "Energy","Force","FrequencyDrift","Frequency","HeatCapacity","HeatFluxDensity","HeatTransfer","Inductance","InformationRate","Information","Jerk","Length",
+        "LinearDensityOfStates","LinearMassDensity","LinearNumberDensity","LinearNumberRate","LinearPowerDensity","Luminance","LuminousIntensity","MagneticFieldStrength",
+        "MagneticFluxDensity","MagneticFlux","MagneticMoment","MagneticPermeability","MassConcentration","MassDensity","MassFlux","MassRate","Mass","Molality","MolarConcentration",
+        "MolarEnergy","MolarFlux","MolarHeatCapacity","MolarMass","MolarRadioactivity","MolarVolume","MomentOfInertia","Momentum","Power","PressureImpulse","Pressure",
+        "RadiantExposure","Radioactivity","Ratio","ReciprocalLength","SolidAngle","SpecificArea","SpecificHeatCapacity","SpecificRadioactivity","SpecificVolume",
+        "SurfaceElectricCurrentDensity","TemperatureCoefficient","TemperatureGradient","TemperatureInterval","ThermalConductivity","ThermodynamicTemperature","Time",
+        "Torque","Velocity","VolumeRate","Volume","VolumetricDensityOfStates","VolumetricHeatCapacity","VolumetricNumberDensity","VolumetricNumberRate","VolumetricPowerDensity"]
 Absement=["Length", "Time"]
 AbsorbedDose=["Length", "Time"]
 Acceleration=["Length", "Time"]
@@ -46,6 +57,7 @@ CatalyticActivityConcentration=["AmountOfSubstance", "Time", "Length", "Volume",
 CatalyticActivity=["AmountOfSubstance", "Time"]
 Curvature=["Angle", "Length"]
 DiffusionCoefficient=["Length", "Time", "Area"]
+Dimensionless=[]
 DoseEquivalent=[]
 DynamicViscosity=["Pressure", "Time"]
 ElectricalConductance=[]

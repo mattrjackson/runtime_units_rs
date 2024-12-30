@@ -10,8 +10,27 @@
 ### Fixed
 -->
 
+## [0.4.0] — 2024-12-30
+Bumped to 0.4 to reflect an API change for scalar and slice quantities (see bullet 3 in Changed below for details). When you get errors about missing functions, importing the relevant traits (`Quantity` for arbitrary quantites, `FixedQuantity` for scalar quantities of a fixed type, or `FixedSliceQuantity` for vector quantities of a fixed type) should resolve the issue.
+### Security
+### Added
+Added new `Dimensionless` quantity.
+### Changed
+1. Added `Dimensionless` to the default build flags.
+2. Added and implemented `unit_mut` for `FixedQuantity`. 
+3. Changed public `unit` and `value` members of scalar and slice quantities to `pub(crate)`. Use `unit()`, `value()`, or `values()` to access the immutable variables, or `unit_mut()`, `value_mut()`, `values_mut()` to mutate them.
+4. Changed singular/plural variants of `psi` unit to "psi". 
+5. Cleanup of traits and quantities - conversion functionality is tied to traits, rather than being implemented within the struct impl.   
+6. Corrected a bug in `convert_mut`, where the conversion was correctly applied to the scalar or vector quantity, but the unit was not updated.
+7. Renamed `Quantity` trait to `ArbitraryQuantity` to provide a name distinct from the `Quantity` data structure.
+### Deprecated
+### Removed
+1. Removed `units.rs`, an obsolete artifact of earlier development efforts.
+2. Removed duplicate definition of speed of light from velocity.rs.
+3. 
 
-## [0.31] — 2024-11-30
+
+## [0.3.1] — 2024-11-30
 
 ### Security
 ### Added
@@ -21,7 +40,7 @@ Changed `AvailableEnergy` to more customary name of `SpecificEnergy`.
 ### Deprecated
 ### Removed
 
-## [0.30] — 2024-04-16
+## [0.3.0] — 2024-04-16
 
 ### Security
 ### Added

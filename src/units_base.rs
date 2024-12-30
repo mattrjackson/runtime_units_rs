@@ -256,7 +256,17 @@ pub struct UnitDefinition
 }
 impl Eq for UnitDefinition{}
 impl UnitDefinition
-{
+{    
+    #[doc="Create a new `UnitDefinition` manually by specifying powers of each base unit, as well as the multiplier."]      
+    pub fn new(multiplier: f64, meter: i8, kilogram: i8, second: i8, ampere: i8, kelvin: i8, mole: i8, candela: i8) -> Self
+    {
+        UnitDefinition { base: UnitBase::new().with_meter(meter).with_kilogram(kilogram).with_second(second).with_ampere(ampere).with_kelvin(kelvin).with_mole(mole).with_candela(candela), multiplier }
+    }
+    #[doc="Returns a dimensionless `UnitDefinition`."]      
+    pub fn dimensionless() -> Self
+    {
+        UnitDefinition { base: UnitBase::default(), multiplier: 1.0 }
+    }
     #[doc="Check whether this unit can be converted to a a given `unit`."]      
     pub fn is_convertible(&self, unit: UnitDefinition) -> bool
     {

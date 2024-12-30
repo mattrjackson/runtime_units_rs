@@ -3,21 +3,20 @@ use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use crate::errors::RuntimeUnitError;
 use crate::units_base::UnitDefinition;
-use crate::Units;
 
-impl crate::traits::Quantity for Quantity
+impl crate::traits::ArbitraryQuantity for Quantity
 {
     fn unit(&self) -> UnitDefinition {
-        self.definition()
+        self.unit
     }
 
     fn convert(&self, unit: UnitDefinition)  -> Quantity
     {
-        Quantity { value: self.value() * self.definition().convert_unchecked(unit).multiplier, unit }
+        Quantity { value: self.value() * self.unit.convert_unchecked(unit).multiplier, unit }
     }
     
     fn try_convert_mut(&mut self, unit: UnitDefinition) -> Result<(), RuntimeUnitError> {
-        self.value *= self.definition().try_convert(unit)?.multiplier;
+        self.value *= self.unit.try_convert(unit)?.multiplier;
         Ok(())
     }
     
@@ -25,8 +24,12 @@ impl crate::traits::Quantity for Quantity
         self.value *= self.unit.convert_unchecked(unit).multiplier;
     }
     
-    fn try_convert(&mut self, unit: UnitDefinition) -> Result<Quantity, RuntimeUnitError> {
+    fn try_convert(&self, unit: UnitDefinition) -> Result<Quantity, RuntimeUnitError> {
         Ok(Quantity { value : self.value * self.unit.try_convert(unit)?.multiplier, unit })
+    }
+    
+    fn unit_mut(&mut self) -> &mut UnitDefinition {
+        &mut self.unit
     }
 }
 
@@ -66,51 +69,6 @@ impl Quantity
         &mut self.value
     }
 
-    ///
-    /// Retrieve a unit with a corresponding multiplier
-    /// 
-    #[inline]
-    pub fn definition(&self) -> UnitDefinition
-    {
-        self.unit
-    }
-
-    ///
-    /// Get mutable reference to the definition for this quantity.
-    /// 
-    #[inline]
-    pub fn definition_mut(&mut self) -> &mut UnitDefinition
-    {
-        &mut self.unit
-    }
-    ///
-    /// Convert a quantity from one unit to another
-    ///
-    #[inline]
-    pub fn convert(&self, unit: Units) -> Result<Quantity, RuntimeUnitError>
-    {
-        self.convert_unit(unit.into())
-    }    
-    #[inline]
-    pub fn convert_unit(&self, unit: UnitDefinition) -> Result<Quantity, RuntimeUnitError>
-    {
-        if self.unit == unit
-        {
-            Ok(*self)
-        }
-        else
-        {
-            if self.unit.is_convertible(unit)
-            {
-                Ok(Self { value: self.value * self.unit.multiplier / unit.multiplier(), unit })
-            }
-            else
-            {
-                Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Could not convert from base units of {} to {}", self.unit.unit_string(), unit.unit_string())))
-            }
-        }
-    }   
-
     #[inline] 
     /// Convert from one unit to another (no check is made to ensure destination unit is valid).
     pub(crate) fn convert_unchecked(&self, unit: UnitDefinition) -> f64
@@ -130,7 +88,7 @@ impl Debug for Quantity
 {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result 
     {
-        write!(f, "{} {:?}", self.value(), self.definition())
+        write!(f, "{} {:?}", self.value(), self.unit)
     }
 }
 impl Mul<f64> for Quantity

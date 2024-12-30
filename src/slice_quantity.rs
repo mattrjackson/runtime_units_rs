@@ -42,9 +42,8 @@ pub struct SliceQuantity<T: Clone+Slice<f64>>
     pub values: T
 }
 
-// Defining Quantity for our SliceQuantity
-
-impl<T: Clone+Slice<f64>> crate::traits::Quantity for SliceQuantity<T>
+// Defining ArbitraryQuantity for our SliceQuantity
+impl<T: Clone+Slice<f64>> crate::traits::ArbitraryQuantity for SliceQuantity<T>
 {
     fn unit(&self) -> UnitDefinition {
         self.unit
@@ -65,7 +64,7 @@ impl<T: Clone+Slice<f64>> crate::traits::Quantity for SliceQuantity<T>
         }            
     }
     
-    fn try_convert(&mut self, unit: UnitDefinition) -> Result<Self, crate::errors::RuntimeUnitError> {
+    fn try_convert(&self, unit: UnitDefinition) -> Result<Self, crate::errors::RuntimeUnitError> {
         if self.unit.base != unit.base
         {
             Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Could not convert from base units of {} to {}", self.unit.unit_string(), unit.unit_string())))
@@ -86,6 +85,10 @@ impl<T: Clone+Slice<f64>> crate::traits::Quantity for SliceQuantity<T>
         {
             Ok(self.convert_mut(unit))
         }
+    }
+    
+    fn unit_mut(&mut self) -> &mut UnitDefinition {
+        &mut self.unit
     }
 }
 

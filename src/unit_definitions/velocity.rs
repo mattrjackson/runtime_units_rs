@@ -73,9 +73,6 @@ quantity! {
         @atomic_unit_of_velocity: 2.187_691_263_64_E6; "a₀ · Eₕ/ħ", "atomic UnitDefinition of velocity",
             "atomic units of velocity";
         /// Speed of light in vacuum, CODATA 2018
-        @natural_unit_of_velocity: 299_792_458.0; "c", "natural UnitDefinition of velocity",
-            "natural units of velocity";
-        /// Speed of light in vacuum, CODATA 2018
         @speed_of_light_in_vacuum: 299_792_458.0; "c", "speed of light in vacuum",
             "speeds of light in vacuum";
     }

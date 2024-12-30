@@ -122,28 +122,6 @@ macro_rules! impl_quantity_slice {
                 }
             }
         }
-
-        impl<T: Clone+Slice<f64>> crate::traits::FixedQuantity<[<$quantity Unit>]> for [<$quantity Slice>]<T>
-        {
-            fn unit(&self) -> [<$quantity Unit>] {
-                self.unit
-            }
-
-            fn convert(&self, unit: [<$quantity Unit>]) -> Self 
-            {
-                let mut result = self.clone();
-                result.convert_mut(unit);
-                return result;
-            }
-
-            fn convert_mut(&mut self, unit: [<$quantity Unit>]) {
-                let factor = self.unit.definition().convert_unchecked(unit.definition()).multiplier();
-                for val in self.values.as_mut_slice().iter_mut()
-                {
-                    *val *= factor;
-                }            
-            }
-        }
     }
     }
 }  
@@ -395,7 +373,7 @@ macro_rules! quantity {
         }
         impl $crate::traits::Unit for [<$quantity Unit>] 
         {
-              /// Return unit definition for this Unit Type
+                /// Return unit definition for this Unit Type                
                 fn definition(&self) -> UnitDefinition
                 {
                     match self
@@ -403,6 +381,7 @@ macro_rules! quantity {
                         $([<$quantity Unit>]::$unit=>[<$quantity Unit>]::[<get_$unit:snake>](),)+
                     }
                 }
+                #[inline]
                 fn base() -> UnitBase
                 {
                     [<$quantity:upper _UNIT_BASE>]
@@ -421,7 +400,8 @@ macro_rules! quantity {
                         )+
                     }
                 }
-            }            
+            }     
+            
             impl TryFrom<UnitDefinition> for [<$quantity Unit>]
             {
                 type Error = RuntimeUnitError;                
@@ -449,6 +429,37 @@ macro_rules! quantity {
                     }
                 }
             }
+            // Permit creation of `Units` from a `FixedQuantity`
+            impl From<[<$quantity>]> for $crate::Units
+            {
+                fn from(value: [<$quantity>]) -> Self {
+                    $crate::Units::$quantity(value.unit)
+                }
+            }        
+
+            // Permit creation of `Units` from a &`FixedQuantity`
+            impl From<&[<$quantity>]> for $crate::Units
+            {
+                fn from(value: &[<$quantity>]) -> Self {
+                    $crate::Units::$quantity(value.unit)
+                }
+            }      
+
+            // Permit creation of `Units` from a `FixedSliceQuantity`
+            impl<T: Clone+Slice<f64>> From<[<$quantity Slice>]<T>> for $crate::Units
+            {
+                fn from(value:[<$quantity Slice>]<T>) -> Self {
+                    $crate::Units::$quantity(value.unit)
+                }
+            }     
+
+             // Permit creation of `Units` from a &`FixedSliceQuantity`
+             impl<T: Clone+Slice<f64>> From<&[<$quantity Slice>]<T>> for $crate::Units
+             {
+                 fn from(value: &[<$quantity Slice>]<T>) -> Self {
+                     $crate::Units::$quantity(value.unit)
+                 }
+             }     
         }
         
         paste::paste!
@@ -462,8 +473,8 @@ macro_rules! quantity {
             #[doc = "Scalar storage of a quantity (f64 and [`" [<$quantity Unit>]"`])."]   
             pub struct $quantity
             {
-                pub value: f64,
-                pub unit: [<$quantity Unit>]   
+                pub(crate) value: f64,
+                pub(crate) unit: [<$quantity Unit>]   
             }
           
             impl $quantity
@@ -487,6 +498,13 @@ macro_rules! quantity {
                 {
                     self.value
                 }
+
+                #[doc = "Retrieve the mutable value associated with this [`" [<$quantity>]"`]."]   
+                #[inline]
+                pub fn value_mut(&mut self) -> &mut f64
+                {
+                    &mut self.value
+                }          
 
                 #[doc = "Retrieve the `UnitDefinition` associated with this [`" [<$quantity>]"`]."]   
                 #[inline]
@@ -515,34 +533,39 @@ macro_rules! quantity {
                     {                     
                         Self { value: self.value * (self.definition().multiplier / ([<$quantity:upper _ $unit:upper _conversion:upper>])) as f64, unit: [<$quantity Unit>]::$unit }    
                     }
-                )+
-
-                #[doc = "Convert [`" [<$quantity>] "`] to another unit of the same quantity."]                                        
-                pub fn convert(&self, unit: [<$quantity Unit>]) -> Self
-                {
-                    Self { value: self.convert_unchecked(unit.into()), unit: unit }
-                }
-                pub fn try_convert(&self, unit: $crate::Units) -> Result<Self, RuntimeUnitError>
-                {
-                    let destination_unit:  [<$quantity Unit>] = unit.try_into()?;                   
-                    Ok(self.convert(destination_unit))                    
-                }                
+                )+    
             }
             impl FixedQuantity<[<$quantity Unit>]> for $quantity
             {                
+                #[inline]
                 fn unit(&self) -> [<$quantity Unit>]
                 {
                     self.unit
                 }
-                /// Convert from this unit to another (creates a copy). No validation of base unit is made.
+
+                #[inline]
                 fn convert(&self, unit: [<$quantity Unit>]) -> Self
                 {
                     Self { value: self.convert_unchecked(unit.into()), unit: unit }
                 }
-                /// Convert from this unit to another (modifies current quantity). No validation of base unit is made.
+                
+                #[inline]
                 fn convert_mut(&mut self, unit: [<$quantity Unit>])
                 {
                     self.value = self.convert_unchecked(unit.into());
+                    self.unit = unit;
+                }
+                #[inline]
+                fn unit_mut(&mut self) -> &mut [<$quantity Unit>]
+                {
+                    &mut self.unit
+                }
+
+                #[inline]
+                fn try_convert(&self, unit: $crate::Units) -> Result<Self, RuntimeUnitError> where Self: Sized
+                {
+                    let destination_unit: [<$quantity Unit>] = unit.try_into()?;                   
+                    Ok(self.convert(destination_unit))     
                 }
             }
 
@@ -594,10 +617,53 @@ macro_rules! quantity {
             #[doc = "Array storage (must implement `Slice`) for a series of values and [`" [<$quantity Unit>]"`]. Utoipa alias has been implemented for `Vec<f64>`."]   
             pub struct [<$quantity Slice>]<T: Clone+Slice<f64>>
             {
-                pub unit: [<$quantity Unit>],
-                pub values: T
+                pub(crate) unit: [<$quantity Unit>],
+                pub(crate) values: T
             }
             use crate::impl_quantity_slice;
+            
+            impl<T: Clone+Slice<f64>>  crate::traits::FixedSliceQuantity<[<$quantity Unit>], f64, T> for [<$quantity Slice>]<T>
+            {
+                fn unit(&self) -> [<$quantity Unit>] {
+                    self.unit
+                }
+
+                fn values(&self) -> &[f64] {
+                    &self.values.as_slice()
+                }
+
+                fn values_mut(&mut self) -> &mut [f64] {
+                    self.values.as_mut_slice()
+                }
+
+                fn len(&self) -> usize {
+                    self.values.len()
+                }
+
+                fn convert(&self, unit: [<$quantity Unit>]) -> Self 
+                {
+                    let mut result = self.clone();
+                    result.convert_mut(unit);
+                    return result;
+                }
+
+                #[inline]
+                fn convert_mut(&mut self, unit: [<$quantity Unit>]) {
+                    let factor = self.unit.definition().convert_unchecked(unit.definition()).multiplier();
+                    for val in self.values.as_mut_slice().iter_mut()
+                    {
+                        *val *= factor;
+                    }            
+                    self.unit = unit;
+                }
+
+                #[inline]
+                fn try_convert(&self, unit: $crate::Units) -> Result<Self, RuntimeUnitError> where Self: Sized
+                {
+                    let destination_unit: [<$quantity Unit>] = unit.try_into()?;                   
+                    Ok(self.convert(destination_unit))      
+                }
+            }
             impl<T: Clone+Slice<f64>> [<$quantity Slice>]<T>
             {
                 #[doc = "Create a new vector of [`" [<$quantity Unit>]"`]."]   
@@ -605,6 +671,19 @@ macro_rules! quantity {
                 {
                     Self{values, unit}
                 }
+                #[inline]
+                #[doc = "Retrieve values associated with this [`" [<$quantity Slice>]"`]."]   
+                pub fn values(&self) -> &T
+                {
+                    &self.values
+                }
+                #[inline]
+                #[doc = "Retrieve the mutable values associated with this [`" [<$quantity Slice>]"`]."]   
+                pub fn values_mut(&mut self) -> &mut T
+                {
+                    &mut self.values
+                }
+
                 $(
                     #[doc = "Create a new [`" [<$quantity>] "`] with units of [`" [<$quantity Unit>] "::" [<$unit>] "`]."] 
                     pub fn [<$unit:snake>](values: T) -> Self
@@ -612,16 +691,18 @@ macro_rules! quantity {
                         Self{ values, unit: [<$quantity Unit>]::$unit.into() }
                     }
                 )+
+
                 $(
                     #[doc = "Convert to [`" [<$quantity Unit>] "::" [<$unit>] "`]."]                        
                     #[inline]
                     pub fn [<to_ $unit:snake>](&self) -> Self
                     {                     
+                        use crate::traits::FixedSliceQuantity;
                         let mut r = self.clone();
                         r.convert_mut([<$quantity Unit>]::$unit);
                         r
                     }
-                )+
+                )+   
             }
 
             impl_quantity_ops!($quantity);
@@ -844,6 +925,7 @@ macro_rules! system {
                 /// Try to convert to the unit specified by a given `Units` enumeration.
                 pub fn try_convert(&self, unit: Units) -> Result<Quantities, RuntimeUnitError>
                 {   
+                    use crate::traits::FixedQuantity;
                     match self
                     {
                         $(

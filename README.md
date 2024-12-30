@@ -33,7 +33,7 @@ Example:
 
 ```rust
 use runtime_units::{Length, Acceleration, UnitTypes, Units, QuantityBase, Time};
-
+use runtime_units::traits::FixedQuantity;
 fn example()
 {
     let length = Length::meter(10.0);
@@ -67,6 +67,4 @@ fn example()
 Currently conversions on my laptop cost < 1 nsec if converting between the same quantity, and up to 3 nsec using the convert method from `Quantity`. 
 
 # API Stability
-This library is still a work in progress. Expect futher changes to the API as it matures.
-
-Pull requests are welcome. For the most part conversions are based on UOM data.
+API is largely fixed at this point, but minor changes may occur until 1.0.

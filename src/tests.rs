@@ -1,9 +1,6 @@
 #[cfg(test)]
 mod test
 {
-
-    use crate::units::TimeUnit;
-    use crate::{units::LengthUnit, units_base::UnitDefinition};
    
     #[test]
     #[cfg(all(any(feature="All", all(feature="Time", feature="Length", feature="Velocity", feature="Acceleration")), feature="std", feature="serde"))]
@@ -22,6 +19,7 @@ mod test
     #[cfg(all(any(feature="All", all(feature="Time", feature="Pressure"))))]
     fn test_try_convert()
     {
+        use crate::traits::FixedQuantity;
         use crate::{Time, Units, Pressure};         
         let pressure = Pressure::poundal_per_square_foot(1.0);
         let time = Time::second(5.0);

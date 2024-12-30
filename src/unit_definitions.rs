@@ -23,6 +23,7 @@ system!(
         CatalyticActivityConcentration,
         Curvature,
         DiffusionCoefficient,
+        Dimensionless,
         DoseEquivalent,
         DynamicViscosity,
         ElectricCharge,
