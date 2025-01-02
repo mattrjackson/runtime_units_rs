@@ -25,7 +25,7 @@ impl crate::traits::ArbitraryQuantity for Quantity
     }
     
     fn try_convert(&self, unit: UnitDefinition) -> Result<Quantity, RuntimeUnitError> {
-        Ok(Quantity { value : self.value * self.unit.try_convert(unit)?.multiplier, unit })
+        Ok(Quantity { value : self.value * self.unit.try_convert(unit)?.multiplier / self.unit.multiplier, unit })
     }
     
     fn unit_mut(&mut self) -> &mut UnitDefinition {

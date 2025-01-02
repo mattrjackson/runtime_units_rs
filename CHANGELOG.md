@@ -10,6 +10,15 @@
 ### Fixed
 -->
 
+## [0.4.1] — 2025-01-02
+
+### Security
+### Added
+### Changed
+Corrected a bug in `try_convert` introduced in 0.4 for `ArbitraryQuantity`.
+### Deprecated
+### Removed
+
 ## [0.4.0] — 2024-12-30
 Bumped to 0.4 to reflect an API change for scalar and slice quantities (see bullet 3 in Changed below for details). When you get errors about missing functions, importing the relevant traits (`Quantity` for arbitrary quantites, `FixedQuantity` for scalar quantities of a fixed type, or `FixedSliceQuantity` for vector quantities of a fixed type) should resolve the issue.
 ### Security

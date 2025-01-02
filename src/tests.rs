@@ -155,6 +155,18 @@ mod test
         assert!(length.try_convert(Units::Length(LengthUnit::meter)).is_ok());
         assert_eq!(length.try_convert(Units::Length(LengthUnit::meter)).unwrap().value(), 1.0e3);
     }
+
+    #[test]
+    #[cfg(any(feature="All", all(feature="Length", feature="Time")))]
+    fn test_quantity_conversion()
+    {
+        use crate::{quantity::Quantity, traits::ArbitraryQuantity, units::LengthUnit, Length, Units};
+        let length = Length::meter(10.0);
+        let length_quantity: Quantity = length.into();
+        let unit = Units::Length(LengthUnit::meter);
+        assert_eq!(length_quantity.try_convert_unit(unit).unwrap().value(), 10.0);
+        assert_eq!(length_quantity.try_convert_unit(Units::Length(LengthUnit::centimeter)).unwrap().value(), 1.0e3);
+    }
     #[test]
     #[cfg(any(feature="All", feature ="Energy"))]
     fn test_quantities_to_string()
