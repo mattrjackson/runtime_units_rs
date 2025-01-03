@@ -1,12 +1,12 @@
 use quantity::Quantity;
-
-
+pub mod array_quantity;
 pub mod errors;
-pub mod slice_quantity;
-pub(crate) mod quantity;
 pub(crate) mod macros;
-pub mod units_base;
+pub(crate) mod mutivalue_macros;
+pub(crate) mod quantity;
+mod tests;
 pub mod traits;
+pub mod units_base;
 mod unit_definitions;
 pub use crate::unit_definitions::*;
-mod tests;
+pub mod vector_quantity;

@@ -10,6 +10,22 @@
 ### Fixed
 -->
 
+## [0.5.0] — 2025-01-04
+
+### Security
+### Added
+Added PartialCmp for individual unit types (e.g. `Length`, `Mass`).
+### Changed
+Utoipa changes motivated a final round of cleanup. 
+
+Multivalue quantities are now broken into two data structures:
+1. ArrayQuantity - const generic arrays
+2. VecQuantity - dynamically sized data
+### Deprecated
+### Removed
+Removed `Slice` and `SliceQuantity`, which have replaced by the array and Vec quantities mentioned previously.
+
+
 ## [0.4.3] — 2025-01-02
 
 ### Security

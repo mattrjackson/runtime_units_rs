@@ -1,49 +1,33 @@
-use crate::{errors::RuntimeUnitError, traits::Slice, units_base::UnitDefinition};
+use crate::{errors::RuntimeUnitError, units_base::UnitDefinition};
 use core::ops::{AddAssign, Div, DivAssign, Mul, MulAssign, SubAssign };
-
-// Slice implementations for Vec and arrays.
-
-impl Slice<f64> for Vec<f64>
-{
-    fn as_mut_slice(&mut self) -> &mut [f64] {
-        self.as_mut_slice()
-    }
-
-    fn as_slice(&self) -> &[f64] {
-        self.as_slice()
-    }
-
-    fn len(&self) -> usize {
-       Vec::len(&self)
-    }
-}
-impl<const SIZE: usize> Slice<f64> for [f64; SIZE]
-{
-    fn as_mut_slice(&mut self) -> &mut [f64] {
-        self
-    }
-
-    fn as_slice(&self) -> &[f64] {
-        self
-    }
-
-    fn len(&self) -> usize {
-        self.as_slice().len()
-    }
-}
+use std::ops::{Deref, DerefMut};
 
 
 #[derive(Clone)]
 #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
 #[doc ="Data structure to hold a unit and array of data"]
-pub struct SliceQuantity<T: Clone+Slice<f64>>
+pub struct VecQuantity
 {
     pub unit: UnitDefinition,
-    pub values: T
+    pub values: Vec<f64>
 }
 
-// Defining ArbitraryQuantity for our SliceQuantity
-impl<T: Clone+Slice<f64>> crate::traits::ArbitraryQuantity for SliceQuantity<T>
+impl Deref for VecQuantity
+{
+    type Target = Vec<f64>;
+    fn deref(&self) -> &Vec<f64> {
+        &self.values
+    }
+}
+impl DerefMut for VecQuantity
+{
+    fn deref_mut(&mut self) -> &mut Vec<f64> {
+        &mut self.values
+    }
+}
+
+// Defining ArbitraryQuantity for our VecQuantity
+impl crate::traits::ArbitraryQuantity for VecQuantity
 {
     fn unit(&self) -> UnitDefinition {
         self.unit
@@ -95,9 +79,9 @@ impl<T: Clone+Slice<f64>> crate::traits::ArbitraryQuantity for SliceQuantity<T>
 
 
 
-impl<T: Clone+Slice<f64>> Div<f64> for SliceQuantity<T>
+impl Div<f64> for VecQuantity
 {
-    type Output = SliceQuantity<T>;
+    type Output = VecQuantity;
 
     fn div(self, rhs: f64) -> Self::Output {
         let mut result = self.clone();
@@ -108,11 +92,11 @@ impl<T: Clone+Slice<f64>> Div<f64> for SliceQuantity<T>
         result
     }
 }
-impl<T: Clone+Slice<f64>> Div<SliceQuantity<T>> for SliceQuantity<T>
+impl Div<VecQuantity> for VecQuantity
 {
-    type Output = SliceQuantity<T>;
+    type Output = VecQuantity;
 
-    fn div(self, rhs: SliceQuantity<T>) -> Self::Output {
+    fn div(self, rhs: VecQuantity) -> Self::Output {
         let mut result = self.clone();
         if rhs.values.len() != self.values.len()
         {
@@ -125,11 +109,11 @@ impl<T: Clone+Slice<f64>> Div<SliceQuantity<T>> for SliceQuantity<T>
         result
     }
 }
-impl<T: Clone+Slice<f64>> Mul<SliceQuantity<T>> for SliceQuantity<T>
+impl Mul<VecQuantity> for VecQuantity
 {
-    type Output = SliceQuantity<T>;
+    type Output = VecQuantity;
 
-    fn mul(self, rhs: SliceQuantity<T>) -> Self::Output {
+    fn mul(self, rhs: VecQuantity) -> Self::Output {
         let mut result = self.clone();
         if rhs.values.len() != self.values.len()
         {
@@ -142,9 +126,9 @@ impl<T: Clone+Slice<f64>> Mul<SliceQuantity<T>> for SliceQuantity<T>
         result
     }
 }
-impl<T: Clone+Slice<f64>> Mul<f64> for SliceQuantity<T>
+impl Mul<f64> for VecQuantity
 {
-    type Output = SliceQuantity<T>;
+    type Output = VecQuantity;
 
     fn mul(self, rhs: f64) -> Self::Output {
         let mut result = self.clone();
@@ -155,7 +139,7 @@ impl<T: Clone+Slice<f64>> Mul<f64> for SliceQuantity<T>
         result
     }
 }
-impl<T: Clone+Slice<f64>> DivAssign<f64> for SliceQuantity<T>
+impl DivAssign<f64> for VecQuantity
 {
 
     fn div_assign(&mut self, rhs: f64) {        
@@ -165,7 +149,7 @@ impl<T: Clone+Slice<f64>> DivAssign<f64> for SliceQuantity<T>
         }
     }
 }
-impl<T: Clone+Slice<f64>> MulAssign<f64> for SliceQuantity<T>
+impl MulAssign<f64> for VecQuantity
 {
 
     fn mul_assign(&mut self, rhs: f64) {        
@@ -175,10 +159,10 @@ impl<T: Clone+Slice<f64>> MulAssign<f64> for SliceQuantity<T>
         }
     }
 }
-impl<T: Clone+Slice<f64>> DivAssign<SliceQuantity<T>> for SliceQuantity<T>
+impl DivAssign<VecQuantity> for VecQuantity
 {
 
-    fn div_assign(&mut self, rhs: SliceQuantity<T>) {            
+    fn div_assign(&mut self, rhs: VecQuantity) {            
         if rhs.values.len() != self.values.len()
         {
             panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
@@ -189,10 +173,10 @@ impl<T: Clone+Slice<f64>> DivAssign<SliceQuantity<T>> for SliceQuantity<T>
         }
     }
 }
-impl<T: Clone+Slice<f64>> AddAssign<SliceQuantity<T>> for SliceQuantity<T>
+impl AddAssign<VecQuantity> for VecQuantity
 {
 
-    fn add_assign(&mut self, rhs: SliceQuantity<T>) {            
+    fn add_assign(&mut self, rhs: VecQuantity) {            
         if rhs.values.len() != self.values.len()
         {
             panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
@@ -204,10 +188,10 @@ impl<T: Clone+Slice<f64>> AddAssign<SliceQuantity<T>> for SliceQuantity<T>
         }
     }
 }
-impl<T: Clone+Slice<f64>> SubAssign<SliceQuantity<T>> for SliceQuantity<T>
+impl SubAssign<VecQuantity> for VecQuantity
 {
 
-    fn sub_assign(&mut self, rhs: SliceQuantity<T>) {            
+    fn sub_assign(&mut self, rhs: VecQuantity) {            
         if rhs.values.len() != self.values.len()
         {
             panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());

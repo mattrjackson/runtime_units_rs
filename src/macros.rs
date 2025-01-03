@@ -34,97 +34,7 @@ macro_rules! prefix {
     (mebi) => { 1024.0 * 1024.0 };
     (kibi) => { 1024.0 };
 }
-#[macro_export]
-macro_rules! impl_quantity_slice {
-    ($quantity:ident) =>
-    {
-        paste::paste!
-        {
-        use $crate::traits::Slice;       
 
-        use core::ops::{Mul, Div, Add, Sub, AddAssign, SubAssign, MulAssign, DivAssign };
-        impl<T: Clone+Slice<f64>> Div<f64> for [<$quantity Slice>]<T>
-        {
-            type Output = [<$quantity Slice>]<T>;
-
-            fn div(self, rhs: f64) -> Self::Output {
-                let mut result = self.clone();
-                for val in result.values.as_mut_slice()
-                {  
-                *val /= rhs;
-                }
-                result
-            }
-        }
-
-
-        impl<T: Clone+Slice<f64>> Mul<f64> for [<$quantity Slice>]<T>
-        {
-            type Output = [<$quantity Slice>]<T>;
-
-            fn mul(self, rhs: f64) -> Self::Output {
-                let mut result = self.clone();
-                for val in result.values.as_mut_slice()
-                {  
-                *val *= rhs;
-                }
-                result
-            }
-        }
-        impl<T: Clone+Slice<f64>> DivAssign<f64> for [<$quantity Slice>]<T>
-        {
-
-            fn div_assign(&mut self, rhs: f64) {        
-                for val in self.values.as_mut_slice()
-                {  
-                *val /= rhs;
-                }
-            }
-        }
-        impl<T: Clone+Slice<f64>> MulAssign<f64> for [<$quantity Slice>]<T>
-        {
-
-            fn mul_assign(&mut self, rhs: f64) {        
-                for val in self.values.as_mut_slice()
-                {  
-                *val *= rhs;
-                }
-            }
-        }
-        use $crate::traits::Unit;
-        impl<T: Clone+Slice<f64>> AddAssign<[<$quantity Slice>]<T>> for [<$quantity Slice>]<T>
-        {
-
-            fn add_assign(&mut self, rhs: [<$quantity Slice>]<T>) {            
-                if rhs.values.len() != self.values.len()
-                {
-                    panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
-                }
-                let factor = rhs.unit.definition().convert_unchecked(self.unit.definition());
-                for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
-                {  
-                *val += rhs*factor;
-                }
-            }
-        }
-        impl<T: Clone+Slice<f64>> SubAssign<[<$quantity Slice>]<T>> for [<$quantity Slice>]<T>
-        {
-
-            fn sub_assign(&mut self, rhs: [<$quantity Slice>]<T>) {            
-                if rhs.values.len() != self.values.len()
-                {
-                    panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
-                }
-                let factor = rhs.unit.convert_unchecked(self.unit);
-                for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
-                {  
-                *val -= rhs*factor;
-                }
-            }
-        }
-    }
-    }
-}  
 #[macro_export]
 macro_rules! impl_quantity_ops {   
     ($quantity:ident) =>
@@ -182,6 +92,13 @@ macro_rules! impl_quantity_ops {
             fn eq(&self, other: &$quantity) -> bool {
                 self.value * self.definition().multiplier == other.value * other.definition().multiplier
             }
+        }
+        
+        impl PartialOrd for $quantity
+        {
+            fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+                (self.value * self.definition().multiplier).partial_cmp(&(other.value * other.definition().multiplier))
+            }        
         }
 
         impl<T:IsScalarQuantity> Mul<T> for $quantity
@@ -316,11 +233,25 @@ macro_rules! quantity {
         {
             $($unit,)+
         }
+        impl Default for [<$quantity Unit>]{
+            fn default() -> Self {
+                Self::base_unit()
+            }
+        }
         }        
         paste::paste! { 
             pub(crate) const [<$quantity:upper _UNIT_BASE>]: UnitBase = crate::units_base::UOMDimensions::to_unit_base(($($crate::units_base::UOMDimensions::$dimension,)+));
             $(pub(crate) const [<$quantity:upper _ $unit:upper _conversion:upper>]: f64 = $conversion;)+
-        
+        const [<$quantity:upper _BASE_UNIT>]: [<$quantity Unit>] =  [<get_base_unit_ $quantity:lower>]();
+        const fn [<get_base_unit_ $quantity:lower>]() -> [<$quantity Unit>] 
+        {
+            
+            $(if [<$quantity Unit>]::$unit.multiplier() == 1.0
+            {
+                return [<$quantity Unit>]::$unit;
+            })+
+            panic!("No base unit found");            
+        }
         impl [<$quantity Unit>] 
         {
             paste::paste!{
@@ -333,7 +264,7 @@ macro_rules! quantity {
             }        
             #[doc = "Multiplier of unit to its base quantity."]
             #[allow(clippy::eq_op)]            
-            pub fn multiplier(&self) -> f64
+            pub const fn multiplier(&self) -> f64
             {
                 match self
                 {
@@ -370,6 +301,7 @@ macro_rules! quantity {
                 const UNITS: &[&'static str] = &[ $($singular,)+ ];                
                 UNITS
             }            
+            
         }
         impl $crate::traits::Unit for [<$quantity Unit>] 
         {
@@ -386,6 +318,11 @@ macro_rules! quantity {
                 {
                     [<$quantity:upper _UNIT_BASE>]
                 }                
+                #[inline]
+                fn base_unit() -> Self
+                {
+                    [<$quantity:upper _BASE_UNIT>]
+                }
             }        
         }
         paste::paste!
@@ -446,17 +383,17 @@ macro_rules! quantity {
             }      
 
             // Permit creation of `Units` from a `FixedSliceQuantity`
-            impl<T: Clone+Slice<f64>> From<[<$quantity Slice>]<T>> for $crate::Units
+            impl From<[<$quantity Vec>]> for $crate::Units
             {
-                fn from(value:[<$quantity Slice>]<T>) -> Self {
+                fn from(value:[<$quantity Vec>]) -> Self {
                     $crate::Units::$quantity(value.unit)
                 }
             }     
 
              // Permit creation of `Units` from a &`FixedSliceQuantity`
-             impl<T: Clone+Slice<f64>> From<&[<$quantity Slice>]<T>> for $crate::Units
+             impl From<&[<$quantity Vec>]> for $crate::Units
              {
-                 fn from(value: &[<$quantity Slice>]<T>) -> Self {
+                 fn from(value: &[<$quantity Vec>]) -> Self {
                      $crate::Units::$quantity(value.unit)
                  }
              }     
@@ -466,7 +403,7 @@ macro_rules! quantity {
         {
             use $crate::traits::FixedQuantity;
             $(#[$quantity_attr])*
-            #[derive(Copy, Clone, Debug)]
+            #[derive(Copy, Clone, Debug, Default)]
             #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
             #[cfg_attr(feature="utoipa", derive(ToSchema))]
             #[cfg_attr(feature="utoipa", schema(title = "" [<$quantity>]))]
@@ -535,6 +472,8 @@ macro_rules! quantity {
                     }
                 )+    
             }
+
+                        
             impl FixedQuantity<[<$quantity Unit>]> for $quantity
             {                
                 #[inline]
@@ -608,85 +547,35 @@ macro_rules! quantity {
                     self.unit.into()
                 }
             }
-            use crate::impl_quantity_ops;            
+            use crate::impl_quantity_ops;
             
-            #[derive(Clone, Debug)]
-            #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
-            #[cfg_attr(feature="utoipa", derive(ToSchema))]            
-            #[cfg_attr(feature="utoipa", aliases([<$quantity Vec>]=[<$quantity Slice>]<Vec<f64>>))]
-            #[doc = "Array storage (must implement `Slice`) for a series of values and [`" [<$quantity Unit>]"`]. Utoipa alias has been implemented for `Vec<f64>`."]   
-            pub struct [<$quantity Slice>]<T: Clone+Slice<f64>>
-            {
-                pub(crate) unit: [<$quantity Unit>],
-                pub(crate) values: T
-            }
-            use crate::impl_quantity_slice;
+            use crate::create_multivalue_quantities;
+            use crate::{impl_quantity_vec_ops, impl_quantity_array_ops};
             
-            impl<T: Clone+Slice<f64>>  crate::traits::FixedSliceQuantity<[<$quantity Unit>], f64, T> for [<$quantity Slice>]<T>
-            {
-                fn unit(&self) -> [<$quantity Unit>] {
-                    self.unit
-                }
-
-                fn values(&self) -> &[f64] {
-                    &self.values.as_slice()
-                }
-
-                fn values_mut(&mut self) -> &mut [f64] {
-                    self.values.as_mut_slice()
-                }
-
-                fn len(&self) -> usize {
-                    self.values.len()
-                }
-
-                fn convert(&self, unit: [<$quantity Unit>]) -> Self 
-                {
-                    let mut result = self.clone();
-                    result.convert_mut(unit);
-                    return result;
-                }
-
-                #[inline]
-                fn convert_mut(&mut self, unit: [<$quantity Unit>]) {
-                    let factor = self.unit.definition().convert_unchecked(unit.definition());
-                    for val in self.values.as_mut_slice().iter_mut()
-                    {
-                        *val *= factor;
-                    }            
-                    self.unit = unit;
-                }
-
-                #[inline]
-                fn try_convert(&self, unit: $crate::Units) -> Result<Self, RuntimeUnitError> where Self: Sized
-                {
-                    let destination_unit: [<$quantity Unit>] = unit.try_into()?;                   
-                    Ok(self.convert(destination_unit))      
-                }
-            }
-            impl<T: Clone+Slice<f64>> [<$quantity Slice>]<T>
+            
+            impl [<$quantity Vec>]
             {
                 #[doc = "Create a new vector of [`" [<$quantity Unit>]"`]."]   
-                pub fn new(values: T, unit: [<$quantity Unit>]) -> Self
+                pub fn new(values: Vec<f64>, unit: [<$quantity Unit>]) -> Self
                 {
                     Self{values, unit}
                 }
                 #[inline]
                 #[doc = "Retrieve values associated with this [`" [<$quantity Slice>]"`]."]   
-                pub fn values(&self) -> &T
+                pub fn values(&self) -> &Vec<f64>
                 {
                     &self.values
                 }
                 #[inline]
                 #[doc = "Retrieve the mutable values associated with this [`" [<$quantity Slice>]"`]."]   
-                pub fn values_mut(&mut self) -> &mut T
+                pub fn values_mut(&mut self) -> &mut Vec<f64>
                 {
                     &mut self.values
                 }
 
                 $(
                     #[doc = "Create a new [`" [<$quantity>] "`] with units of [`" [<$quantity Unit>] "::" [<$unit>] "`]."] 
-                    pub fn [<$unit:snake>](values: T) -> Self
+                    pub fn [<$unit:snake>](values: Vec<f64>) -> Self
                     {
                         Self{ values, unit: [<$quantity Unit>]::$unit.into() }
                     }
@@ -704,15 +593,17 @@ macro_rules! quantity {
                     }
                 )+   
             }
-
             impl_quantity_ops!($quantity);
-            impl_quantity_slice!($quantity);
-            use crate::slice_quantity::SliceQuantity;
-            impl<T: Clone+Slice<f64>> From<[<$quantity Slice>]<T>> for SliceQuantity<T>
+            create_multivalue_quantities!($quantity);
+            impl_quantity_vec_ops!($quantity);
+            impl_quantity_array_ops!($quantity);
+            
+            use crate::vector_quantity::VecQuantity;
+            impl From<[<$quantity Vec>]> for VecQuantity
             {
-                fn from(input: [<$quantity Slice>]<T>) -> Self 
+                fn from(input: [<$quantity Vec>]) -> Self 
                 {
-                    SliceQuantity{ unit: input.unit.definition(), values: input.values }
+                    VecQuantity{ unit: input.unit.definition(), values: input.values }
                 }
             }
         }        
@@ -812,12 +703,11 @@ macro_rules! system {
            mod [<$quantity:snake>];
             }
            paste::paste!{#[cfg(any(feature = "" $quantity, feature="All"))]       
-           pub use $crate::unit_definitions::[<$quantity:snake>]::[<$quantity Slice>];}          
+           pub use $crate::unit_definitions::[<$quantity:snake>]::[<$quantity Array>];}
            paste::paste!{#[cfg(any(feature = "" $quantity, feature="All"))]       
            pub use $crate::unit_definitions::[<$quantity:snake>]::$quantity;}
-           #[cfg(any(feature = "" $quantity, feature="All"))]                                             
-           #[cfg(feature="utoipa")]
-           pub use $crate::unit_definitions::[<$quantity:snake>]::[<$quantity Vec>];
+           paste::paste!{#[cfg(any(feature = "" $quantity, feature="All"))]                                              
+           pub use $crate::unit_definitions::[<$quantity:snake>]::[<$quantity Vec>];}
            
         )+
         pub mod quantities
@@ -831,6 +721,29 @@ macro_rules! system {
             )+
             pub use $crate::quantity::Quantity;
             
+        }
+        pub mod quantities_array
+        {
+            $(  
+                paste::paste!{
+                    #[allow(clippy::eq_op)]
+                    #[cfg(any(feature = "" $quantity, feature="All"))]                    
+                    pub use $crate::unit_definitions::[<$quantity:snake>]::$quantity;                         
+                }
+            )+
+            pub use $crate::array_quantity::ArrayQuantity;
+        }
+
+        pub mod quantities_vector
+        {
+            $(  
+                paste::paste!{
+                    #[allow(clippy::eq_op)]
+                    #[cfg(any(feature = "" $quantity, feature="All"))]                    
+                    pub use $crate::unit_definitions::[<$quantity:snake>]::$quantity;                         
+                }
+            )+
+            pub use $crate::vector_quantity::VecQuantity;
         }
         pub mod units
         {
@@ -1069,7 +982,9 @@ macro_rules! system {
                 }    
                 }
             }
-           
+            use crate::{create_multivalue_quantities_vec_enum, create_multivalue_quantities_array_enum};
+            create_multivalue_quantities_vec_enum!($($quantity),+);
+            create_multivalue_quantities_array_enum!($($quantity),+);
             
         }
     };

@@ -51,22 +51,9 @@ pub trait FixedQuantity<UnitType: Unit> where Self: Sized + Div<f64> + Mul<f64> 
 }
 
 ///
-/// A trait to define storage that provides iterator over an `Element` of a given type.
-/// 
-pub trait Slice<Element>
-{
-    /// Get a mutable slice of the values.
-    fn as_mut_slice(&mut self) -> &mut [Element];
-    /// Get an immutable slice of the values.
-    fn as_slice(&self) -> &[Element];
-    /// Get the length of the values.
-    fn len(&self) -> usize;
-}
-
-///
 /// Trait that implements conversion of a slice quantity within a given unit type (e.g. m->cm, kg->g)
 /// 
-pub trait FixedSliceQuantity<UnitType: Unit, Element, Storage: Slice<Element>>
+pub trait FixedSliceQuantity<UnitType: Unit, Element>
 {
     /// Return unit associated with this quantity
     fn unit(&self) -> UnitType;
@@ -95,6 +82,9 @@ pub trait Unit where Self:Sized
 
     /// Base unit definition
     fn base() -> UnitBase;
+
+    /// Base unit for this unit type (e.g. `meter` for `LengthUnit`)
+    fn base_unit() -> Self;
 
     /// Try to compute conversion factor from this unit to another.
     #[inline]
