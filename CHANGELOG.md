@@ -10,6 +10,16 @@
 ### Fixed
 -->
 
+## [0.4.2] — 2025-01-02
+
+### Security
+### Added
+### Changed
+Corrected root cause of several bugs in conversions for `ArbitraryQuantity`. Corrected units for `try_convert` and `try_convert_unchecked` in `UnitDefinition` and `Unit`, and updated documentation that this returns the conversion factor required to compute from one `UnitDefinition` to another. Both functions now return an `f64` rather than a `UnitDefinition`.
+Updated packages to new versions. 
+### Deprecated
+### Removed
+
 ## [0.4.1] — 2025-01-02
 
 ### Security

@@ -96,23 +96,25 @@ pub trait Unit where Self:Sized
     /// Base unit definition
     fn base() -> UnitBase;
 
-    /// Convert from this unit to another. No validation of base unit is made.
-    fn try_convert(&self, unit: UnitDefinition) -> Result<UnitDefinition, RuntimeUnitError>
+    /// Try to compute conversion factor from this unit to another.
+    #[inline]
+    fn try_convert(&self, unit: UnitDefinition) -> Result<f64, RuntimeUnitError>
     {
         let definition = self.definition();
         if definition.is_convertible(unit)
         {
-            Ok(UnitDefinition { base: definition.base, multiplier: unit.multiplier() / definition.multiplier() })
+            Ok(unit.multiplier() / definition.multiplier())
         }
         else
         {
             Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Could not convert from base units of {} to {}", definition.unit_string(), unit.unit_string())))
         }
     }
-    /// Try converting from this unit to another.
-    fn convert_unchecked(&self, unit: Self) -> UnitDefinition
+    /// Compute conversion factor from this unit to another (no check of unit compatibility is made).
+    #[inline]
+    fn convert_unchecked(&self, unit: Self) -> f64
     {
         let definition = self.definition();
-        UnitDefinition { base: definition.base, multiplier: unit.definition().multiplier() / definition.multiplier() }
+        unit.definition().multiplier() / definition.multiplier()
     }
 }

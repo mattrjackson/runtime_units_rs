@@ -1,6 +1,6 @@
 [package]
 name = "runtime_units"
-version = "0.4.1"
+version = "0.4.2"
 edition = "2021"
 license = "MIT"
 keywords =  ["units", "measurement", "SI", "dimensional-analysis"]
@@ -10,11 +10,11 @@ readme = "README.md"
 authors = ["Matt Jackson <mattrjackson@gmail.com>"]
 
 [dependencies]
-bitfield-struct = "0.6.0"
-paste = "1.0.14"
-serde = {version = "1.0.197", optional = true, features=["derive"] }
-serde_json = { version = "1.0.114", optional = true }
-utoipa = { version = "4.2.0", optional = true , features=["axum_extras", "uuid","chrono", "url", "time", "openapi_extensions"]}
+bitfield-struct = "0.6.2"
+paste = "1.0.15"
+serde = {version = "1.0.217", optional = true, features=["derive"] }
+serde_json = { version = "1.0.134", optional = true }
+utoipa = { version = "4.2.3", optional = true , features=["axum_extras", "uuid","chrono", "url", "time", "openapi_extensions"]}
 
 [profile.test]
 opt-level = 3

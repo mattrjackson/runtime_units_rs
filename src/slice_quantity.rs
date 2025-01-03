@@ -57,7 +57,7 @@ impl<T: Clone+Slice<f64>> crate::traits::ArbitraryQuantity for SliceQuantity<T>
     }
 
     fn convert_mut(&mut self, unit: UnitDefinition) {
-        let factor = self.unit.convert_unchecked(unit).multiplier();
+        let factor = self.unit.convert_unchecked(unit);
         for val in self.values.as_mut_slice().iter_mut()
         {
             *val *= factor;
@@ -197,7 +197,7 @@ impl<T: Clone+Slice<f64>> AddAssign<SliceQuantity<T>> for SliceQuantity<T>
         {
             panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
         }
-        let factor = rhs.unit.convert_unchecked(self.unit).multiplier;
+        let factor = rhs.unit.convert_unchecked(self.unit);
         for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
         {  
            *val += rhs*factor;
@@ -212,7 +212,7 @@ impl<T: Clone+Slice<f64>> SubAssign<SliceQuantity<T>> for SliceQuantity<T>
         {
             panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
         }
-        let factor = rhs.unit.convert_unchecked(self.unit).multiplier;
+        let factor = rhs.unit.convert_unchecked(self.unit);
         for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
         {  
            *val -= rhs*factor;

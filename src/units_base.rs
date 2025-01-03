@@ -292,8 +292,8 @@ impl UnitDefinition
     {
         other.base == self.base && if self.multiplier == 0.0 { (self.multiplier-other.multiplier).abs()} else { (1.0-other.multiplier/self.multiplier).abs() } <= rel_error 
     }
-    #[doc="Convert one unit to another"]
-    pub fn try_convert(&self, unit: Self) -> Result<Self, RuntimeUnitError>
+    #[doc="Compute the conversion factor required to convert current `UnitDefinition` to another"]
+    pub fn try_convert(&self, unit: Self) -> Result<f64, RuntimeUnitError>
     {
         if unit.base == self.base
         {
@@ -304,16 +304,16 @@ impl UnitDefinition
             Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Could not convert from base units of {} to {}", self.unit_string(), unit.unit_string())))
         }
     }
-    #[doc="Convert one unit to another"]
-    pub fn convert_unchecked(&self, unit: Self) -> Self
+    #[doc="Compute the conversion factor required to convert current `UnitDefinition` to another"]
+    pub fn convert_unchecked(&self, unit: Self) -> f64
     {
         if *self == unit
         {
-            *self
+            1.0
         }
         else 
         {
-            UnitDefinition { base: self.base, multiplier: self.multiplier / unit.multiplier() }
+            self.multiplier / unit.multiplier()
         }
     }
 }

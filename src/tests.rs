@@ -166,6 +166,8 @@ mod test
         let unit = Units::Length(LengthUnit::meter);
         assert_eq!(length_quantity.try_convert_unit(unit).unwrap().value(), 10.0);
         assert_eq!(length_quantity.try_convert_unit(Units::Length(LengthUnit::centimeter)).unwrap().value(), 1.0e3);
+        let length_quantity2: Quantity = Length::centimeter(1.0).into();
+        assert_eq!(length_quantity2.convert(LengthUnit::centimeter.into()).value(), 1.0);
     }
     #[test]
     #[cfg(any(feature="All", feature ="Energy"))]

@@ -12,20 +12,20 @@ impl crate::traits::ArbitraryQuantity for Quantity
 
     fn convert(&self, unit: UnitDefinition)  -> Quantity
     {
-        Quantity { value: self.value() * self.unit.convert_unchecked(unit).multiplier, unit }
+        Quantity { value: self.value() * self.unit.convert_unchecked(unit), unit }
     }
     
     fn try_convert_mut(&mut self, unit: UnitDefinition) -> Result<(), RuntimeUnitError> {
-        self.value *= self.unit.try_convert(unit)?.multiplier;
+        self.value *= self.unit.try_convert(unit)?;
         Ok(())
     }
     
     fn convert_mut(&mut self, unit: UnitDefinition) {
-        self.value *= self.unit.convert_unchecked(unit).multiplier;
+        self.value *= self.unit.convert_unchecked(unit);
     }
     
     fn try_convert(&self, unit: UnitDefinition) -> Result<Quantity, RuntimeUnitError> {
-        Ok(Quantity { value : self.value * self.unit.try_convert(unit)?.multiplier / self.unit.multiplier, unit })
+        Ok(Quantity { value : self.value * self.unit.try_convert(unit)?, unit })
     }
     
     fn unit_mut(&mut self) -> &mut UnitDefinition {

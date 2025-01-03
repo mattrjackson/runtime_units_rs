@@ -100,7 +100,7 @@ macro_rules! impl_quantity_slice {
                 {
                     panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
                 }
-                let factor = rhs.unit.definition().convert_unchecked(self.unit.definition()).multiplier;
+                let factor = rhs.unit.definition().convert_unchecked(self.unit.definition());
                 for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
                 {  
                 *val += rhs*factor;
@@ -115,7 +115,7 @@ macro_rules! impl_quantity_slice {
                 {
                     panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
                 }
-                let factor = rhs.unit.convert_unchecked(self.unit).multiplier;
+                let factor = rhs.unit.convert_unchecked(self.unit);
                 for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
                 {  
                 *val -= rhs*factor;
@@ -649,7 +649,7 @@ macro_rules! quantity {
 
                 #[inline]
                 fn convert_mut(&mut self, unit: [<$quantity Unit>]) {
-                    let factor = self.unit.definition().convert_unchecked(unit.definition()).multiplier();
+                    let factor = self.unit.definition().convert_unchecked(unit.definition());
                     for val in self.values.as_mut_slice().iter_mut()
                     {
                         *val *= factor;
