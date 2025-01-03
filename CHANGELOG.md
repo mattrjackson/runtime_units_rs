@@ -10,6 +10,15 @@
 ### Fixed
 -->
 
+## [0.4.3] — 2025-01-02
+
+### Security
+### Added
+### Changed
+Updated Utoipa to 5.3.0
+### Deprecated
+### Removed
+
 ## [0.4.2] — 2025-01-02
 
 ### Security
