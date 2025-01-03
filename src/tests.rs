@@ -195,14 +195,23 @@ mod test
         use serde_json::json;
         println!("{}",json!(crate::Length::new(1.0, crate::units::LengthUnit::centimeter)));
     }
-   
+    #[cfg(all(feature="utoipa", any(feature="All", feature="Length")))]
+    #[test]
+    fn utoipa_test()
+    {
+        use utoipa::PartialSchema;
+        use crate::{units::LengthUnit, Length, LengthVec};
+        let length =LengthVec::new(vec![0.0,2.0], LengthUnit::meter);
+        println!("{:?}",LengthVec::schema());
+
+    }
     
 
     #[test]
     fn test_vector_quantity()
     {
-        use crate::LengthSlice;
-        let length_meters = LengthSlice::meter(vec![1.0, 2.0, 3.0]);        
+        use crate::LengthVec;
+        let length_meters = LengthVec::meter(vec![1.0, 2.0, 3.0]);        
         let length_centimeters = length_meters.to_centimeter();
         for (&val_m, &val_cm) in length_meters.values.iter().zip(&length_centimeters.values)
         {
