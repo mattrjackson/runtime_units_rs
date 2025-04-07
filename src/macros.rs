@@ -228,7 +228,6 @@ macro_rules! quantity {
         #[allow(non_camel_case_types)]         
         #[allow(clippy::eq_op)]
         #[cfg_attr(feature="utoipa", derive(ToSchema))]        
-        #[cfg_attr(feature="utoipa", schema(title = "" [<$quantity Unit>]))]
         pub enum [<$quantity Unit>]
         {
             $($unit,)+
@@ -576,6 +575,47 @@ macro_rules! quantity {
                 $(
                     #[doc = "Create a new [`" [<$quantity>] "`] with units of [`" [<$quantity Unit>] "::" [<$unit>] "`]."] 
                     pub fn [<$unit:snake>](values: Vec<f64>) -> Self
+                    {
+                        Self{ values, unit: [<$quantity Unit>]::$unit.into() }
+                    }
+                )+
+
+                $(
+                    #[doc = "Convert to [`" [<$quantity Unit>] "::" [<$unit>] "`]."]                        
+                    #[inline]
+                    pub fn [<to_ $unit:snake>](&self) -> Self
+                    {                     
+                        use crate::traits::FixedSliceQuantity;
+                        let mut r = self.clone();
+                        r.convert_mut([<$quantity Unit>]::$unit);
+                        r
+                    }
+                )+   
+            }
+
+            impl<const D: usize> [<$quantity Array>]<D>
+            {
+                #[doc = "Create a new vector of [`" [<$quantity Unit>]"`]."]   
+                pub fn new(values: [f64; D], unit: [<$quantity Unit>]) -> Self
+                {
+                    Self{values, unit}
+                }
+                #[inline]
+                #[doc = "Retrieve values associated with this [`" [<$quantity Slice>]"`]."]   
+                pub fn values(&self) -> &[f64; D]
+                {
+                    &self.values
+                }
+                #[inline]
+                #[doc = "Retrieve the mutable values associated with this [`" [<$quantity Slice>]"`]."]   
+                pub fn values_mut(&mut self) -> &mut [f64; D]
+                {
+                    &mut self.values
+                }
+
+                $(
+                    #[doc = "Create a new [`" [<$quantity>] "`] with units of [`" [<$quantity Unit>] "::" [<$unit>] "`]."] 
+                    pub fn [<$unit:snake>](values: [f64; D]) -> Self
                     {
                         Self{ values, unit: [<$quantity Unit>]::$unit.into() }
                     }

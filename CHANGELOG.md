@@ -10,6 +10,15 @@
 ### Fixed
 -->
 
+## [0.5.1] — 2025-04-05
+
+### Security
+### Added
+Added `to_unit`, and `unit()` methods for array quantities.
+### Changed
+### Deprecated
+### Removed
+
 ## [0.5.0] — 2025-01-04
 
 ### Security

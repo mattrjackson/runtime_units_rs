@@ -1,6 +1,6 @@
 [package]
 name = "runtime_units"
-version = "0.5.0"
+version = "0.5.1"
 edition = "2021"
 license = "MIT"
 keywords =  ["units", "measurement", "SI", "dimensional-analysis"]
@@ -16,7 +16,7 @@ paste = "1.0.15"
 serde = {version = "1.0.217", optional = true, features=["derive"] }
 serde_json = { version = "1.0.134", optional = true }
 serde_with = { version = "3.12.0", optional =  true }
-utoipa = { version = "5.3.0", optional = true , features=["axum_extras", "uuid","chrono", "url", "time", "openapi_extensions", "debug"]}
+utoipa = { version = "5.3.*", optional = true , features=["axum_extras", "uuid","chrono", "url", "time", "openapi_extensions", "debug"]}
 
 [profile.test]
 opt-level = 3
