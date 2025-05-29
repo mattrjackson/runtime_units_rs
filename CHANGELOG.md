@@ -10,6 +10,16 @@
 ### Fixed
 -->
 
+## [0.5.2] — 2025-05-29
+
+### Security
+### Added
+Corrected unit conversion bug affecting addition or subtraction of `Quantity`.
+### Changed
+Implemented Display for `UnitDefinition` and `Quantity`.
+### Deprecated
+### Removed
+
 ## [0.5.1] — 2025-04-05
 
 ### Security

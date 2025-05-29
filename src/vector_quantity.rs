@@ -181,7 +181,7 @@ impl AddAssign<VecQuantity> for VecQuantity
         {
             panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
         }
-        let factor = rhs.unit.convert_unchecked(self.unit);
+        let factor = rhs.unit.try_convert(self.unit).unwrap_or_else(|_| panic!("Addition failed due to incompatible units `{}` and `{}`", self.unit, rhs.unit));
         for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
         {  
            *val += rhs*factor;
@@ -196,7 +196,7 @@ impl SubAssign<VecQuantity> for VecQuantity
         {
             panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
         }
-        let factor = rhs.unit.convert_unchecked(self.unit);
+        let factor = rhs.unit.try_convert(self.unit).unwrap_or_else(|_| panic!("Subtraction failed due to incompatible units `{}` and `{}`", self.unit, rhs.unit));
         for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
         {  
            *val -= rhs*factor;
