@@ -155,6 +155,109 @@ mod test
         assert!(length.try_convert(Units::Length(LengthUnit::meter)).is_ok());
         assert_eq!(length.try_convert(Units::Length(LengthUnit::meter)).unwrap().value(), 1.0e3);
     }
+    
+    #[test]
+    #[should_panic(expected = "Addition failed due to incompatible units `m` and `s`")]
+    #[cfg(any(feature="All", all(feature="Length", feature="Time")))]
+    fn test_invalid_addition()
+    {
+        use crate::{quantity::Quantity, Length, Quantities, Time};
+
+        let length = Quantities::Length(Length::meter(10.0));
+        let time = Quantities::Time(Time::second(5.0));
+        let length_quantity: Quantity = length.into();
+        let time_quantity: Quantity = time.into();
+        
+        // Test an invalid addition
+        let _result_add = length_quantity + time_quantity;
+        
+    }
+    #[test]
+    #[cfg(any(feature="All", all(feature="Length", feature="Volume")))]
+    fn test_quantity_addition()
+    {
+        use crate::traits::ArbitraryQuantity;
+        use crate::units::VolumeUnit;
+        use crate::{quantity::Quantity, Volume, Units};
+        use crate::units_base::UnitDefinition;
+        let water = Quantity::from(Volume::liter(2.0));
+        let salt = Quantity::from(Volume::cubic_centimeter(100.0));
+
+        let total = water + salt;
+
+        let total_in_liters = total.try_convert(UnitDefinition::from(Units::Volume(VolumeUnit::liter))).unwrap();
+
+        let total_in_m3 = total.try_convert(UnitDefinition::from(Units::Volume(VolumeUnit::cubic_meter))).unwrap();
+
+        assert!((total_in_liters.value() - 2.1).abs() < 1e-6, "Expected approximately 2.1 liters, got {}", total_in_liters.value());
+        assert!((total_in_m3.value() - 0.0021).abs() < 1e-6, "Expected approximately 0.0021 m³, got {}", total_in_m3.value());        
+    }
+
+    #[test]
+    #[cfg(any(feature="All", all(feature="Length", feature="Volume")))]
+    fn test_quantity_subtraction()
+    {
+        use crate::traits::ArbitraryQuantity;
+        use crate::units::VolumeUnit;
+        use crate::{quantity::Quantity, Volume, Units};
+        use crate::units_base::UnitDefinition;
+        let water = Quantity::from(Volume::liter(2.0));
+        let salt = Quantity::from(Volume::cubic_centimeter(100.0));
+
+        let total = water - salt;
+
+        let total_in_liters = total.try_convert(UnitDefinition::from(Units::Volume(VolumeUnit::liter))).unwrap();
+
+        let total_in_m3 = total.try_convert(UnitDefinition::from(Units::Volume(VolumeUnit::cubic_meter))).unwrap();
+
+        assert!((total_in_liters.value() - 1.9).abs() < 1e-6, "Expected approximately 1.9 liters, got {}", total_in_liters.value());
+        assert!((total_in_m3.value() - 0.0019).abs() < 1e-6, "Expected approximately 0.0019 m³, got {}", total_in_m3.value());
+        
+    }
+
+    #[test]
+    #[cfg(any(feature="All", all(feature="Length", feature="Volume")))]
+    fn test_quantity_addassign()
+    {
+        use crate::traits::ArbitraryQuantity;
+        use crate::units::VolumeUnit;
+        use crate::{quantity::Quantity, Volume, Units};
+        use crate::units_base::UnitDefinition;
+        let mut total = Quantity::from(Volume::liter(2.0));
+        let salt = Quantity::from(Volume::cubic_centimeter(100.0));
+
+        total += salt;
+
+        let total_in_liters = total.try_convert(UnitDefinition::from(Units::Volume(VolumeUnit::liter))).unwrap();
+
+        let total_in_m3 = total.try_convert(UnitDefinition::from(Units::Volume(VolumeUnit::cubic_meter))).unwrap();
+
+        assert!((total_in_liters.value() - 2.1).abs() < 1e-6, "Expected approximately 2.1 liters, got {}", total_in_liters.value());
+        assert!((total_in_m3.value() - 0.0021).abs() < 1e-6, "Expected approximately 0.0021 m³, got {}", total_in_m3.value());
+        
+    }
+
+    #[test]
+    #[cfg(any(feature="All", all(feature="Length", feature="Volume")))]
+    fn test_quantity_subassign()
+    {
+        use crate::traits::ArbitraryQuantity;
+        use crate::units::VolumeUnit;
+        use crate::{quantity::Quantity, Volume, Units};
+        use crate::units_base::UnitDefinition;
+        let mut total = Quantity::from(Volume::liter(2.0));
+        let salt = Quantity::from(Volume::cubic_centimeter(100.0));
+
+        total -= salt;
+
+        let total_in_liters = total.try_convert(UnitDefinition::from(Units::Volume(VolumeUnit::liter))).unwrap();
+
+        let total_in_m3 = total.try_convert(UnitDefinition::from(Units::Volume(VolumeUnit::cubic_meter))).unwrap();
+
+        assert!((total_in_liters.value() - 1.9).abs() < 1e-6, "Expected approximately 1.9 liters, got {}", total_in_liters.value());
+        assert!((total_in_m3.value() - 0.0019).abs() < 1e-6, "Expected approximately 0.0019 m³, got {}", total_in_m3.value());
+        
+    }
 
     #[test]
     #[cfg(any(feature="All", all(feature="Length", feature="Time")))]

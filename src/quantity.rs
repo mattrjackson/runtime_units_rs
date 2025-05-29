@@ -1,7 +1,8 @@
-use core::fmt::Debug;
+use core::fmt::{Display, Debug};
 use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use crate::errors::RuntimeUnitError;
+use crate::traits::ArbitraryQuantity;
 use crate::units_base::UnitDefinition;
 
 impl crate::traits::ArbitraryQuantity for Quantity
@@ -129,6 +130,7 @@ impl Add<Quantity> for Quantity
     type Output=Quantity;
 
     fn add(self, rhs: Quantity) -> Self::Output {
+        let rhs = rhs.try_convert(self.unit).unwrap_or_else(|_| panic!("Addition failed due to incompatible units `{}` and `{}`", self.unit, rhs.unit));
         Self { value: self.value + rhs.value, unit: self.unit }
     }
 }
@@ -137,6 +139,7 @@ impl Sub<Quantity> for Quantity
     type Output=Quantity;
 
     fn sub(self, rhs: Quantity) -> Self::Output {
+        let rhs = rhs.try_convert(self.unit).unwrap_or_else(|_| panic!("Subtraction failed due to incompatible units `{}` and `{}`", self.unit, rhs.unit));
         Self { value: self.value - rhs.value, unit: self.unit }
     }
 }
@@ -144,6 +147,7 @@ impl Sub<Quantity> for Quantity
 impl AddAssign for Quantity
 {
     fn add_assign(&mut self, rhs: Self) {
+        let rhs = rhs.try_convert(self.unit).unwrap_or_else(|_| panic!("Addition failed due to incompatible units `{}` and `{}`", self.unit, rhs.unit));
         self.value += rhs.value;
     }
 }
@@ -151,6 +155,7 @@ impl AddAssign for Quantity
 impl SubAssign for Quantity
 {
     fn sub_assign(&mut self, rhs: Self) {
+        let rhs = rhs.try_convert(self.unit).unwrap_or_else(|_| panic!("Subtraction failed due to incompatible units `{}` and `{}`", self.unit, rhs.unit));
         self.value -= rhs.value;
     }
 }
@@ -199,5 +204,12 @@ impl PartialEq for Quantity
 {
     fn eq(&self, other: &Self) -> bool {
         self.unit.base == other.unit.base && self.convert_unchecked(other.unit) == other.value
+    }
+}
+
+impl Display for Quantity
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{} {}", self.value, self.unit)
     }
 }

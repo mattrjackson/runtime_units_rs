@@ -355,6 +355,14 @@ impl MulAssign for UnitDefinition
         self.base *=  rhs.base
     }
 }
+
+impl Display for UnitDefinition
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.base)
+    }
+}
+
 ///
 /// Internal datatype to map UOM dimensions to runtime units. 
 ///
