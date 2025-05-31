@@ -4,14 +4,14 @@ quantity! {
     /// Molar volume (base UnitDefinition cubic meter per mole, m³ · mol⁻¹).
     quantity: MolarVolume; "molar volume";
     /// Dimension of molar volume, L³N⁻¹ (base UnitDefinition cubic meter per mole, m³ · mol⁻¹).
-    dimension: ISQ<
-        P3,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        N1,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        3.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        -1.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @cubic_meter_per_mole: prefix!(none); "m³/mol", "cubic meter per mole",
             "cubic meters per mole";

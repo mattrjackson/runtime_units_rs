@@ -4,14 +4,14 @@ quantity! {
     /// Electric dipole moment (base UnitDefinition coulomb meter, m · s · A).
     quantity: ElectricDipoleMoment; "electric dipole moment";
     /// Dimension of electric dipole moment, LTI (base UnitDefinition coulomb meter, m · s · A).
-    dimension: ISQ<
-        P1,     // length
-        Z0,     // mass
-        P1,     // time
-        P1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        1.0,     // length
+        0.0,     // mass
+        1.0,     // time
+        1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @coulomb_meter: prefix!(none); "C · m", "coulomb meter", "coulomb meters";
 

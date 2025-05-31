@@ -4,14 +4,14 @@ quantity! {
     /// Electrical resistance (base UnitDefinition ohm, m² · kg · s⁻³ · A⁻²).
     quantity: ElectricalResistance; "electrical resistance";
     /// Dimension of electrical resistance, L²MT⁻³I⁻² (base UnitDefinition ohm, m² · kg · s⁻³ · A⁻²).
-    dimension: ISQ<
-        P2,     // length
-        P1,     // mass
-        N3,     // time
-        N2,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        1.0,     // mass
+        -3.0,     // time
+        -2.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottaohm: prefix!(yotta); "YΩ", "yottaohm", "yottaohms";
         @zettaohm: prefix!(zetta); "ZΩ", "zettaohm", "zettaohms";

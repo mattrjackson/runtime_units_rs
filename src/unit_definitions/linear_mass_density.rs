@@ -4,14 +4,14 @@ quantity! {
     /// Linear mass density (base UnitDefinition kilogram per meter, m⁻¹ · kg).
     quantity: LinearMassDensity; "linear mass density";
     /// Dimension of linear mass density, L⁻¹M (base UnitDefinition kilogram per meter, m⁻¹ · kg).
-    dimension: ISQ<
-        N1,     // length
-        P1,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -1.0,     // length
+        1.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @kilogram_per_meter: prefix!(none); "kg/m", "kilogram per meter", "kilograms per meter";
         @gram_per_kilometer: prefix!(milli) / prefix!(kilo); "g/km", "gram per kilometer",

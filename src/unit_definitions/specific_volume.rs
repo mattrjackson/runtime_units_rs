@@ -4,14 +4,14 @@ quantity! {
     /// Specific volume (base UnitDefinition cubic meter per kilogram, m³ · kg⁻¹).
     quantity: SpecificVolume; "specific volume";
     /// Dimension of specific volume, L³M⁻¹ (base UnitDefinition cubic meter per kilogram, m³ · kg⁻¹).
-    dimension: ISQ<
-        P3,     // length
-        N1,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        3.0,     // length
+        -1.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @cubic_meter_per_kilogram: prefix!(none); "m³/kg", "cubic meter per kilogram",
             "cubic meters per kilogram";

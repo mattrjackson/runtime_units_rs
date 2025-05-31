@@ -4,14 +4,14 @@ quantity! {
     /// Specific radioactivity (base UnitDefinition becquerel per kilogram, kg⁻¹ · s⁻¹).
     quantity: SpecificRadioactivity; "specific radioactivity";
     /// Dimension of specific radioactivity, M⁻¹T⁻¹ (base UnitDefinition becquerel per kilogram, kg⁻¹ · s⁻¹).
-    dimension: ISQ<
-        Z0,     // length
-        N1,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        -1.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @becquerel_per_kilogram: prefix!(none); "Bq/kg", "becquerel per kilogram",

@@ -5,14 +5,14 @@ quantity! {
     quantity: ElectricalConductivity; "electrical conductivity";
     /// Dimension of electrical conductivity, L⁻³M⁻¹T³I² (base UnitDefinition siemens per meter,
     /// m⁻³ · kg⁻¹ · s³ · A²).
-    dimension: ISQ<
-        N3,     // length
-        N1,     // mass
-        P3,     // time
-        P2,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -3.0,     // length
+        -1.0,     // mass
+        3.0,     // time
+        2.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @siemens_per_meter: prefix!(none); "S/m", "siemens per meter", "siemens per meter";
         @siemens_per_centimeter: prefix!(none) / prefix!(centi); "S/cm", "siemens per centimeter",

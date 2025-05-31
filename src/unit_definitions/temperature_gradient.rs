@@ -4,14 +4,14 @@ quantity! {
     /// Temperature gradient (base UnitDefinition kelvin per meter, m⁻¹ · K).
     quantity: TemperatureGradient; "temperature gradient";
     /// Dimension of temperature gradient, L⁻¹Th (base UnitDefinition kelvin per meter, K · m⁻¹).
-    dimension: ISQ<
-        N1,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        P1,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -1.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        1.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @kelvin_per_kilometer: prefix!(none) / prefix!(kilo); "K/km", "kelvin per kilometer",
             "kelvins per kilometer";

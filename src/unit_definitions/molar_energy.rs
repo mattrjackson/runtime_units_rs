@@ -4,14 +4,14 @@ quantity! {
     /// Molar energy (base UnitDefinition joule per mole, kg · m² · s⁻² · mol⁻¹).
     quantity: MolarEnergy; "molar energy";
     /// Dimension of molar energy, L²MT⁻²N⁻¹ (base UnitDefinition joule per mole, kg · m² · s⁻² · mol⁻¹).
-    dimension: ISQ<
-        P2,     // length
-        P1,     // mass
-        N2,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        N1,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        1.0,     // mass
+        -2.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        -1.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         /// Molar energy expressed in base units. Equivalent to J/mol.
         @kilogram_square_meter_per_second_squared_mole: prefix!(kilo) / prefix!(kilo);

@@ -4,14 +4,14 @@ quantity! {
     /// Moment of inertia (base UnitDefinition kilogram square meter, kg · m² ).
     quantity: MomentOfInertia; "moment of inertia";
     /// Dimension of moment of inertia, L²M (base UnitDefinition kilogram square meter, kg · m² ).
-    dimension: ISQ<
-        P2,     // length
-        P1,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        1.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @kilogram_square_meter: prefix!(none); "kg · m²", "kilogram square meter",
             "kilogram square meters";

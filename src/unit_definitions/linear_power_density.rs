@@ -4,14 +4,14 @@ quantity! {
     /// Linear power density (base UnitDefinition watt per meter, m · kg · s⁻³).
     quantity: LinearPowerDensity; "linear power density";
     /// Dimension of linear power density, LMT⁻³ (base UnitDefinition watt per meter, m · kg · s⁻³).
-    dimension: ISQ<
-        P1,     // length
-        P1,     // mass
-        N3,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        1.0,     // length
+        1.0,     // mass
+        -3.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @watt_per_meter: prefix!(none); "W/m", "watt per meter", "watts per meter";
         @watt_per_centimeter: prefix!(none) / prefix!(centi); "W/cm", "watt per centimeter",

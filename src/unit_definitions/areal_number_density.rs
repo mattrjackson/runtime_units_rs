@@ -4,14 +4,14 @@ quantity! {
     /// Areal number density (base UnitDefinition 1 per square meter, m⁻²).
     quantity: ArealNumberDensity; "areal number density";
     /// Dimension of areal number density, L⁻² (base UnitDefinition 1 per square meter, m⁻²).
-    dimension: ISQ<
-        N2,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -2.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @per_square_kilometer: prefix!(none) / prefix!(kilo) / prefix!(kilo); "km⁻²",

@@ -4,14 +4,14 @@ quantity! {
     /// Electrical conductance (base UnitDefinition siemens, m⁻² · kg⁻¹ · s³ · A²).
     quantity: ElectricalConductance; "electrical conductance";
     /// Dimension of electrical conductance, L⁻²M⁻¹T³I² (base UnitDefinition siemens, m⁻² · kg⁻¹ · s³ · A²).
-    dimension: ISQ<
-        N2,     // length
-        N1,     // mass
-        P3,     // time
-        P2,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -2.0,     // length
+        -1.0,     // mass
+        3.0,     // time
+        2.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottasiemens: prefix!(yotta); "YS", "yottasiemens", "yottasiemens";
         @zettasiemens: prefix!(zetta); "ZS", "zettasiemens", "zettasiemens";

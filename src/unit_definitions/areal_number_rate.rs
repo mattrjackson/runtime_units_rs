@@ -4,14 +4,14 @@ quantity! {
     /// Areal number rate (base UnitDefinition 1 per square meter second, m⁻² · s⁻¹).
     quantity: ArealNumberRate; "areal number rate";
     /// Dimension of areal number rate, L⁻²T⁻¹ (base UnitDefinition 1 per square meter second, m⁻² · s⁻¹).
-    dimension: ISQ<
-        N2,     // length
-        Z0,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -2.0,     // length
+        0.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @per_square_meter_second: prefix!(none); "m⁻² · s⁻¹", "per square meter second",

@@ -4,14 +4,14 @@ quantity! {
     /// Molar mass (base UnitDefinition kilogram per mole, kg · mol⁻¹).
     quantity: MolarMass; "molar mass";
     /// Dimension of molar mass, MN⁻¹ (base UnitDefinition kilogram per mole, kg · mol⁻¹).
-    dimension: ISQ<
-        Z0,     // length
-        P1,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        N1,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        1.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        -1.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottagram_per_mole: prefix!(yotta) / prefix!(kilo);
             "Yg/mol", "yottagram per mole", "yottagrams per mole";

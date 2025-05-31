@@ -4,14 +4,14 @@ quantity! {
     /// Electric quadrupole moment (base UnitDefinition coulomb square meter, m² · s · A).
     quantity: ElectricQuadrupoleMoment; "electric quadrupole moment";
     /// Dimension of electric quadrupole moment, LTI (base UnitDefinition coulomb square meter, m² · s · A).
-    dimension: ISQ<
-        P2,     // length
-        Z0,     // mass
-        P1,     // time
-        P1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        0.0,     // mass
+        1.0,     // time
+        1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @coulomb_square_meter: prefix!(none); "C · m²", "coulomb square meter",
             "coulomb square meters";

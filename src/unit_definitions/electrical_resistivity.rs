@@ -4,14 +4,14 @@ quantity! {
     /// Electrical resistivity (base UnitDefinition ohm meter, m³ · kg · s⁻³ · A⁻²).
     quantity: ElectricalResistivity; "electrical resistivity";
     /// Dimension of electrical resistivity, L³MT⁻³I⁻² (base UnitDefinition ohm meter, m³ · kg · s⁻³ · A⁻²).
-    dimension: ISQ<
-        P3,     // length
-        P1,     // mass
-        N3,     // time
-        N2,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        3.0,     // length
+        1.0,     // mass
+        -3.0,     // time
+        -2.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottaohm_meter: prefix!(yotta); "YΩ · m", "yottaohm meter", "yottaohm meters";
         @zettaohm_meter: prefix!(zetta); "ZΩ · m", "zettaohm meter", "zettaohm meters";

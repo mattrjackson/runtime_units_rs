@@ -4,14 +4,14 @@ quantity! {
     /// Acceleration (base UnitDefinition meter per second squared, m · s⁻²).
     quantity: Acceleration; "acceleration";
     /// Dimension of acceleration, LT⁻² (base UnitDefinition meter per second squared, m · s⁻²).
-    dimension: ISQ<
-        P1,     // length
-        Z0,     // mass
-        N2,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        1.0,     // length
+        0.0,     // mass
+        -2.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottameter_per_second_squared: prefix!(yotta); "Ym/s²", "yottameter per second squared",
             "yottameters per second squared";

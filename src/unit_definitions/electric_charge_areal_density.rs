@@ -5,14 +5,14 @@ quantity! {
     quantity: ElectricChargeArealDensity; "electric charge areal density";
     /// Dimension of electric charge areal density, L⁻²TI (base UnitDefinition coulomb per square meter,
     /// m⁻² · A · s).
-    dimension: ISQ<
-        N2,     // length
-        Z0,     // mass
-        P1,     // time
-        P1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -2.0,     // length
+        0.0,     // mass
+        1.0,     // time
+        1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
         kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @coulomb_per_square_meter: prefix!(none); "C/m²", "coulomb per square meter",

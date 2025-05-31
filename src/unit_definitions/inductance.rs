@@ -4,14 +4,14 @@ quantity! {
     /// Inductance (base UnitDefinition henry, m² · kg · s⁻² · A⁻²).
     quantity: Inductance; "inductance";
     /// Dimension of inductance, L²MT⁻²I⁻² (base UnitDefinition henry, m² · kg · s⁻² · A⁻²).
-    dimension: ISQ<
-        P2,     // length
-        P1,     // mass
-        N2,     // time
-        N2,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        1.0,     // mass
+        -2.0,     // time
+        -2.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottahenry: prefix!(yotta); "YH", "yottahenry", "yottahenries";
         @zettahenry: prefix!(zetta); "ZH", "zettahenry", "zettahenries";

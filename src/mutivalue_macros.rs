@@ -84,6 +84,25 @@ macro_rules! impl_quantity_vec_ops {
                 }
             }
         }
+        impl Add<[<$quantity Vec>]> for [<$quantity Vec>]
+        {
+            type Output=Self;
+
+            fn add(self, rhs: [<$quantity Vec>]) -> Self {
+                let mut result = self.clone();
+                result += rhs;
+                result
+            }
+        }
+        impl Sub<[<$quantity Vec>]> for [<$quantity Vec>]
+        {
+            type Output=Self;
+            fn sub(self, rhs: [<$quantity Vec>]) -> Self {
+                let mut result = self;
+                result -= rhs;
+                result
+            }
+        } 
     }
     }
 }
@@ -132,6 +151,25 @@ macro_rules! impl_quantity_array_ops {
                 }
             }
         }
+        impl<const N: usize> Add<[<$quantity Array>]<N>> for [<$quantity Array>]<N>
+        {
+            type Output=Self;
+
+            fn add(self, rhs: [<$quantity Array>]<N>) -> Self {
+                let mut result = self;
+                result += rhs;
+                result
+            }
+        }
+        impl<const N: usize> Sub<[<$quantity Array>]<N>> for [<$quantity Array>]<N>
+        {
+            type Output=Self;
+            fn sub(self, rhs: [<$quantity Array>]<N>) -> Self {
+                let mut result = self;
+                result -= rhs;
+                result
+            }
+        }     
         impl<const N: usize> MulAssign<f64> for [<$quantity Array>]<N>
         {
 
@@ -243,7 +281,7 @@ macro_rules! create_multivalue_quantities {
             }
         }
 
-        impl crate::traits::FixedSliceQuantity<[<$quantity Unit>], f64> for [<$quantity Vec>]
+        impl $crate::traits::FixedSliceQuantity<[<$quantity Unit>], f64> for [<$quantity Vec>]
         {
             fn unit(&self) -> [<$quantity Unit>] {
                 self.unit
@@ -285,7 +323,7 @@ macro_rules! create_multivalue_quantities {
                 Ok(self.convert(destination_unit))
             }
         }
-        impl<const N: usize>  crate::traits::FixedSliceQuantity<[<$quantity Unit>], f64> for [<$quantity Array>]<N>
+        impl<const N: usize>  $crate::traits::FixedSliceQuantity<[<$quantity Unit>], f64> for [<$quantity Array>]<N>
         {
             fn unit(&self) -> [<$quantity Unit>] {
                 self.unit
@@ -357,7 +395,7 @@ macro_rules! create_multivalue_quantities_vec_enum {
                 /// Get the `Units` enumeration associated with a given `QuantitiesVec` enumeration.
                 pub fn unit(&self) -> Units
                 {
-                    use crate::traits::FixedSliceQuantity;
+                    use $crate::traits::FixedSliceQuantity;
                     match self
                     {
                         $(
@@ -369,7 +407,7 @@ macro_rules! create_multivalue_quantities_vec_enum {
                 /// Try to convert to the unit specified by a given `Units` enumeration.
                 pub fn try_convert(&self, unit: Units) -> Result<QuantitiesVec, RuntimeUnitError>
                 {   
-                    use crate::traits::FixedSliceQuantity;
+                    use $crate::traits::FixedSliceQuantity;
                     match self
                     {
                         $(
@@ -397,7 +435,7 @@ macro_rules! create_multivalue_quantities_vec_enum {
                 /// Get the value associated with quantity.
                 pub fn values(&self) -> Vec<f64>
                 {
-                    use crate::vector_quantity::VecQuantity;
+                    use $crate::vector_quantity::VecQuantity;
                     VecQuantity::from(self.clone()).values
                 }
             }
@@ -429,7 +467,7 @@ macro_rules! create_multivalue_quantities_vec_enum {
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            QuantitiesVec::$quantity(x)=>crate::vector_quantity::VecQuantity { values: x.values, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]} },
+                            QuantitiesVec::$quantity(x)=>crate::vector_quantity::VecQuantity { values: x.values, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: *[<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]} },
                         )+
                     }
                 }
@@ -485,7 +523,7 @@ macro_rules! create_multivalue_quantities_array_enum {
                 /// Try to convert to the unit specified by a given `Units` enumeration.
                 pub fn try_convert(&self, unit: Units) -> Result<QuantitiesArray<N>, RuntimeUnitError>
                 {   
-                    use crate::traits::FixedSliceQuantity;
+                    use $crate::traits::FixedSliceQuantity;
                     match self
                     {
                         $(
@@ -513,7 +551,7 @@ macro_rules! create_multivalue_quantities_array_enum {
                 /// Get the value associated with quantity.
                 pub fn values(&self) -> [f64; N]
                 {
-                    use crate::array_quantity::ArrayQuantity;
+                    use $crate::array_quantity::ArrayQuantity;
                     ArrayQuantity::from(*self).values
                 }
             }
@@ -532,7 +570,7 @@ macro_rules! create_multivalue_quantities_array_enum {
                     
                 }
             }
-            impl<const N: usize> From<QuantitiesArray<N>> for crate::array_quantity::ArrayQuantity<N>
+            impl<const N: usize> From<QuantitiesArray<N>> for $crate::array_quantity::ArrayQuantity<N>
             {
                 fn from(value: QuantitiesArray<N>) -> Self {
                     use crate::array_quantity::ArrayQuantity;
@@ -540,7 +578,7 @@ macro_rules! create_multivalue_quantities_array_enum {
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            QuantitiesArray::$quantity(x)=>ArrayQuantity { values: x.values, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]} },
+                            QuantitiesArray::$quantity(x)=>ArrayQuantity { values: x.values, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: *[<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]} },
                         )+
                     }
                 }

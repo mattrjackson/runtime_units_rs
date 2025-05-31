@@ -4,14 +4,14 @@ quantity! {
     /// Pressure impulse (base UnitDefinition pascal-sec, kg · m⁻¹ · s⁻¹).
     quantity: PressureImpulse; "pressure_impulse";
     /// Dimension of pressure impulse, L⁻¹MT⁻¹ (base UnitDefinition pascal-sec, kg · m⁻¹ · s⁻¹).
-    dimension: ISQ<
-        N1,     // length
-        P1,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -1.0,     // length
+        1.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::PressureImpulseKind);
     units {
         @yottapascal_sec : prefix!(yotta); "YPa-sec", "yottapascal-sec", "yottapascals-sec";

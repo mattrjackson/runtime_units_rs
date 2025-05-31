@@ -4,14 +4,14 @@ quantity! {
     /// Temperature coefficient (base UnitDefinition 1 / kelvin, K⁻¹).
     quantity: TemperatureCoefficient; "temperature coefficient";
     /// Dimension of temperature coefficient, Th⁻¹ (base UnitDefinition 1 / kelvin, K⁻¹).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        N1,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        -1.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @per_kelvin: prefix!(none); "K⁻¹", "per kelvin", "per kelvin";
         @ppm_per_kelvin: 1E-6; "ppm/K", "ppm per kelvin", "ppm per kelvin";

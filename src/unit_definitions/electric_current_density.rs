@@ -4,14 +4,14 @@ quantity! {
     /// Electric current density (base UnitDefinition ampere per square meter, m⁻² · A).
     quantity: ElectricCurrentDensity; "electric current density";
     /// Dimension of electric current density, L⁻²I (base UnitDefinition ampere per square meter, A · m⁻²).
-    dimension: ISQ<
-        N2,     // length
-        Z0,     // mass
-        Z0,     // time
-        P1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -2.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
         kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @ampere_per_square_meter: prefix!(none); "A/m²", "ampere per square meter",

@@ -9,14 +9,14 @@ quantity! {
     /// can be combined*.
     quantity: Torque; "torque";
     /// Dimension of torque, L²MT⁻² (base UnitDefinition newton meter, kg · m² · s⁻²).
-    dimension: ISQ<
-        P2,     // length
-        P1,     // mass
-        N2,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        1.0,     // mass
+        -2.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::AngleKind);
     units {
         @yottanewton_meter: prefix!(yotta); "YN · m", "yottanewton meter", "yottanewton meters";

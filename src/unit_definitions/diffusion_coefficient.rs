@@ -4,14 +4,14 @@ quantity! {
     /// Diffusion coefficient (base UnitDefinition square meter per second, m² · s⁻¹).
     quantity: DiffusionCoefficient; "diffusion coefficient";
     /// Dimension of diffusion coefficient, L²T⁻¹ (base UnitDefinition square meter per second, m² · s⁻¹).
-    dimension: ISQ<
-        P2,     // length
-        Z0,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        0.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @square_meter_per_second: prefix!(none); "m²/s", "square meter per second",
             "square meters per second";

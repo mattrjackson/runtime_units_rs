@@ -4,14 +4,14 @@ quantity! {
     /// Jerk (base UnitDefinition meter per second cubed, m · s⁻³).
     quantity: Jerk; "jerk";
     /// Dimension of jerk, LT⁻³ (base UnitDefinition meter per second cubed, m · s⁻³).
-    dimension: ISQ<
-        P1,     // length
-        Z0,     // mass
-        N3,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        1.0,     // length
+        0.0,     // mass
+        -3.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottameter_per_second_cubed: prefix!(yotta); "Ym/s³", "yottameter per second cubed",
             "yottameters per second cubed";

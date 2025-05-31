@@ -4,14 +4,14 @@ quantity! {
     /// Molar radioactivity (base UnitDefinition becquerel per mole, s⁻¹ · mol⁻¹).
     quantity: MolarRadioactivity; "molar radioactivity";
     /// Dimension of molar radioactivity, T⁻¹N⁻¹ (base UnitDefinition becquerel per mole, s⁻¹ · mol⁻¹).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        N1,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        -1.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @becquerel_per_mole: prefix!(none); "Bq/mol", "becquerel per mole", "becquerels per mole";

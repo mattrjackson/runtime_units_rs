@@ -39,7 +39,7 @@ macro_rules! prefix {
 macro_rules! impl_quantity_ops {   
     ($quantity:ident) =>
     {
-        use crate::traits::IsScalarQuantity;
+        use $crate::traits::IsScalarQuantity;
         impl Mul<f64> for $quantity
         {
             type Output = $quantity;
@@ -209,7 +209,7 @@ macro_rules! impl_quantity_ops {
 macro_rules! quantity {
     (        
         $(#[$quantity_attr:meta])* quantity: $quantity:ident; $description:expr;
-        $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
+        $(#[$dim_attr:meta])* dimension: $system:ident[$($dimension:expr),+];
         $(kind: $kind:ty;)?
         units {            
             $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr; $abbreviation:literal,
@@ -218,6 +218,7 @@ macro_rules! quantity {
     ) => {
         #[cfg(feature="utoipa")]
         use utoipa::{ToSchema, schema};
+        use static_init::dynamic;
         use $crate::errors::RuntimeUnitError;
         use $crate::Quantity;
         use $crate::units_base::{UnitDefinition, UnitBase};
@@ -234,12 +235,14 @@ macro_rules! quantity {
         }
         impl Default for [<$quantity Unit>]{
             fn default() -> Self {
-                Self::base_unit()
+                [<$quantity:upper _BASE_UNIT>]
             }
         }
         }        
+
         paste::paste! { 
-            pub(crate) const [<$quantity:upper _UNIT_BASE>]: UnitBase = crate::units_base::UOMDimensions::to_unit_base(($($crate::units_base::UOMDimensions::$dimension,)+));
+            #[dynamic]
+            pub(crate) static [<$quantity:upper _UNIT_BASE>]: UnitBase = $crate::units_base::to_unit_base(($($dimension,)+));
             $(pub(crate) const [<$quantity:upper _ $unit:upper _conversion:upper>]: f64 = $conversion;)+
         const [<$quantity:upper _BASE_UNIT>]: [<$quantity Unit>] =  [<get_base_unit_ $quantity:lower>]();
         const fn [<get_base_unit_ $quantity:lower>]() -> [<$quantity Unit>] 
@@ -258,7 +261,7 @@ macro_rules! quantity {
                 #[allow(clippy::eq_op)]
                 pub fn [<get_$unit:snake>]() -> UnitDefinition
                 {
-                    UnitDefinition{ base: [<$quantity:upper _UNIT_BASE>], multiplier: [<$quantity:upper _ $unit:upper _conversion:upper>] }
+                    UnitDefinition{ base: *[<$quantity:upper _UNIT_BASE>], multiplier: [<$quantity:upper _ $unit:upper _conversion:upper>] }
                 })+
             }        
             #[doc = "Multiplier of unit to its base quantity."]
@@ -301,6 +304,17 @@ macro_rules! quantity {
                 UNITS
             }            
             
+            #[inline]
+            pub(crate) fn base() -> UnitBase
+            {
+                *[<$quantity:upper _UNIT_BASE>]
+            }       
+
+            #[inline]
+            pub(crate) fn base_unit(&self) -> Self
+            {
+                [<$quantity:upper _BASE_UNIT>]
+            } 
         }
         impl $crate::traits::Unit for [<$quantity Unit>] 
         {
@@ -311,17 +325,7 @@ macro_rules! quantity {
                     {                    
                         $([<$quantity Unit>]::$unit=>[<$quantity Unit>]::[<get_$unit:snake>](),)+
                     }
-                }
-                #[inline]
-                fn base() -> UnitBase
-                {
-                    [<$quantity:upper _UNIT_BASE>]
-                }                
-                #[inline]
-                fn base_unit() -> Self
-                {
-                    [<$quantity:upper _BASE_UNIT>]
-                }
+                }       
             }        
         }
         paste::paste!
@@ -344,12 +348,18 @@ macro_rules! quantity {
                 #[allow(unreachable_patterns)]
                 fn try_from(value: UnitDefinition) -> Result<Self, Self::Error> 
                 {
-                    match value
+                    if value.base != *[<$quantity:upper _UNIT_BASE>] 
+                    {
+                        return Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Base mismatch: {:?} vs {}", value, stringify!($quantity))));
+                    }
+                    match value.multiplier 
                     {
                         $(
-                            UnitDefinition { base: [<$quantity:upper _UNIT_BASE>], multiplier: [<$quantity:upper _ $unit:upper _conversion:upper>] } => Ok([<$quantity Unit>]::$unit),
+                            [<$quantity:upper _ $unit:upper _conversion:upper>] => Ok([<$quantity Unit>]::$unit),
                         )+
-                        _ =>  Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Could not convert from {:?} to {}", value, stringify!($quantity))))
+                        _ => Err(RuntimeUnitError::IncompatibleUnitConversion(
+                            format!("Unknown multiplier: {:?} for {}", value, stringify!($quantity))
+                        ))
                     }
                 }
             }
@@ -484,7 +494,7 @@ macro_rules! quantity {
                 #[inline]
                 fn convert(&self, unit: [<$quantity Unit>]) -> Self
                 {
-                    Self { value: self.convert_unchecked(unit.into()), unit: unit }
+                    Self { value: self.convert_unchecked(unit.into()), unit }
                 }
                 
                 #[inline]
@@ -546,9 +556,9 @@ macro_rules! quantity {
                     self.unit.into()
                 }
             }
-            use crate::impl_quantity_ops;
+            use $crate::impl_quantity_ops;
             
-            use crate::create_multivalue_quantities;
+            use $crate::create_multivalue_quantities;
             use crate::{impl_quantity_vec_ops, impl_quantity_array_ops};
             
             
@@ -632,7 +642,13 @@ macro_rules! quantity {
                         r
                     }
                 )+   
+                
+                pub fn at(&self, index: usize) -> $quantity
+                {
+                    $quantity{ unit: self.unit, value: self.values[index] }
+                }
             }
+            
             impl_quantity_ops!($quantity);
             create_multivalue_quantities!($quantity);
             impl_quantity_vec_ops!($quantity);
@@ -835,7 +851,7 @@ macro_rules! system {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
                             UnitTypes::$quantity => {
-                                match crate::units::[<$quantity Unit>]::try_from(unit_str)
+                                match $crate::units::[<$quantity Unit>]::try_from(unit_str)
                                 {
                                     Ok(r) => Ok(r.into()),
                                     Err(err) => Err(err)
@@ -878,7 +894,7 @@ macro_rules! system {
                 /// Try to convert to the unit specified by a given `Units` enumeration.
                 pub fn try_convert(&self, unit: Units) -> Result<Quantities, RuntimeUnitError>
                 {   
-                    use crate::traits::FixedQuantity;
+                    use $crate::traits::FixedQuantity;
                     match self
                     {
                         $(
@@ -931,7 +947,7 @@ macro_rules! system {
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            Quantities::$quantity(x)=>Quantity { value: x.value, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: [<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]} },
+                            Quantities::$quantity(x)=>Quantity { value: x.value, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: *[<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]} },
                         )+
                     }
                 }
@@ -975,7 +991,7 @@ macro_rules! system {
                         {
                             $(
                                 #[cfg(any(feature = "" $quantity, feature="All"))]     
-                                Units::$quantity(x)=> UnitDefinition{multiplier: x.multiplier(), base: [<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]},
+                                Units::$quantity(x)=> UnitDefinition{multiplier: x.multiplier(), base: *[<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]},
                             )+
                         }
                     }
@@ -1022,7 +1038,7 @@ macro_rules! system {
                 }    
                 }
             }
-            use crate::{create_multivalue_quantities_vec_enum, create_multivalue_quantities_array_enum};
+            use $crate::{create_multivalue_quantities_vec_enum, create_multivalue_quantities_array_enum};
             create_multivalue_quantities_vec_enum!($($quantity),+);
             create_multivalue_quantities_array_enum!($($quantity),+);
             

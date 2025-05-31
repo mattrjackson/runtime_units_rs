@@ -37,9 +37,9 @@ impl<const N: usize> crate::traits::ArbitraryQuantity for ArrayQuantity<N>
 
     fn convert(&self, unit: UnitDefinition) -> Self 
     {
-        let mut result = self.clone();
+        let mut result = *self;
         result.convert_mut(unit);
-        return result;
+        result
     }
 
     fn convert_mut(&mut self, unit: UnitDefinition) {
@@ -69,7 +69,8 @@ impl<const N: usize> crate::traits::ArbitraryQuantity for ArrayQuantity<N>
         }
         else
         {
-            Ok(self.convert_mut(unit))
+            self.convert_mut(unit);
+            Ok(())
         }
     }
     
@@ -86,7 +87,7 @@ impl<const N: usize> Div<f64> for ArrayQuantity<N>
     type Output = ArrayQuantity<N>;
 
     fn div(self, rhs: f64) -> Self::Output {
-        let mut result = self.clone();
+        let mut result = self;
         for val in result.values.as_mut_slice()
         {  
            *val /= rhs;
@@ -99,7 +100,7 @@ impl<const N: usize> Div<ArrayQuantity<N>> for ArrayQuantity<N>
     type Output = ArrayQuantity<N>;
 
     fn div(self, rhs: ArrayQuantity<N>) -> Self::Output {
-        let mut result = self.clone();
+        let mut result = self;
         if rhs.values.len() != self.values.len()
         {
             panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
@@ -116,7 +117,7 @@ impl<const N: usize> Mul<ArrayQuantity<N>> for ArrayQuantity<N>
     type Output = ArrayQuantity<N>;
 
     fn mul(self, rhs: ArrayQuantity<N>) -> Self::Output {
-        let mut result = self.clone();
+        let mut result = self;
         if rhs.values.len() != self.values.len()
         {
             panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
@@ -133,7 +134,7 @@ impl<const N: usize> Mul<f64> for ArrayQuantity<N>
     type Output = ArrayQuantity<N>;
 
     fn mul(self, rhs: f64) -> Self::Output {
-        let mut result = self.clone();
+        let mut result = self;
         for val in result.values.as_mut_slice()
         {  
            *val *= rhs;

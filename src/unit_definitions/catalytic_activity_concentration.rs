@@ -5,14 +5,14 @@ quantity! {
     quantity: CatalyticActivityConcentration; "catalytic activity concentration";
     /// Dimension of catalytic activity concentration, L⁻³T⁻¹N
     /// (base UnitDefinition katal per cubic meter, mol · s⁻¹ · m⁻³).
-    dimension: ISQ<
-        N3,     // length
-        Z0,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        P1,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -3.0,     // length
+        0.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        1.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @yottakatal_per_cubic_meter: prefix!(yotta); "Ykat/m³",

@@ -5,14 +5,14 @@ quantity! {
     quantity: VolumetricPowerDensity; "volumetric power density";
     /// Dimension of volumetric power density, L⁻¹MT⁻³ (base UnitDefinition watt per cubic meter,
     /// m⁻¹ · kg · s⁻³).
-    dimension: ISQ<
-        N1,     // length
-        P1,     // mass
-        N3,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -1.0,     // length
+        1.0,     // mass
+        -3.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @watt_per_cubic_meter: prefix!(none); "W/m³", "watt per cubic meter",
             "watts per cubic meter";

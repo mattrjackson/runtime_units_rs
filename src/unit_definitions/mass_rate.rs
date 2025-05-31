@@ -4,14 +4,14 @@ quantity! {
     /// Mass rate (base UnitDefinition kilogram per second, kg · s⁻¹).
     quantity: MassRate; "mass rate";
     /// Dimension of mass rate, MT⁻¹ (base UnitDefinition kilogram per second, kg · s⁻¹).
-    dimension: ISQ<
-        Z0,     // length
-        P1,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        1.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottagram_per_second: prefix!(yotta) / prefix!(kilo); "Yg/s", "yottagram per second",
             "yottagrams per second";

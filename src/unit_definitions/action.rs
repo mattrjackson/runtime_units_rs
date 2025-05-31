@@ -4,14 +4,14 @@ quantity! {
     /// Action (base UnitDefinition joule second, kg ⋅ m² ⋅ s⁻¹).
     quantity: Action; "action";
     /// Dimension of action, L²MT⁻¹ (base UnitDefinition joule second, kg ⋅ m² ⋅ s⁻¹).
-    dimension: ISQ<
-        P2,     // length
-        P1,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        1.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @joule_second: prefix!(none); "J · s", "joule second", "joule seconds";
 

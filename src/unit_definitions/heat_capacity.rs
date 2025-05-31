@@ -15,14 +15,14 @@ quantity! {
     /// Heat capacity (base UnitDefinition joule per kelvin, kg · m² · s⁻² · K⁻¹).
     quantity: HeatCapacity; "heat capacity";
     /// Dimension of heat capacity, L²MT⁻²Th⁻¹ (base UnitDefinition joule per kelvin, kg · m² · s⁻² · K⁻¹).
-    dimension: ISQ<
-        P2,     // length
-        P1,     // mass
-        N2,     // time
-        Z0,     // electric current
-        N1,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        1.0,     // mass
+        -2.0,     // time
+        0.0,     // electric current
+        -1.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottagram_square_meter_per_second_squared_kelvin: prefix!(yotta) / prefix!(kilo);
             "Yg · m²/(s² · K)",

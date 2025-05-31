@@ -5,14 +5,14 @@ quantity! {
     quantity: VolumetricHeatCapacity; "volumetric heat capacity";
     /// Dimension of volumetric heat capacity, L⁻¹MT⁻²Th⁻¹(base UnitDefinition joule per cubic meter kelvin,
     /// m⁻¹ · kg · s⁻² · K⁻¹).
-    dimension: ISQ<
-        N1,     // length
-        P1,     // mass
-        N2,     // time
-        Z0,     // electric current
-        N1,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -1.0,     // length
+        1.0,     // mass
+        -2.0,     // time
+        0.0,     // electric current
+        -1.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @joule_per_cubic_meter_kelvin: prefix!(none); "J/(m³ · K)", "joule per cubic meter kelvin",
             "joules per cubic meter kelvin";

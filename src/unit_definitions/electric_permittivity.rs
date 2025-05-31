@@ -5,14 +5,14 @@ quantity! {
     quantity: ElectricPermittivity; "electric permittivity";
     /// Dimension of electric permittivity, L⁻³M⁻¹T⁴I² (base UnitDefinition farad per meter,
     /// m⁻³ · kg⁻¹ · s⁴ · A²).
-    dimension: ISQ<
-        N3,     // length
-        N1,     // mass
-        P4,     // time
-        P2,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -3.0,     // length
+        -1.0,     // mass
+        4.0,     // time
+        2.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @farad_per_meter: prefix!(none); "F/m", "farad per meter", "farads per meter";
         @vacuum_electric_permittivity: 8.854_187_8128_E-12; "ε₀", "vacuum electric permittivity",

@@ -12,14 +12,14 @@ quantity! {
     quantity: ThermalConductivity; "thermal conductivity";
     /// Dimension of thermal conductivity, LMT⁻³Th⁻¹ (base UnitDefinition watt per meter kelvin, kg · m · s⁻³
     /// · K⁻¹).
-    dimension: ISQ<
-        P1,     // length
-        P1,     // mass
-        N3,     // time
-        Z0,     // electric current
-        N1,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        1.0,     // length
+        1.0,     // mass
+        -3.0,     // time
+        0.0,     // electric current
+        -1.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottagram_meter_per_second_cubed_kelvin: prefix!(yotta) / prefix!(kilo); "Yg · m/(s³ · K)",
             "yottagram meter per second cubed kelvin", "yottagrams meter per second cubed kelvin";

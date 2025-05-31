@@ -4,14 +4,14 @@ quantity! {
     /// Energy (base UnitDefinition joule, kg · m² · s⁻²).
     quantity: Energy; "energy";
     /// Dimension of energy, L²MT⁻² (base UnitDefinition joule, kg · m² · s⁻²).
-    dimension: ISQ<
-        P2,     // length
-        P1,     // mass
-        N2,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        1.0,     // mass
+        -2.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottajoule: prefix!(yotta); "YJ", "yottajoule", "yottajoules";
         @zettajoule: prefix!(zetta); "ZJ", "zettajoule", "zettajoules";

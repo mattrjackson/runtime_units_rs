@@ -11,14 +11,14 @@ quantity! {
     /// Temperature interval (base UnitDefinition kelvin, K).
     quantity: TemperatureInterval; "temperature interval";
     /// Dimension of temperature interval, Th (base UnitDefinition kelvin, K).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        P1,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        1.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottakelvin: prefix!(yotta); "YK", "yottakelvin", "yottakelvins";
         @zettakelvin: prefix!(zetta); "ZK", "zettakelvin", "zettakelvins";
@@ -59,7 +59,7 @@ quantity! {
 //     Ur: super::Units<V> + ?Sized,
 //     V: crate::num::Num + crate::Conversion<V>,
 // {
-//     type Output = ThermodynamicTemperature<Ul, V>;
+//     type Output = ThermodynamicTemperature<Ul, V];
 
 //     #[inline(always)]
 //     fn add(self, rhs: ThermodynamicTemperature<Ur, V>) -> Self::Output {
@@ -77,7 +77,7 @@ quantity! {
 //     U: super::Units<V> + ?Sized,
 //     V: crate::num::Num + crate::Conversion<V>,
 // {
-//     type Output = ThermodynamicTemperature<U, V>;
+//     type Output = ThermodynamicTemperature<U, V];
 
 //     #[inline(always)]
 //     fn add(self, rhs: ThermodynamicTemperature<U, V>) -> Self::Output {

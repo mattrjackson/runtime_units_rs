@@ -4,14 +4,14 @@ quantity! {
     /// Electric charge (base UnitDefinition coulomb, A · s).
     quantity: ElectricCharge; "electric charge";
     /// Dimension of electric charge, TI (base UnitDefinition coulomb, A · s).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        P1,     // time
-        P1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        1.0,     // time
+        1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottacoulomb: prefix!(yotta); "YC", "yottacoulomb", "yottacoulombs";
         @zettacoulomb: prefix!(zetta); "ZC", "zettacoulomb", "zettacoulombs";

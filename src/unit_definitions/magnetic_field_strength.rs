@@ -4,14 +4,14 @@ quantity! {
     /// Magnetic field strength (H field) (base UnitDefinition ampere per meter, m⁻¹ · A).
     quantity: MagneticFieldStrength; "magnetic field strength (H field)";
     /// Dimension of magnetic field strength (H field), L⁻¹I (base UnitDefinition ampere per meter, m⁻¹ · A).
-    dimension: ISQ<
-        N1,     // length
-        Z0,     // mass
-        Z0,     // time
-        P1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -1.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @ampere_per_meter: prefix!(none); "A/m", "ampere per meter", "amperes per meter";
         @ampere_per_centimeter: prefix!(none) / prefix!(centi); "A/cm", "ampere per centimeter",

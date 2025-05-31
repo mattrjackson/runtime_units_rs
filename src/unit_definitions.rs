@@ -1,5 +1,4 @@
 use crate::system;
- 
 
 system!(
     units: SI
@@ -21,6 +20,7 @@ system!(
         Capacitance,
         CatalyticActivity,
         CatalyticActivityConcentration,
+        CubeRootScaledLength,
         Curvature,
         DiffusionCoefficient,
         Dimensionless,

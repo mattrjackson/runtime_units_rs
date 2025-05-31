@@ -5,14 +5,14 @@ quantity! {
     quantity: VolumetricDensityOfStates; "volumetric density of states";
     /// Dimension of volumetric density of states, L⁻⁵M⁻¹T² (base UnitDefinition 1 / cubic meter joule,
     /// kg⁻¹ · m⁻⁵ · s²).
-    dimension: ISQ<
-        N5,     // length
-        N1,     // mass
-        P2,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -5.0,     // length
+        -1.0,     // mass
+        2.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @state_per_cubic_meter_joule: prefix!(none); "1/(m³ · J)",

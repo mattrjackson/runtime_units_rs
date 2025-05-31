@@ -5,14 +5,14 @@ quantity! {
     quantity: LinearDensityOfStates; "linear density of states";
     /// Dimension of linear density of states, L⁻³M⁻¹T² (base UnitDefinition 1 / meter joule,
     /// kg⁻¹ · m⁻³ · s²).
-    dimension: ISQ<
-        N3,     // length
-        N1,     // mass
-        P2,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -3.0,     // length
+        -1.0,     // mass
+        2.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @state_per_meter_joule: prefix!(none); "1/(m · J)", "state per meter joule",

@@ -5,14 +5,14 @@ quantity! {
     quantity: MassFlux; "mass flux";
     /// Dimension of mass flux, L⁻²MT⁻¹ (base UnitDefinition kilogram per square meter second,
     /// m⁻² · kg ·  s⁻¹).
-    dimension: ISQ<
-        N2,     // length
-        P1,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -2.0,     // length
+        1.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @kilogram_per_square_meter_second: prefix!(none); "kg/(m² · s)",
             "kilogram per square meter second", "kilograms per square meter second";

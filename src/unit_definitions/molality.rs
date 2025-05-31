@@ -4,14 +4,14 @@ quantity! {
     /// Molality (base UnitDefinition mole per kilogram, kg⁻¹ · mol).
     quantity: Molality; "molality";
     /// Dimension of molality, M⁻¹N (base UnitDefinition mole per kilogram, kg⁻¹ · mol).
-    dimension: ISQ<
-        Z0,     // length
-        N1,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        P1,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        -1.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        1.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @mole_per_kilogram: prefix!(none); "mol/kg", "mole per kilogram", "moles per kilogram";

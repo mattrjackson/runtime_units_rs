@@ -4,14 +4,14 @@ quantity! {
     /// Volume rate (base UnitDefinition cubic meter per second, m³ · s⁻¹).
     quantity: VolumeRate; "volume rate";
     /// Dimension of volume rate, L³T⁻¹ (base UnitDefinition cubic meter per second, m³ · s⁻¹).
-    dimension: ISQ<
-        P3,     // length
-        Z0,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        3.0,     // length
+        0.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @cubic_yottameter_per_second: prefix!(yotta) * prefix!(yotta) * prefix!(yotta);
             "Ym³/s", "cubic yottameter per second", "cubic yottameters per second";

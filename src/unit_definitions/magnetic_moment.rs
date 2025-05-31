@@ -4,14 +4,14 @@ quantity! {
     /// Magnetic moment (base UnitDefinition ampere square meter A · m²).
     quantity: MagneticMoment; "magnetic moment";
     /// Dimension of magnetic moment, IL² (base UnitDefinition ampere square meter A · m²).
-    dimension: ISQ<
-        P2,     // length
-        Z0,     // mass
-        Z0,     // time
-        P1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @ampere_square_meter: prefix!(none); "A · m²", "ampere square meter",
             "ampere square meters";

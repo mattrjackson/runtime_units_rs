@@ -4,14 +4,14 @@ quantity! {
     /// Frequency (base UnitDefinition hertz, s⁻¹).
     quantity: Frequency; "frequency";
     /// Dimension of frequency, T⁻¹ (base UnitDefinition hertz, s⁻¹).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottahertz: prefix!(yotta); "YHz", "yottahertz", "yottahertz";
         @zettahertz: prefix!(zetta); "ZHz", "zettahertz", "zettahertz";

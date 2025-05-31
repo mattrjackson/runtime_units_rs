@@ -4,14 +4,14 @@ quantity! {
     /// Luminous intensity (base UnitDefinition candela, cd).
     quantity: LuminousIntensity; "luminous intensity";
     /// Dimension of luminous intensity, J (base UnitDefinition candela, cd).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        P1>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        1.0];    // luminous intensity
     units {
         @yottacandela: prefix!(yotta); "Ycd", "yottacandela", "yottacandelas";
         @zettacandela: prefix!(zetta); "Zcd", "zettacandela", "zettacandelas";

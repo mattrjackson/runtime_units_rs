@@ -4,14 +4,14 @@ quantity! {
     /// Catalytic activity (base UnitDefinition katal, mol · s⁻¹).
     quantity: CatalyticActivity; "catalytic activity";
     /// Dimension of catalytic activity, T⁻¹N (base UnitDefinition katal, mol · s⁻¹).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        P1,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        1.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottakatal: prefix!(yotta); "Ykat", "yottakatal", "yottakatals";
         @zettakatal: prefix!(zetta); "Zkat", "zettakatal", "zettakatals";

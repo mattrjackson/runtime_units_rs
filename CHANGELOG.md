@@ -10,6 +10,18 @@
 ### Fixed
 -->
 
+## [0.6.0] — 2025-06-05
+
+### Security
+### Added
+Added `CubeRootScaledLength` quantity.
+### Changed
+Changed `UnitBase` to support fractional powers via rational approximations. 
+Fixed unit conversion bug impacting `convert_unchecked` for Array and Vector quantities.
+### Deprecated
+### Removed
+
+
 ## [0.5.2] — 2025-05-29
 
 ### Security

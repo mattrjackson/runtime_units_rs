@@ -4,14 +4,14 @@ quantity! {
     /// Heat flux density (base UnitDefinition watt per square meter, kg · s⁻³).
     quantity: HeatFluxDensity; "heat flux density";
     /// Dimension of heat flux density, MT⁻³ (base UnitDefinition watt per square meter, kg · s⁻³).
-    dimension: ISQ<
-        Z0,     // length
-        P1,     // mass
-        N3,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        1.0,     // mass
+        -3.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottawatt_per_square_meter: prefix!(yotta); "YW/m²",
             "yottawatt per square meter", "yottawatts per square meter";

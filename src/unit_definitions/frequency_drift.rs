@@ -6,14 +6,14 @@ quantity! {
     /// Frequency drift (base UnitDefinition hertz per second, s⁻²).
     quantity: FrequencyDrift; "frequency drift";
     /// Dimension of frequency drift, T⁻² (base UnitDefinition hertz per second, s⁻²).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        N2,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        -2.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @terahertz_per_second: prefix!(tera) / prefix!(none); "THz/s", "terahertz per second",
             "terahertz per second";

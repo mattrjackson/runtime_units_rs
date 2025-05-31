@@ -16,14 +16,14 @@ quantity! {
     quantity: HeatTransfer; "heat transfer";
     /// Dimension of heat transfer, MT⁻³Th⁻¹ (base UnitDefinition watt per square meter kelvin,
     /// kg · s⁻³ · K⁻¹).
-    dimension: ISQ<
-        Z0,     // length
-        P1,     // mass
-        N3,     // time
-        Z0,     // electric current
-        N1,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        1.0,     // mass
+        -3.0,     // time
+        0.0,     // electric current
+        -1.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottagram_per_second_cubed_kelvin: prefix!(yotta) / prefix!(kilo); "Yg/(s³ · K)",
             "yottagram per second cubed kelvin", "yottagrams per second cubed kelvin";

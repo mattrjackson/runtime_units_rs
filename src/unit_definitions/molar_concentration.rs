@@ -4,14 +4,14 @@ quantity! {
     /// Molar concentration (base UnitDefinition mole per cubic meter, mol · m⁻³).
     quantity: MolarConcentration; "molar concentration";
     /// Dimension of molar concentration, L⁻³N (base UnitDefinition mole per cubic meter, mol · m⁻³).
-    dimension: ISQ<
-        N3,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        P1,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -3.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        1.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @yottamole_per_cubic_meter: prefix!(yotta); "Ymol/m³",

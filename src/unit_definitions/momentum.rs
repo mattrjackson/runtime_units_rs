@@ -4,14 +4,14 @@ quantity! {
     /// Momentum (base UnitDefinition kilogram meter per second, kg · m · s⁻¹).
     quantity: Momentum; "momentum";
     /// Dimension of momentum, LMT⁻¹ (base UnitDefinition kilogram meter per second, kg · m · s⁻¹).
-    dimension: ISQ<
-        P1,     // length
-        P1,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        1.0,     // length
+        1.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottagram_meter_per_second: prefix!(yotta) / prefix!(kilo); "Yg · m/s",
             "yottagram meter per second", "yottagram meters per second";

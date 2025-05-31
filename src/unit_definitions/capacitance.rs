@@ -4,14 +4,14 @@ quantity! {
     /// Capacitance (base UnitDefinition farad, m⁻² · kg⁻¹ · s⁴ · A²).
     quantity: Capacitance; "capacitance";
     /// Dimension of capacitance, L⁻²M⁻¹T⁴I² (base UnitDefinition farad, m⁻² · kg⁻¹ · s⁴ · A²).
-    dimension: ISQ<
-        N2,     // length
-        N1,     // mass
-        P4,     // time
-        P2,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -2.0,     // length
+        -1.0,     // mass
+        4.0,     // time
+        2.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottafarad: prefix!(yotta); "YF", "yottafarad", "yottafarads";
         @zettafarad: prefix!(zetta); "ZF", "zettafarad", "zettafarads";

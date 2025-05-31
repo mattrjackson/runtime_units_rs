@@ -6,14 +6,14 @@ quantity! {
     /// Time (base UnitDefinition second, s).
     quantity: Time; "time";
     /// Dimension of time, T (base UnitDefinition second, s).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        P1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottasecond: prefix!(yotta); "Ys", "yottasecond", "yottaseconds";
         @zettasecond: prefix!(zetta); "Zs", "zettasecond", "zettaseconds";

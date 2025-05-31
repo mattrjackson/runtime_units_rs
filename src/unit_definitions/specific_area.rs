@@ -4,14 +4,14 @@ quantity! {
     /// Specific area (base UnitDefinition square meter per kilogram, m² · kg⁻¹).
     quantity: SpecificArea; "specific area";
     /// Dimension of specific area, L²M⁻¹ (base UnitDefinition square meter per kilogram, m² · kg⁻¹).
-    dimension: ISQ<
-        P2,     // length
-        N1,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        -1.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @square_meter_per_kilogram: prefix!(none); "m²/kg", "square meter per kilogram",
             "square meters per kilogram";

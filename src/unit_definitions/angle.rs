@@ -7,14 +7,14 @@ quantity! {
     /// Angle (dimensionless quantity).
     quantity: Angle; "angle";
     /// Dimension of angle, 1 (dimensionless).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::AngleKind);
     units {
         /// SI derived UnitDefinition of angle. It is the angle subtended at the center of a circle by an
@@ -65,7 +65,7 @@ impl Angle
     #[inline(always)]
     pub fn sin_cos(self) -> (f64, f64) {
         let (sin, cos) = self.convert_unchecked(AngleUnit::get_radian()).sin_cos();
-        (sin.into(), cos.into())
+        (sin, cos)
     }
 
     /// Computes the value of the tangent of the angle.

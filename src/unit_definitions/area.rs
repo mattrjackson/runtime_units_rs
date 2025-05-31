@@ -4,14 +4,14 @@ quantity! {
     /// Area (base UnitDefinition square meter, m²).
     quantity: Area; "area";
     /// Dimension of area, L² (base UnitDefinition square meter, m²).
-    dimension: ISQ<
-        P2,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @square_yottameter: prefix!(yotta) * prefix!(yotta);
             "Ym²", "square yottameter", "square yottameters";

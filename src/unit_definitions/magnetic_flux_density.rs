@@ -4,14 +4,14 @@ quantity! {
     /// Magnetic flux density (base UnitDefinition tesla, kg · s⁻² · A⁻¹).
     quantity: MagneticFluxDensity; "magnetic flux density";
     /// Dimension of magnetic flux density, MT⁻²I⁻¹ (base UnitDefinition tesla, kg · s⁻² · A⁻¹).
-    dimension: ISQ<
-        Z0,     // length
-        P1,     // mass
-        N2,     // time
-        N1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        1.0,     // mass
+        -2.0,     // time
+        -1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottatesla: prefix!(yotta); "YT", "yottatesla", "yottateslas";
         @zettatesla: prefix!(zetta); "ZT", "zettatesla", "zettateslas";

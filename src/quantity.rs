@@ -84,6 +84,34 @@ impl Quantity
         }
     }
 
+    #[inline]
+    pub fn powf(&self, value: f64) -> Quantity
+    {
+        let mut r = *self;
+        r.unit = r.unit.powf(value);
+        r.value = r.value.powf(value);
+        r
+    }
+
+    #[inline]
+    pub fn powi(&self, value: i8) -> Quantity
+    {
+        let mut r = *self;
+        r.unit = r.unit.powi(value);
+        r.value = r.value.powi(value as i32);
+        r
+    }
+
+    #[inline]
+    pub fn inv(&self) -> Quantity
+    {
+        Quantity {
+            value: 1.0 / self.value,
+            unit: self.unit.inv(),
+        }
+    }
+
+
 }
 impl Debug for Quantity
 {

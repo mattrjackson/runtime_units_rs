@@ -37,7 +37,7 @@ impl crate::traits::ArbitraryQuantity for VecQuantity
     {
         let mut result = self.clone();
         result.convert_mut(unit);
-        return result;
+        result
     }
 
     fn convert_mut(&mut self, unit: UnitDefinition) {
@@ -67,7 +67,8 @@ impl crate::traits::ArbitraryQuantity for VecQuantity
         }
         else
         {
-            Ok(self.convert_mut(unit))
+            self.convert_mut(unit);
+            Ok(())
         }
     }
     

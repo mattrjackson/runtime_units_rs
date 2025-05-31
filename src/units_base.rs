@@ -1,35 +1,222 @@
 use core::{fmt::Display,  ops::{Div, DivAssign, Mul, MulAssign}};
+use std::ops::{Add, Neg, Sub};
 use bitfield_struct::bitfield;
 
 use crate::errors::RuntimeUnitError;
+type Ratio8 = num_rational::Ratio<i8>;
+#[bitfield(u8, default=false)]
+#[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(PartialEq, Eq, Hash)]
+pub struct Rational8 {
+    #[bits(4)]
+    pub numerator: i8,
+    #[bits(4)]
+    pub denominator: i8,
+}
+impl Default for Rational8
+{
+    #[inline]
+    fn default() -> Self {
+        Self::new().with_denominator(1).with_numerator(0)
+    }
+}
 
-#[bitfield(u64)]
+impl Display for Rational8
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if self.is_fraction()
+        {
+            write!(f, "{}/{}", self.numerator(), self.denominator())
+        }
+        else {
+            write!(f, "{}", self.numerator())
+        }
+    }
+}
+
+impl From<Ratio8> for Rational8
+{
+    fn from(value: Ratio8) -> Self {
+        Self::new().with_numerator(*value.numer()).with_denominator(*value.denom())
+    }
+}
+
+impl Rational8
+{
+    ///
+    /// Return 
+    /// 
+    #[inline]
+    pub const fn unity() -> Self
+    {
+        Self::new().with_numerator(1).with_denominator(1)
+    }
+
+    ///
+    /// Determine if this is represents a fraction
+    /// 
+    #[inline]
+    pub fn is_fraction(&self) -> bool
+    {
+        self.denominator() > 1
+    }
+
+    ///
+    /// Return the floating point representation of the power for this unit component
+    /// 
+    #[inline]
+    pub fn fraction(&self) -> f64
+    {
+        self.numerator() as f64 / self.denominator() as f64
+    }
+}
+impl From<i8> for Rational8
+{
+    fn from(value: i8) -> Self {
+        Rational8::new().with_numerator(value).with_denominator(1)
+    }
+}
+impl Into<f32> for Rational8
+{
+    #[inline]
+    fn into(self) -> f32 {
+        if self.denominator() == 1 
+        {
+            self.numerator() as f32
+        }
+        else
+        {
+            self.numerator() as f32 / self.denominator() as f32
+        }
+    }
+}
+
+impl Into<f64> for Rational8
+{
+    #[inline]
+    fn into(self) -> f64 {
+        if self.denominator() == 1 
+        {
+            self.numerator() as f64
+        }
+        else
+        {
+            self.numerator() as f64 / self.denominator() as f64
+        }
+    }
+}
+impl From<f64> for Rational8
+{
+    fn from(value: f64) -> Self {        
+        Ratio8::approximate_float(value).unwrap().into()
+    }
+}
+impl Add<Rational8> for Rational8
+{
+    type Output=Rational8;
+    #[inline]
+    fn add(self, rhs: Rational8) -> Self::Output {
+        if self.is_fraction() || rhs.is_fraction()
+        {
+            Ratio8::approximate_float(self.fraction() + rhs.fraction()).unwrap().into()            
+        }
+        else
+        {
+            self.with_numerator(self.numerator() + rhs.numerator()).with_denominator(self.denominator())
+        }
+        
+    }
+}
+impl Sub<Rational8> for Rational8
+{
+    type Output=Rational8;
+    #[inline]
+    fn sub(self, rhs: Rational8) -> Self::Output {
+        if self.is_fraction() || rhs.is_fraction() || self.denominator() != rhs.denominator()
+        {            
+            Ratio8::approximate_float(self.fraction() - rhs.fraction()).unwrap().into()            
+        }
+        else
+        {
+            self.with_numerator(self.numerator() - rhs.numerator()).with_denominator(self.denominator())
+        }
+    }
+}
+impl Mul<i8> for Rational8
+{
+    type Output=Rational8;
+    #[inline]
+    fn mul(self, rhs: i8) -> Self::Output {        
+        if self.is_fraction()
+        {            
+            Ratio8::approximate_float(self.fraction() * rhs as f64).unwrap().into()
+        }
+        else
+        {
+            self.with_numerator(self.numerator() * rhs).with_denominator(1)
+        }
+    }
+}
+
+impl Mul<f64> for Rational8
+{
+    type Output=Rational8;
+    #[inline]
+    fn mul(self, rhs: f64) -> Self::Output {        
+        let power = self.fraction() * rhs;
+        Ratio8::approximate_float(power).unwrap().into()                    
+    }
+}
+
+impl Neg for Rational8
+{
+    type Output=Rational8;
+
+    fn neg(self) -> Self::Output {
+        self.with_numerator(-self.numerator())
+    }
+}
+#[bitfield(u64, default=false)]
 #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(PartialEq, Eq, Hash)]
 #[doc="Storage of primitives used to define a given unit."]
 pub struct UnitBase
+{    
+    #[bits(8)]
+    meter: Rational8, 
+    #[bits(8)]
+    second: Rational8,
+    #[bits(8)]
+    kilogram: Rational8,
+    #[bits(8)]
+    ampere: Rational8,
+    #[bits(8)]
+    candela: Rational8,
+    #[bits(8)]
+    kelvin: Rational8,
+    #[bits(8)]
+    mole: Rational8,
+    #[bits(8)]
+    _unused: Rational8,
+}
+impl Default for UnitBase
 {
-    #[bits(8)]
-    meter: i8,
-    #[bits(8)]
-    second: i8,
-    #[bits(8)]
-    kilogram: i8,
-    #[bits(8)]
-    ampere: i8,
-    #[bits(8)]
-    candela: i8,
-    #[bits(8)]
-    kelvin: i8,
-    #[bits(8)]
-    mole: i8,
-    #[bits(8)]
-    _unused: i8,
+    fn default() -> Self 
+    {
+        UnitBase::new().
+        with_meter(Rational8::default()).
+        with_second(Rational8::default()).
+        with_kilogram(Rational8::default()).    
+        with_ampere(Rational8::default()).
+        with_candela(Rational8::default()).
+        with_kelvin(Rational8::default()).
+        with_mole(Rational8::default())    
+    }
 }
 impl UnitBase
 {   
     /// A method to get the power of a given unit component.    
-    fn get_element(&self, index: u8) -> i8
+    fn get_element(&self, index: u8) -> Rational8
     {
         match index
         {
@@ -58,7 +245,19 @@ impl UnitBase
             _ => panic!("Unsupported index {} provided to get_element", index)
         }
     }
-
+    ///
+    /// Generate inverse of current unit (e.g. m -> 1/m).
+    /// This is effectively setting the numerator to the negative of the current value
+    pub fn inv(&self) -> Self
+    {
+        self.with_ampere(-self.ampere()).
+        with_candela(-self.candela()).
+        with_kelvin(-self.kelvin()).
+        with_kilogram(-self.kilogram()).
+        with_meter(-self.meter()).
+        with_mole(-self.mole()).
+        with_second(-self.second())
+    }
     
 }
 impl Display for UnitBase
@@ -68,34 +267,36 @@ impl Display for UnitBase
         let numerator = (0..7).map(|i| 
             {
                 let value =  self.get_element(i as u8);
-                if value.is_positive()
-                {
-                    if value > 1
+                if value.numerator().is_positive()
+                {         
+                    if !value.is_fraction()
                     {
-                        format!("{}^{}", self.unit_name(i as u8), value).to_owned() 
+                        format!("{}", self.unit_name(i as u8)).to_owned()
                     }
                     else
                     {
-                        format!("{}", self.unit_name(i as u8)).to_owned()
+                        format!("{}^{}", self.unit_name(i as u8), value).to_owned() 
                     }
                 }
                 else
                 {
                     "".to_owned()
                 }
+                
             }).filter(|x|!x.is_empty()).collect::<Vec<String>>().join("*");
             let denominator = (0..7).map(|i| 
                 {
                     let value =  self.get_element(i as u8);
-                    if value.is_negative()
+                    if value.numerator().is_negative()
                     {
-                        if value < -1
+                        let value = -value;
+                        if !value.is_fraction()
                         {
-                            format!("{}^{}", self.unit_name(i as u8), -value).to_owned() 
+                            format!("{}", self.unit_name(i as u8)).to_owned()
                         }
                         else
                         {
-                            format!("{}", self.unit_name(i as u8)).to_owned()
+                            format!("{}^{}", self.unit_name(i as u8), value).to_owned() 
                         }
                     }
                     else
@@ -111,8 +312,15 @@ impl Display for UnitBase
                     "dimensionless".to_owned()
                 }
                 else
-                {
-                    format!("1/{denominator}")
+                {        
+                    if denominator.contains("*")
+                    {
+                        format!("1/({denominator})")
+                    }
+                    else
+                    {
+                        format!("1/{denominator}")
+                    }
                 }            
             }
             else
@@ -142,7 +350,7 @@ impl Mul for UnitBase
     type Output = UnitBase;
 
     fn mul(self, rhs: Self) -> Self::Output {        
-        UnitBase::new().
+        UnitBase::default().
         with_meter(self.meter() + rhs.meter()).
         with_second(self.second() + rhs.second()).
         with_kilogram(self.kilogram() + rhs.kilogram()).
@@ -183,7 +391,7 @@ impl Div for UnitBase
 
 impl DivAssign for UnitBase
 {
-    fn div_assign(&mut self, rhs: Self) {
+    fn div_assign(&mut self, rhs: Self) {        
         self.set_meter(self.meter() - rhs.meter());
         self.set_second(self.second() - rhs.second());
         self.set_kilogram(self.kilogram() - rhs.kilogram());
@@ -197,45 +405,56 @@ impl DivAssign for UnitBase
 impl UnitBase
 {
     #[allow(unused)]
-    pub(crate) const fn new_length() -> Self
+    pub(crate) fn new_length() -> Self
     {
-        UnitBase::new().with_meter(1)
+        UnitBase::default().with_meter(Rational8::unity())
     }
     #[allow(unused)]
-    pub(crate) const fn new_mass() -> Self
+    pub(crate) fn new_mass() -> Self
     {
-        UnitBase::new().with_kilogram(1)
+        UnitBase::default().with_kilogram(Rational8::unity())
     }
     #[allow(unused)]
-    pub(crate) const fn new_time() -> Self
+    pub(crate) fn new_time() -> Self
     {
-        UnitBase::new().with_second(1)
+        UnitBase::default().with_second(Rational8::unity())
     }
     #[allow(unused)]
-    pub(crate) const fn new_current() -> Self
+    pub(crate) fn new_current() -> Self
     {
-        UnitBase::new().with_ampere(1)
+        UnitBase::default().with_ampere(Rational8::unity())
     }
     #[allow(unused)]
-    pub(crate) const fn new_temperature() -> Self
+    pub(crate) fn new_temperature() -> Self
     {
-        UnitBase::new().with_kelvin(1)
+        UnitBase::default().with_kelvin(Rational8::unity())
     }
     #[allow(unused)]
-    pub(crate) const fn new_luminance() -> Self
+    pub(crate) fn new_luminance() -> Self
     {
-        UnitBase::new().with_candela(1)
+        UnitBase::default().with_candela(Rational8::unity())
     }
 
     #[allow(unused)]
-    pub(crate) const fn dimensionless() -> Self
+    pub(crate) fn dimensionless() -> Self
     {
-        UnitBase::new()
+        UnitBase::default()
     }
     
     pub(crate) fn powi(&self, power: i8) -> Self
     {
-        UnitBase::new().
+        UnitBase::default().
+        with_meter(self.meter()*power).
+        with_second(self.second()*power).
+        with_kilogram(self.kilogram()*power).
+        with_ampere(self.ampere()*power).
+        with_candela(self.candela()*power).
+        with_kelvin(self.kelvin()*power).
+        with_mole(self.mole()*power)
+    }
+    pub(crate) fn powf(&self, power: f64) -> Self
+    {
+        UnitBase::default().
         with_meter(self.meter()*power).
         with_second(self.second()*power).
         with_kilogram(self.kilogram()*power).
@@ -260,7 +479,7 @@ impl UnitDefinition
     #[doc="Create a new `UnitDefinition` manually by specifying powers of each base unit, as well as the multiplier."]      
     pub fn new(multiplier: f64, meter: i8, kilogram: i8, second: i8, ampere: i8, kelvin: i8, mole: i8, candela: i8) -> Self
     {
-        UnitDefinition { base: UnitBase::new().with_meter(meter).with_kilogram(kilogram).with_second(second).with_ampere(ampere).with_kelvin(kelvin).with_mole(mole).with_candela(candela), multiplier }
+        UnitDefinition { base: UnitBase::default().with_meter(meter.into()).with_kilogram(kilogram.into()).with_second(second.into()).with_ampere(ampere.into()).with_kelvin(kelvin.into()).with_mole(mole.into()).with_candela(candela.into()), multiplier }
     }
     #[doc="Returns a dimensionless `UnitDefinition`."]      
     pub fn dimensionless() -> Self
@@ -276,6 +495,12 @@ impl UnitDefinition
     pub fn powi(&self, power: i8) -> UnitDefinition
     {
         UnitDefinition { base: self.base.powi(power), multiplier: self.multiplier.powi(power as i32) }
+    }
+
+    #[doc="Raise a unit to an floating point power."]
+    pub fn powf(&self, power: f64) -> UnitDefinition
+    {        
+        UnitDefinition { base: self.base.powf(power), multiplier: self.multiplier.powf(power) }
     }
     #[doc="Retrieve multiplier that converts this unit to its base quantity."]
     pub fn multiplier(&self) -> f64
@@ -315,6 +540,11 @@ impl UnitDefinition
         {
             self.multiplier / unit.multiplier()
         }
+    }
+    #[doc="Compute inverse of the current units"]
+    pub fn inv(&self) -> Self
+    {
+        Self { base: self.base.inv(), multiplier: 1.0 /self.multiplier }
     }
 }
 impl Mul<UnitDefinition> for UnitDefinition
@@ -356,46 +586,24 @@ impl MulAssign for UnitDefinition
     }
 }
 
+
+#[inline(always)]
+pub(crate) fn to_unit_base(value: (f64, f64, f64, f64, f64, f64, f64)) -> UnitBase
+{
+    UnitBase::default().
+    with_meter(value.0.into()).
+    with_kilogram(value.1.into()).
+    with_second(value.2.into()).
+    with_ampere(value.3.into()).
+    with_kelvin(value.4.into()).
+    with_mole(value.5.into()).
+    with_candela(value.6.into())
+}
+
+
 impl Display for UnitDefinition
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.base)
-    }
-}
-
-///
-/// Internal datatype to map UOM dimensions to runtime units. 
-///
-#[derive(Copy, Clone)]
-#[repr(i8)]
-#[allow(unused)]
-pub(crate) enum UOMDimensions
-{
-    N5 = -5,
-    N4 = -4,
-    N3 = -3,
-    N2 = -2,
-    N1 = -1,
-    Z0 = 0,
-    P1 = 1,
-    P2 = 2,
-    P3 = 3,
-    P4 = 4,
-    P5 = 5
-}
-
-impl UOMDimensions
-{
-    #[inline(always)]
-    pub(crate) const fn to_unit_base(value: (UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions, UOMDimensions)) -> UnitBase
-    {
-        UnitBase::new().
-        with_meter(value.0 as i8).
-        with_kilogram(value.1 as i8).
-        with_second(value.2 as i8).
-        with_ampere(value.3 as i8).
-        with_kelvin(value.4 as i8).
-        with_mole(value.5 as i8).
-        with_candela(value.6 as i8)
     }
 }

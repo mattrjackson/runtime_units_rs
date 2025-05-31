@@ -4,14 +4,14 @@ quantity! {
     /// Information rate (base UnitDefinition byte per second, s⁻¹).
     quantity: InformationRate; "information rate";
     /// Dimension of information rate, T⁻¹ (base UnitDefinition byte per second, s⁻¹).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::InformationKind);
     units {
         @yobibit_per_second: prefix!(yobi) * prefix!(none) / 8.0; "Yib/s", "yobibit per second",

@@ -16,14 +16,14 @@ quantity! {
     quantity: SpecificHeatCapacity; "specific heat capacity";
     /// Dimension of specific heat capacity, L²T⁻²Th⁻¹ (base UnitDefinition joule per kilogram kelvin, m² ·
     /// s⁻² · K⁻¹).
-    dimension: ISQ<
-        P2,     // length
-        Z0,     // mass
-        N2,     // time
-        Z0,     // electric current
-        N1,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        0.0,     // mass
+        -2.0,     // time
+        0.0,     // electric current
+        -1.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @square_kilometer_per_second_squared_kelvin: prefix!(kilo) * prefix!(kilo); "km²/(s² · K)",
             "square kilometer per second squared kelvin",

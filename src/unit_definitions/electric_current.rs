@@ -4,14 +4,14 @@ quantity! {
     /// Electric current (base UnitDefinition ampere, A).
     quantity: ElectricCurrent; "electric current";
     /// Dimension of electric current, I (base UnitDefinition ampere, A).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        Z0,     // time
-        P1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottaampere: prefix!(yotta); "YA", "yottaampere", "yottaamperes";
         @zettaampere: prefix!(zetta); "ZA", "zettaampere", "zettaamperes";

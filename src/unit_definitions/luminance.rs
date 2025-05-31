@@ -4,14 +4,14 @@ quantity! {
     /// Luminance (base UnitDefinition candela per square meter, cd · m⁻²).
     quantity: Luminance; "luminance";
     /// Dimension of luminance, L⁻²J (base UnitDefinition candela per square meter, cd · m⁻²).
-    dimension: ISQ<
-        N2,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        P1>;    // luminous intensity
+    dimension: ISQ[
+        -2.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        1.0];    // luminous intensity
     units {
         @yottacandela_per_square_meter: prefix!(yotta); "Ycd/m²", "yottacandela per square meter",
             "yottacandelas per square meter";

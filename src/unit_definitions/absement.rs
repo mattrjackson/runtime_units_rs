@@ -4,14 +4,14 @@ quantity! {
     /// Absement (base UnitDefinition meter second, m · s).
     quantity: Absement; "absement";
     /// Dimension of absement, LT (base UnitDefinition meter second, m · s).
-    dimension: ISQ<
-        P1,     // length
-        Z0,     // mass
-        P1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        1.0,     // length
+        0.0,     // mass
+        1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottameter_second: prefix!(yotta); "Ym · s", "yottameter second",
             "yottameter seconds";
@@ -71,6 +71,8 @@ use crate::{units::{AbsementUnit, LengthUnit, TimeUnit}, units_base::{UnitDefini
 
 #[test]
 fn check_dimension() {
+    println!("Absement base: {:?}", AbsementUnit::base());
+    println!("Absement base unit: {:?}", UnitBase::new_length()*UnitBase::new_time());
 assert!(AbsementUnit::base() == UnitBase::new_length()*UnitBase::new_time());
 }
 

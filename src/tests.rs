@@ -172,6 +172,19 @@ mod test
         let _result_add = length_quantity + time_quantity;
         
     }
+
+    #[test]
+    #[cfg(any(feature="All", all(feature="Length")))]
+    fn test_quantity_subtraction2()
+    {
+        use crate::{Length, LengthArray};
+        let _scalar = Length::meter(2.0) - Length::centimeter(100.0);
+        let meter = LengthArray::meter([2.0;2]);
+        let centimeter = LengthArray::centimeter([100.0;2]);
+        println!("{:?}", meter-centimeter);
+        ;
+        
+    }
     #[test]
     #[cfg(any(feature="All", all(feature="Length", feature="Volume")))]
     fn test_quantity_addition()

@@ -4,14 +4,14 @@ quantity! {
     /// Electric potential (base UnitDefinition volt, m² · kg · s⁻³ · A⁻¹).
     quantity: ElectricPotential; "electric potential";
     /// Dimension of electric potential, L²MT⁻³I⁻¹ (base UnitDefinition volt, m² · kg · s⁻³ · A⁻¹).
-    dimension: ISQ<
-        P2,     // length
-        P1,     // mass
-        N3,     // time
-        N1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        1.0,     // mass
+        -3.0,     // time
+        -1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottavolt: prefix!(yotta); "YV", "yottavolt", "yottavolts";
         @zettavolt: prefix!(zetta); "ZV", "zettavolt", "zettavolts";

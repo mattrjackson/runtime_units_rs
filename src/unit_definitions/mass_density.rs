@@ -4,14 +4,14 @@ quantity! {
     /// Mass density (base UnitDefinition kilogram per cubic meter, kg · m⁻³).
     quantity: MassDensity; "mass density";
     /// Dimension of mass density, L⁻³M (base UnitDefinition kilogram per cubic meter, kg · m⁻³).
-    dimension: ISQ<
-        N3,     // length
-        P1,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -3.0,     // length
+        1.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottagram_per_cubic_meter: prefix!(yotta) / prefix!(kilo); "Yg/m³",
             "yottagram per cubic meter", "yottagrams per cubic meter";

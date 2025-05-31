@@ -4,14 +4,14 @@ quantity! {
     /// Force (base UnitDefinition newton, kg · m · s⁻²).
     quantity: Force; "force";
     /// Dimension of force, LMT⁻² (base UnitDefinition newton, kg · m · s⁻²).
-    dimension: ISQ<
-        P1,     // length
-        P1,     // mass
-        N2,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        1.0,     // length
+        1.0,     // mass
+        -2.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottanewton: prefix!(yotta); "YN", "yottanewton", "yottanewtons";
         @zettanewton: prefix!(zetta); "ZN", "zettanewton", "zettanewtons";

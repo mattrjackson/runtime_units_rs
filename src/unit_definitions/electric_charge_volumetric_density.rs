@@ -5,14 +5,14 @@ quantity! {
     quantity: ElectricChargeVolumetricDensity; "electric charge volumetric density";
     /// Dimension of electric charge volumetric density, TIL⁻³ (base UnitDefinition coulomb per cubic meter,
     /// m⁻³ · A · s).
-    dimension: ISQ<
-        N3,     // length
-        Z0,     // mass
-        P1,     // time
-        P1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -3.0,     // length
+        0.0,     // mass
+        1.0,     // time
+        1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
         kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @coulomb_per_cubic_meter: prefix!(none); "C/m³", "coulomb per cubic meter",

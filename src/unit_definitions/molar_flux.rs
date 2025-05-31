@@ -4,14 +4,14 @@ quantity! {
     /// Molar flux (base UnitDefinition mole per square meter second, m⁻² · s⁻¹ · mol).
     quantity: MolarFlux; "molar flux";
     /// Dimension of molar flux, L⁻²T⁻¹N (base UnitDefinition mole per square meter second, m⁻² · s⁻¹ · mol).
-    dimension: ISQ<
-        N2,     // length
-        Z0,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        P1,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -2.0,     // length
+        0.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        1.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @mole_per_square_meter_second: prefix!(none); "mol/(m² · s)",
             "mole per square meter second", "moles per square meter second";

@@ -80,12 +80,6 @@ pub trait Unit where Self:Sized
     /// Return unit definition for this Unit Type
     fn definition(&self) -> UnitDefinition;
 
-    /// Base unit definition
-    fn base() -> UnitBase;
-
-    /// Base unit for this unit type (e.g. `meter` for `LengthUnit`)
-    fn base_unit() -> Self;
-
     /// Try to compute conversion factor from this unit to another.
     #[inline]
     fn try_convert(&self, unit: UnitDefinition) -> Result<f64, RuntimeUnitError>
@@ -105,6 +99,6 @@ pub trait Unit where Self:Sized
     fn convert_unchecked(&self, unit: Self) -> f64
     {
         let definition = self.definition();
-        unit.definition().multiplier() / definition.multiplier()
+        definition.multiplier() / unit.definition().multiplier()
     }
 }

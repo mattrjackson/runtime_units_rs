@@ -4,14 +4,14 @@ quantity! {
     /// Volumetric number density (base UnitDefinition 1 per cubic meter, m⁻³).
     quantity: VolumetricNumberDensity; "volumetric number density";
     /// Dimension of volumetric number density, L⁻³ (base UnitDefinition 1 per cubic meter, m⁻³).
-    dimension: ISQ<
-        N3,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -3.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @per_cubic_kilometer: prefix!(none) / prefix!(kilo) / prefix!(kilo) / prefix!(kilo); "km⁻³",

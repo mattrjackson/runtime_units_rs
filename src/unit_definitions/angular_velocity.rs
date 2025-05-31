@@ -4,14 +4,14 @@ quantity! {
     /// Angular velocity (base UnitDefinition radian per second, s⁻¹).
     quantity: AngularVelocity; "angular velocity";
     /// Dimension of angular velocity, T⁻¹ (base UnitDefinition radian per second, s⁻¹).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::AngleKind);
     units {
         /// Derived UnitDefinition of angular velocity.

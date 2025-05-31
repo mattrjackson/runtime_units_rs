@@ -5,14 +5,14 @@ quantity! {
     quantity: MolarHeatCapacity; "molar heat capacity";
     /// Dimension of molar heat capacity, L²MT⁻²Th⁻¹N⁻¹ (base UnitDefinition joule per kelvin mole,
     /// m² · kg · s⁻² · K⁻¹ · mol⁻¹).
-    dimension: ISQ<
-        P2,     // length
-        P1,     // mass
-        N2,     // time
-        Z0,     // electric current
-        N1,     // thermodynamic temperature
-        N1,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        2.0,     // length
+        1.0,     // mass
+        -2.0,     // time
+        0.0,     // electric current
+        -1.0,     // thermodynamic temperature
+        -1.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottajoule_per_kelvin_mole: prefix!(yotta); "YJ/(K · mol)", "yottajoule per kelvin mole",
             "yottajoules per kelvin mole";

@@ -4,14 +4,14 @@ quantity! {
     /// Radiant exposure (base UnitDefinition joule per square meter, kg · s⁻²).
     quantity: RadiantExposure; "radiant exposure";
     /// Dimension of radiant exposure, MT⁻² (base UnitDefinition joule per square meter, kg · s⁻²).
-    dimension: ISQ<
-        Z0,     // length
-        P1,     // mass
-        N2,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        1.0,     // mass
+        -2.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         // square meter denominator
         @yottajoule_per_square_meter: prefix!(yotta); "YJ/m²",

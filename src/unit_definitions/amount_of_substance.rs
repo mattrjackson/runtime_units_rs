@@ -4,14 +4,14 @@ quantity! {
     /// Amount of substance (base UnitDefinition mole, mol).
     quantity: AmountOfSubstance; "amount of substance";
     /// Dimension of amount of substance, N (base UnitDefinition mole, mol).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        P1,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        1.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @yottamole: prefix!(yotta); "Ymol", "yottamole", "yottamoles";
         @zettamole: prefix!(zetta); "Zmol", "zettamole", "zettamoles";

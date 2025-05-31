@@ -5,14 +5,14 @@ quantity! {
     quantity: MagneticPermeability; "magnetic permeability";
     /// Dimension of magnetic permeability, LMT⁻²I⁻² (base UnitDefinition henry per meter,
     /// m · kg · s⁻² · A⁻²).
-    dimension: ISQ<
-        P1,     // length
-        P1,     // mass
-        N2,     // time
-        N2,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        1.0,     // length
+        1.0,     // mass
+        -2.0,     // time
+        -2.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @henry_per_meter: prefix!(none); "H/m", "henry per meter", "henrys per meter";
         @vacuum_magnetic_permeability: 1.256_637_062_12_E-6; "µ₀", "vacuum magnetic permeability",

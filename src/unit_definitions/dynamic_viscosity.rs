@@ -4,14 +4,14 @@ quantity! {
     /// Dynamic viscosity (base UnitDefinition pascal second, kg · m⁻¹ · s⁻¹).
     quantity: DynamicViscosity; "dynamic viscosity";
     /// Dimension of dynamic viscosity, L⁻¹MT⁻¹ (base UnitDefinition pascal second, kg · m⁻¹ · s⁻¹).
-    dimension: ISQ<
-        N1,     // length
-        P1,     // mass
-        N1,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        -1.0,     // length
+        1.0,     // mass
+        -1.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @pascal_second: prefix!(none); "Pa · s", "pascal second", "pascal seconds";
         @millipascal_second: prefix!(milli); "mPa · s", "millipascal second", "millipascal seconds";

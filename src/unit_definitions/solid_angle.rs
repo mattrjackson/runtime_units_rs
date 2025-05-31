@@ -4,14 +4,14 @@ quantity! {
     /// Solid angle (dimensionless quantity).
     quantity: SolidAngle; "solid angle";
     /// Dimension of solid angle, 1 (dimensionless).
-    dimension: ISQ<
-        Z0,     // length
-        Z0,     // mass
-        Z0,     // time
-        Z0,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        0.0,     // length
+        0.0,     // mass
+        0.0,     // time
+        0.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     kind: dyn (crate::si::marker::SolidAngleKind);
     units {
         /// SI derived UnitDefinition of solid angle is steradians. It is the solid angle subtended at the

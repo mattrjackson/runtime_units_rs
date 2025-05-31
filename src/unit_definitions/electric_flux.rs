@@ -4,14 +4,14 @@ quantity! {
     /// Electric Flux (base UnitDefinition volt meter, m³ ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
     quantity: ElectricFlux; "electric flux";
     /// Dimension of electric flux, L³MT⁻³I⁻¹ (base UnitDefinition volt meter, m³ ⋅ kg ⋅ s⁻³ ⋅ A⁻¹).
-    dimension: ISQ<
-        P3,     // length
-        P1,     // mass
-        N3,     // time
-        N1,     // electric current
-        Z0,     // thermodynamic temperature
-        Z0,     // amount of substance
-        Z0>;    // luminous intensity
+    dimension: ISQ[
+        3.0,     // length
+        1.0,     // mass
+        -3.0,     // time
+        -1.0,     // electric current
+        0.0,     // thermodynamic temperature
+        0.0,     // amount of substance
+        0.0];    // luminous intensity
     units {
         @volt_meter: prefix!(none); "V ⋅ m", "volt meter", "volt meters";
         @volt_centimeter: prefix!(none) * prefix!(centi); "V ⋅ cm", "volt centimeter",
