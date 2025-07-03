@@ -22,6 +22,8 @@ quantity! {
             "square meters per gram";
         @square_centimeter_per_gram: prefix!(centi) * prefix!(centi) / prefix!(milli); "cm²/g",
             "square centimeter per gram", "square centimeters per gram";
+        
+        @square_foot_per_pound: 4.88242763638305; "ft²/lbm", "square foot per pound", "square feet per pound";
     }
 }
 

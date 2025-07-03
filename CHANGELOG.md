@@ -10,6 +10,16 @@
 ### Fixed
 -->
 
+## [0.6.1] — 2025-07-03
+
+### Security
+### Added
+Added `ft^2/lbm` to SpecificArea.
+### Changed
+### Deprecated
+### Removed
+
+
 ## [0.6.0] — 2025-06-05
 
 ### Security
