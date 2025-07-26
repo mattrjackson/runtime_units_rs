@@ -9,7 +9,7 @@ An example of including all units and serialization support:
 
 ```toml
 [dependencies]
-runtime_units = { version = "0.6.1", features = ["All", "serde"] }
+runtime_units = { version = "0.6.2", features = ["All", "serde"] }
 ```
 no_std is supported if the `std` feature flag is removed.
 

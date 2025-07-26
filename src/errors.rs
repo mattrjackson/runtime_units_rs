@@ -3,7 +3,8 @@ use core::fmt::Display;
 #[derive(Clone, Debug)]
 pub enum RuntimeUnitError
 {
-    IncompatibleUnitConversion(String)
+    IncompatibleUnitConversion(String),
+    ParseError(String),
 }
 
 impl Display for RuntimeUnitError

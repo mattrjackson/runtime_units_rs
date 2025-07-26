@@ -10,6 +10,17 @@
 ### Fixed
 -->
 
+## [0.6.2] — 2025-07-25
+
+### Security
+### Added
+Added FromStr implementation for `Quantities`. Added serde aliases for singluar, plural, and abbreviations. This permits deserialization from json such as {"unit": "kJ", value: 5.0 } or {"unit": "kilojoule", value: 5.0 }.
+Added TryFrom<`Quantities`> for all individual quantities (e.g. `Length`, `Time`, etc.).
+### Changed
+### Deprecated
+### Removed
+
+
 ## [0.6.1] — 2025-07-03
 
 ### Security

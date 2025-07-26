@@ -1,6 +1,20 @@
 #[cfg(test)]
 mod test
 {
+    #[cfg(all(any(feature="All", all(feature="Energy"))))]
+    #[test]    
+    fn test_from_string()
+    {        
+        use std::str::FromStr;
+        use crate::Energy;
+        use crate::Quantities;
+        let unit = Quantities::from_str("10.5 kJ").unwrap();
+        println!("{:?}", unit);
+        let unit2: Energy = serde_json::from_str( "{\"unit\":\"kJ\",\"value\":10.5}").unwrap();
+        println!("{:?}", unit2);
+        assert_eq!(Energy::try_from(unit).unwrap(), unit2);
+
+    }
    
     #[test]
     #[cfg(all(any(feature="All", all(feature="Time", feature="Length", feature="Velocity", feature="Acceleration")), feature="std", feature="serde"))]
@@ -182,8 +196,6 @@ mod test
         let meter = LengthArray::meter([2.0;2]);
         let centimeter = LengthArray::centimeter([100.0;2]);
         println!("{:?}", meter-centimeter);
-        ;
-        
     }
     #[test]
     #[cfg(any(feature="All", all(feature="Length", feature="Volume")))]

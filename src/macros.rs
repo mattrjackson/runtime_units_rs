@@ -231,7 +231,10 @@ macro_rules! quantity {
         #[cfg_attr(feature="utoipa", derive(ToSchema))]        
         pub enum [<$quantity Unit>]
         {
-            $($unit,)+
+            $(
+                #[cfg_attr(feature="serde", serde(alias=$abbreviation, alias=$singular, alias=$plural))]
+                $unit,
+            )+
         }
         impl Default for [<$quantity Unit>]{
             fn default() -> Self {
@@ -514,6 +517,19 @@ macro_rules! quantity {
                 {
                     let destination_unit: [<$quantity Unit>] = unit.try_into()?;                   
                     Ok(self.convert(destination_unit))     
+                }
+            }
+
+            impl TryFrom<$crate::Quantities> for $quantity
+            {
+                type Error = RuntimeUnitError;
+                fn try_from(value: $crate::Quantities) -> Result<Self, Self::Error> 
+                {                
+                    match value        
+                    {
+                        crate::Quantities::$quantity(value) => Ok(value),         
+                        _ => Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Base mismatch: {:?} vs {}", value, stringify!($quantity))))
+                    }
                 }
             }
 
@@ -965,7 +981,40 @@ macro_rules! system {
                     }                        
                 }
             }
+
+            impl std::str::FromStr for Quantities
+            {
+                type Err = RuntimeUnitError;
+
+                /// Parses a string into a `Quantities` value.
+                ///
+                /// # Format
+                /// The expected input format is: `<value> <unit>`, e.g. `"1.1 m"`.
+                ///
+                /// # Errors
+                /// Returns an error if the value is missing, the unit is missing, the value cannot be parsed as `f64`,
+                /// or the unit is not recognized for any supported quantity.
+                fn from_str(s: &str) -> Result<Self, Self::Err> {
+                    let s = s.trim();
+                    let mut parts = s.splitn(2, char::is_whitespace);
+                    let value_str = parts.next().ok_or_else(|| RuntimeUnitError::ParseError("Missing value".into()))?;
+                    let unit_str = parts.next().ok_or_else(|| RuntimeUnitError::ParseError("Missing unit".into()))?;
+
+                    let value: f64 = value_str.parse().map_err(|_| RuntimeUnitError::ParseError("Invalid value".into()))?;
+
+                    $(
+                        #[cfg(any(feature = "" $quantity, feature="All"))]
+                        if let Ok(unit) = $crate::units::[<$quantity Unit>]::try_from(unit_str) {
+                            return Ok(Quantities::$quantity($quantity::new(value, unit)));
+                        }
+                    )+
+
+                    Err(RuntimeUnitError::ParseError(format!("Unknown unit: {}", unit_str)))
+                }
+            }          
+
             
+                        
             paste::paste!{     
                 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
                 #[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
