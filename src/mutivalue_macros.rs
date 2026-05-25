@@ -220,7 +220,8 @@ macro_rules! create_multivalue_quantities {
     {       
         #[cfg(feature="serde")]
         use serde_with::serde_as;      
-        use std::ops::{Deref, DerefMut};  
+        use alloc::vec::Vec;
+        use core::ops::{Deref, DerefMut};  
         paste::paste!
         {
         #[cfg_attr(feature="serde", cfg_eval::cfg_eval, serde_as)]
@@ -396,18 +397,21 @@ macro_rules! create_multivalue_quantities_vec_enum {
                 pub fn unit(&self) -> Units
                 {
                     use $crate::traits::FixedSliceQuantity;
+                    #[allow(unreachable_patterns)]
                     match self
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]                               
                             QuantitiesVec::$quantity(x)=> $crate::Units::from(x.unit()),
                         )+
+                        _ => unreachable!("QuantitiesVec has no enabled variants"),
                     }
                 }
                 /// Try to convert to the unit specified by a given `Units` enumeration.
                 pub fn try_convert(&self, unit: Units) -> Result<QuantitiesVec, RuntimeUnitError>
                 {   
                     use $crate::traits::FixedSliceQuantity;
+                    #[allow(unreachable_patterns)]
                     match self
                     {
                         $(
@@ -416,6 +420,7 @@ macro_rules! create_multivalue_quantities_vec_enum {
                                 Ok(QuantitiesVec::$quantity(x.try_convert(unit)?))
                             },
                         )+
+                        _ => unreachable!("QuantitiesVec has no enabled variants"),
                     }
                 }
 
@@ -460,14 +465,14 @@ macro_rules! create_multivalue_quantities_vec_enum {
                     
                 }
             }
-            impl From<QuantitiesVec> for crate::vector_quantity::VecQuantity
+            impl From<QuantitiesVec> for $crate::vector_quantity::VecQuantity
             {
                 fn from(value: QuantitiesVec) -> Self {
                     match value
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
-                            QuantitiesVec::$quantity(x)=>crate::vector_quantity::VecQuantity { values: x.values, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: *[<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]} },
+                            QuantitiesVec::$quantity(x)=>$crate::vector_quantity::VecQuantity { values: x.values, unit: UnitDefinition{multiplier: x.unit.multiplier(), base: *[<$quantity:snake>]::[<$quantity:upper _UNIT_BASE>]} },
                         )+
                     }
                 }
@@ -476,12 +481,14 @@ macro_rules! create_multivalue_quantities_vec_enum {
             {
                 fn to_string(&self) -> String 
                 {
+                    #[allow(unreachable_patterns)]
                     match self
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
                             QuantitiesVec::$quantity(x) => format!("{:?} {}", x.values, x.unit.abbreviation()),
                         )+
+                        _ => unreachable!("QuantitiesVec has no enabled variants"),
                     }                        
                 }
             }
@@ -512,18 +519,21 @@ macro_rules! create_multivalue_quantities_array_enum {
                 /// Get the `Units` enumeration associated with a given `QuantitiesArray` enumeration.
                 pub fn unit(&self) -> Units
                 {
+                    #[allow(unreachable_patterns)]
                     match self
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]                               
                             QuantitiesArray::$quantity(x)=> $crate::Units::from(x.unit),
                         )+
+                        _ => unreachable!("QuantitiesArray has no enabled variants"),
                     }
                 }
                 /// Try to convert to the unit specified by a given `Units` enumeration.
                 pub fn try_convert(&self, unit: Units) -> Result<QuantitiesArray<N>, RuntimeUnitError>
                 {   
                     use $crate::traits::FixedSliceQuantity;
+                    #[allow(unreachable_patterns)]
                     match self
                     {
                         $(
@@ -532,6 +542,7 @@ macro_rules! create_multivalue_quantities_array_enum {
                                 Ok(QuantitiesArray::$quantity(x.try_convert(unit)?))
                             },
                         )+
+                        _ => unreachable!("QuantitiesArray has no enabled variants"),
                     }
                 }
 
@@ -573,7 +584,7 @@ macro_rules! create_multivalue_quantities_array_enum {
             impl<const N: usize> From<QuantitiesArray<N>> for $crate::array_quantity::ArrayQuantity<N>
             {
                 fn from(value: QuantitiesArray<N>) -> Self {
-                    use crate::array_quantity::ArrayQuantity;
+                    use $crate::array_quantity::ArrayQuantity;
                     match value
                     {
                         $(
@@ -587,12 +598,14 @@ macro_rules! create_multivalue_quantities_array_enum {
             {
                 fn to_string(&self) -> String 
                 {
+                    #[allow(unreachable_patterns)]
                     match self
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
                             QuantitiesArray::$quantity(x) => format!("{:?} {}", x.values, x.unit.abbreviation()),
                         )+
+                        _ => unreachable!("QuantitiesArray has no enabled variants"),
                     }                        
                 }
             }

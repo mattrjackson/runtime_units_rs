@@ -1,6 +1,8 @@
 use crate::{errors::RuntimeUnitError, units_base::UnitDefinition};
+use alloc::format;
 use core::ops::{AddAssign, Div, DivAssign, Mul, MulAssign, SubAssign };
-use std::ops::{Deref, DerefMut};
+use alloc::vec::Vec;
+use core::ops::{Deref, DerefMut};
 
 
 #[derive(Clone)]
@@ -45,7 +47,8 @@ impl crate::traits::ArbitraryQuantity for VecQuantity
         for val in self.values.as_mut_slice().iter_mut()
         {
             *val *= factor;
-        }            
+        }
+        self.unit = unit;
     }
     
     fn try_convert(&self, unit: UnitDefinition) -> Result<Self, crate::errors::RuntimeUnitError> {
@@ -107,6 +110,7 @@ impl Div<VecQuantity> for VecQuantity
         {  
            *val /= rhs;
         }
+        result.unit /= rhs.unit;
         result
     }
 }
@@ -124,6 +128,7 @@ impl Mul<VecQuantity> for VecQuantity
         {  
            *val *= rhs;
         }
+        result.unit *= rhs.unit;
         result
     }
 }
@@ -160,6 +165,21 @@ impl MulAssign<f64> for VecQuantity
         }
     }
 }
+impl MulAssign<VecQuantity> for VecQuantity
+{
+
+    fn mul_assign(&mut self, rhs: VecQuantity) {
+        if rhs.values.len() != self.values.len()
+        {
+            panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
+        }
+        for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
+        {  
+           *val *= rhs;
+        }
+        self.unit *= rhs.unit;
+    }
+}
 impl DivAssign<VecQuantity> for VecQuantity
 {
 
@@ -172,6 +192,7 @@ impl DivAssign<VecQuantity> for VecQuantity
         {  
            *val /= rhs;
         }
+        self.unit /= rhs.unit;
     }
 }
 impl AddAssign<VecQuantity> for VecQuantity
@@ -204,5 +225,3 @@ impl SubAssign<VecQuantity> for VecQuantity
         }
     }
 }
-
-

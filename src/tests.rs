@@ -1,6 +1,9 @@
 #[cfg(test)]
 mod test
 {
+    #[allow(unused_imports)]
+    use alloc::vec;
+
     #[cfg(all(any(feature="All", all(feature="Energy"))))]
     #[test]    
     fn test_from_string()
@@ -9,11 +12,22 @@ mod test
         use crate::Energy;
         use crate::Quantities;
         let unit = Quantities::from_str("10.5 kJ").unwrap();
-        println!("{:?}", unit);
         let unit2: Energy = serde_json::from_str( "{\"unit\":\"kJ\",\"value\":10.5}").unwrap();
-        println!("{:?}", unit2);
         assert_eq!(Energy::try_from(unit).unwrap(), unit2);
 
+
+    
+    }
+    #[test]
+    #[cfg(any(feature="All", all(feature="Length", feature="Time", feature="Velocity")))]
+    fn test_conversion()
+    {
+        use crate::{Length, Time, Velocity};
+
+        let distance = Length::meter(1.0);
+        let velocity = Velocity::meter_per_second(10.0);
+        let time = Time::second(0.1);
+        assert_eq!(time, Time::from(distance / velocity));
     }
    
     #[test]
@@ -38,7 +52,6 @@ mod test
         let pressure = Pressure::poundal_per_square_foot(1.0);
         let time = Time::second(5.0);
         assert!(pressure.try_convert(Units::Pressure(crate::units::PressureUnit::pascal)).is_ok());
-        println!("{:?}", pressure.try_convert(Units::Pressure(crate::units::PressureUnit::psi)));
         assert!(pressure.try_convert(Units::Pressure(crate::units::PressureUnit::psi)).is_ok());
         assert!(time.try_convert(Units::Length(crate::units::LengthUnit::centimeter)).is_err());
     }
@@ -195,7 +208,7 @@ mod test
         let _scalar = Length::meter(2.0) - Length::centimeter(100.0);
         let meter = LengthArray::meter([2.0;2]);
         let centimeter = LengthArray::centimeter([100.0;2]);
-        println!("{:?}", meter-centimeter);
+        let _difference = meter - centimeter;
     }
     #[test]
     #[cfg(any(feature="All", all(feature="Length", feature="Volume")))]
@@ -310,10 +323,7 @@ mod test
     #[cfg(any(feature="All", feature="Length"))]
     fn available_units()
     {
-        for unit in crate::units::LengthUnit::units()
-        {
-            println!("{unit}");
-        }
+        assert!(!crate::units::LengthUnit::units().is_empty());
     }
     #[test]
     #[cfg(feature="serde")]    
@@ -321,21 +331,22 @@ mod test
     fn serialize_units()
     {
         use serde_json::json;
-        println!("{}",json!(crate::Length::new(1.0, crate::units::LengthUnit::centimeter)));
+        assert_eq!(json!(crate::Length::new(1.0, crate::units::LengthUnit::centimeter)).to_string(), "{\"unit\":\"centimeter\",\"value\":1.0}");
     }
     #[cfg(all(feature="utoipa", any(feature="All", feature="Length")))]
     #[test]
     fn utoipa_test()
     {
         use utoipa::PartialSchema;
-        use crate::{units::LengthUnit, Length, LengthVec};
-        let length =LengthVec::new(vec![0.0,2.0], LengthUnit::meter);
-        println!("{:?}",LengthVec::schema());
+        use crate::{units::LengthUnit, LengthVec};
+        let _length =LengthVec::new(vec![0.0,2.0], LengthUnit::meter);
+        let _schema = LengthVec::schema();
 
     }
     
 
     #[test]
+    #[cfg(any(feature="All", feature="Length"))]
     fn test_vector_quantity()
     {
         use crate::LengthVec;
@@ -345,5 +356,94 @@ mod test
         {
             assert_eq!(val_m*100.0, val_cm);
         }        
+    }
+
+    #[test]
+    #[cfg(any(feature="All", feature="Length"))]
+    fn arbitrary_vec_quantity_conversion_updates_unit()
+    {
+        use crate::traits::ArbitraryQuantity;
+        use crate::units::LengthUnit;
+        use crate::vector_quantity::VecQuantity;
+
+        let length = VecQuantity {
+            unit: LengthUnit::meter.into(),
+            values: vec![1.0, 2.0],
+        };
+
+        let converted = length
+            .try_convert(LengthUnit::centimeter.into())
+            .unwrap();
+
+        assert_eq!(converted.values, vec![100.0, 200.0]);
+        assert_eq!(converted.unit, LengthUnit::centimeter.into());
+    }
+
+    #[test]
+    #[cfg(any(feature="All", feature="Length"))]
+    fn arbitrary_array_quantity_conversion_updates_unit()
+    {
+        use crate::array_quantity::ArrayQuantity;
+        use crate::traits::ArbitraryQuantity;
+        use crate::units::LengthUnit;
+
+        let length = ArrayQuantity {
+            unit: LengthUnit::meter.into(),
+            values: [1.0, 2.0],
+        };
+
+        let converted = length
+            .try_convert(LengthUnit::centimeter.into())
+            .unwrap();
+
+        assert_eq!(converted.values, [100.0, 200.0]);
+        assert_eq!(converted.unit, LengthUnit::centimeter.into());
+    }
+
+    #[test]
+    #[cfg(any(feature="All", all(feature="Length", feature="Time")))]
+    fn arbitrary_vec_quantity_mul_and_div_update_units()
+    {
+        use crate::units_base::UnitDefinition;
+        use crate::units::{LengthUnit, TimeUnit};
+        use crate::vector_quantity::VecQuantity;
+
+        let length = VecQuantity {
+            unit: LengthUnit::meter.into(),
+            values: vec![6.0, 8.0],
+        };
+        let time = VecQuantity {
+            unit: TimeUnit::second.into(),
+            values: vec![2.0, 4.0],
+        };
+
+        let product = length.clone() * time.clone();
+        assert_eq!(product.values, vec![12.0, 32.0]);
+        assert_eq!(
+            product.unit,
+            UnitDefinition::from(LengthUnit::meter) * UnitDefinition::from(TimeUnit::second)
+        );
+
+        let quotient = length / time;
+        assert_eq!(quotient.values, vec![3.0, 2.0]);
+        assert_eq!(
+            quotient.unit,
+            UnitDefinition::from(LengthUnit::meter) / UnitDefinition::from(TimeUnit::second)
+        );
+    }
+
+    #[test]
+    #[cfg(any(feature="All", all(feature="Length", feature="Time")))]
+    fn unit_try_convert_matches_quantity_conversion_direction()
+    {
+        use crate::traits::Unit;
+        use crate::units::LengthUnit;
+
+        assert_eq!(
+            LengthUnit::meter
+                .try_convert(LengthUnit::centimeter.into())
+                .unwrap(),
+            100.0
+        );
     }
 }

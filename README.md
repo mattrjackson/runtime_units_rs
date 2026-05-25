@@ -1,70 +1,288 @@
 # runtime_units
-The goal for this library is to serve as a run-time Rust library for working with units of measurement and conversions between them. Most robust units libraries for Rust are designed for compile-time constant analysis. If one of those crates meets your needs, you should probably use one of those instead.
 
-Much of the code (particularly the unit definitions) were adapted from the excellent uom library (https://github.com/iliekturtles/uom). This library was designed to support cases where compile time analysis isn't a great fit. This can presently handle conversions of everything supported by uom except temperature (temperature intervals are supported).  
+`runtime_units` is a run-time Rust library for values with units of measurement.
+Most Rust unit libraries focus on compile-time dimensional analysis. If that is
+what you need, a crate such as [`uom`](https://github.com/iliekturtles/uom) may
+be a better fit. This crate is intended for cases where units are selected,
+parsed, serialized, or converted at run time.
 
-## Usage
+Much of the unit-definition data was adapted from `uom`.
 
-An example of including all units and serialization support:
+## Quick Start
+
+With default features enabled, the crate includes `std` plus a compact set of
+common quantities such as `Length`, `Time`, `Mass`, and `Velocity`.
+
+```toml
+[dependencies]
+runtime_units = "0.6.2"
+```
+
+```rust
+use runtime_units::{Length, Time, UnitTypes, Units, Velocity};
+use runtime_units::traits::FixedQuantity;
+use runtime_units::units::LengthUnit;
+
+fn main() {
+    let distance = Length::meter(10.0);
+    let distance_cm = distance.to_centimeter();
+
+    assert_eq!(distance_cm.value(), 1000.0);
+    assert_eq!(distance, distance_cm);
+
+    let duration = Time::second(2.0);
+    let speed = Velocity::from(distance / duration);
+
+    assert_eq!(speed, Velocity::meter_per_second(5.0));
+
+    let angstroms = distance
+        .try_convert(Units::Length(LengthUnit::angstrom))
+        .unwrap();
+
+    assert_eq!(angstroms.unit(), LengthUnit::angstrom);
+
+    let parsed = UnitTypes::Length.to_unit("cm").unwrap();
+    assert_eq!(parsed, Units::Length(LengthUnit::centimeter));
+}
+```
+
+## Features
+
+Enable all quantities and serde support:
 
 ```toml
 [dependencies]
 runtime_units = { version = "0.6.2", features = ["All", "serde"] }
 ```
-no_std is supported if the `std` feature flag is removed.
 
-Individual unit types are supported as features, allowing you to pare down the library to what you need. Serialization is optionally supported via the `serde` feature tag, and utoipa schemas can optionally be generated via the `utoipa` tag. By default, only the base SI units are enabled (https://en.wikipedia.org/wiki/SI_base_unit).
+Enable only selected quantities:
 
-## Quantities and Units
+```toml
+[dependencies]
+runtime_units = { version = "0.6.2", default-features = false, features = ["Length", "Time"] }
+```
 
-This library consists of three sets of data structures:
-1. Unit data structures. These store data regarding unit itself, and the storage of the unit definition itself (e.g. the dimensions of the unit, and the conversion factor to convert a given unit to its base quantity). These can be serialized (if serde is enabled), and converted to a utoipa schema (if the utoipa feature flag is enabled). 
-2. Scalar Quantity data structures. These store a scalar value and an associated unit. Also serializable like the units, and most math operations can be performed on them directly (e.g. scalar Mul/Div, multipliying quantites by each other, equality operators).
-3. Array Quantity data structures. These store an array and an associated unit. Analogous to (2). 
+Useful feature flags:
 
-# More details:
+| Feature | Purpose |
+| --- | --- |
+| `std` | Enabled by default. Adds `std::error::Error` support and standard-library integration. |
+| `serde` | Enables serialization/deserialization for units and quantities. |
+| `utoipa` | Enables OpenAPI schema generation. This feature also enables `std`. |
+| `All` | Enables every generated quantity and unit type. |
+| Quantity features | Enable individual quantities, such as `Length`, `Energy`, `Pressure`, or `Velocity`. Some derived quantities enable their dependencies. |
 
-All available units are contained in the `Units` enum. Lists of available units can be easily retrieved from the `UnitTypes` enum. For each quantity processed (depending on the features you compile with), a unit enumeration is created for each unit type (e.g. `LengthUnit`, `EnergyUnit`). 
+The current default feature set is `std`, `Dimensionless`, `Length`, `Mass`,
+`Angle`, `Luminance`, `TemperatureInterval`, `AmountOfSubstance`,
+`ElectricCurrent`, `Time`, and `Velocity`.
 
-Quantities contain a value (currently restricted to f64), and the unit enumeration mentioned above to store the unit. These are then converted to `QuantityBase`. All available quantities can be encapsulated in the `Quantities` enum. A struct is created for each quantity (e.g. `Length`, `Area`), and these contain methods to convert from a `Units`, or its own internal unit enumeration. As an example, `Length` can convert from a given `LengthUnit`, and contains helper methods to convert from its current unit to any of the other enumerations (e.g. `to_meters()`, `to_kilometers()`, etc.). 
+## no_std
 
+`no_std` builds are supported by disabling default features:
 
-Example:
+```toml
+[dependencies]
+runtime_units = { version = "0.6.2", default-features = false, features = ["Length"] }
+```
+
+The crate uses `core` and `alloc` without `std`, so targets that use APIs backed
+by `Vec`, `String`, parsing, or formatted errors must provide an allocator.
+
+## Core Types
+
+There are four common ways to work with values:
+
+| API | Use when |
+| --- | --- |
+| Typed scalar quantities, such as `Length` or `Velocity` | You know the quantity type at compile time. This is the easiest and most ergonomic API. |
+| `runtime_units::quantities::Quantity` | You need a run-time unit definition and scalar value. |
+| `Quantities` | You need an enum that can hold any enabled typed scalar quantity. This is useful for serialization and dynamic dispatch. |
+| `LengthVec`, `LengthArray<N>`, `VecQuantity`, `ArrayQuantity<N>` | You need many values that share one unit. |
+
+Each enabled quantity generates:
+
+- A typed scalar, such as `Length`.
+- A typed unit enum, such as `LengthUnit`.
+- A typed vector quantity, such as `LengthVec`.
+- A typed const-generic array quantity, such as `LengthArray<N>`.
+- Constructor helpers named after units, such as `Length::meter(1.0)`.
+- Conversion helpers named `to_<unit>`, such as `to_centimeter()`.
+
+## Conversions
+
+Typed quantities use the `FixedQuantity` trait for fallible conversions from the
+general `Units` enum:
 
 ```rust
-use runtime_units::{Length, Acceleration, UnitTypes, Units, QuantityBase, Time};
+use runtime_units::{Length, Units};
 use runtime_units::traits::FixedQuantity;
-fn example()
-{
-    let length = Length::meter(10.0);
-    let length_cm = length.to_centimeter();
-    assert_eq!(length, length_cm);
-    let velocity = Acceleration::meter_per_second_squared(1.0) * Time::second(10.0);
-    assert_eq!(length / Time::second(1.0), velocity); 
+use runtime_units::units::LengthUnit;
 
-    let unit = Units::Length(units::LengthUnit::angstrom);
-    let _ = length.try_convert(unit).unwrap();
+let length = Length::meter(1.0);
+let converted = length
+    .try_convert(Units::Length(LengthUnit::centimeter))
+    .unwrap();
 
-    // list units available for Length:
-    for unit in UnitTypes::Length.units()
-    {
-        println!("{unit}");
-    }
-
-    let quantity = Quantities::Acceleration(Acceleration::centimeter_per_second_squared(10.0));
-    assert_eq!(velocity, QuantityBase::from(quantity) * Time::second(100.0));
-
-    // Get a unit type from a string
-    let _units = UnitTypes::Length.to_unit("m").unwrap();
-
-    // Different ways to print base units of a quantity
-    println!("Base Units of Velocity = {}", velocity.definition().unit_string());
-    println!("Base Units of Acceleration = {}", Acceleration::meter_per_second_squared(1.0).definition().unit_string());
-    
-}
+assert_eq!(converted, Length::centimeter(100.0));
 ```
-# Performance
-Currently conversions on my laptop cost < 1 nsec if converting between the same quantity, and up to 3 nsec using the convert method from `Quantity`. 
 
-# API Stability
-API is largely fixed at this point, but minor changes may occur until 1.0.
+The dynamic scalar `Quantity` uses `ArbitraryQuantity` and `UnitDefinition`:
+
+```rust
+use runtime_units::Units;
+use runtime_units::quantities::Quantity;
+use runtime_units::traits::ArbitraryQuantity;
+use runtime_units::units::LengthUnit;
+
+let length: Quantity = Units::Length(LengthUnit::meter).to_quantity(2.0);
+let centimeters = length
+    .try_convert(LengthUnit::centimeter.into())
+    .unwrap();
+
+assert_eq!(centimeters.value(), 200.0);
+```
+
+Use the `Unit` trait when you need the numeric conversion factor directly:
+
+```rust
+use runtime_units::traits::Unit;
+use runtime_units::units::LengthUnit;
+
+let factor = LengthUnit::meter
+    .try_convert(LengthUnit::centimeter.into())
+    .unwrap();
+
+assert_eq!(factor, 100.0);
+```
+
+## Operations
+
+Quantities compare equal when their base-unit values match:
+
+```rust
+use runtime_units::Length;
+
+assert_eq!(Length::meter(1.0), Length::centimeter(100.0));
+```
+
+Addition and subtraction convert the right-hand side into the left-hand unit.
+Incompatible addition/subtraction panics. Use `try_convert` first when working
+with user-provided or otherwise uncertain units.
+
+Multiplication and division combine dimensions. The direct result is the dynamic
+`Quantity`; convert it into a typed quantity when the result type is known:
+
+```rust
+use runtime_units::{Length, Time, Velocity};
+
+let distance = Length::meter(10.0);
+let duration = Time::second(2.0);
+
+let speed = Velocity::from(distance / duration);
+assert_eq!(speed, Velocity::meter_per_second(5.0));
+```
+
+Because values are `f64`, prefer approximate comparisons for calculations that
+accumulate floating-point error.
+
+## Vector and Array Quantities
+
+Typed vector and array quantities store many values with one shared unit:
+
+```rust
+use runtime_units::{LengthArray, LengthVec};
+
+let samples = LengthVec::meter(vec![1.0, 2.0]).to_centimeter();
+assert_eq!(samples.values().as_slice(), &[100.0, 200.0]);
+
+let fixed = LengthArray::meter([1.0, 2.0]).to_centimeter();
+assert_eq!(fixed.values(), &[100.0, 200.0]);
+```
+
+Use arbitrary vector/array quantities when the unit is only known at run time:
+
+```rust
+use runtime_units::quantities_vector::VecQuantity;
+use runtime_units::traits::ArbitraryQuantity;
+use runtime_units::units::LengthUnit;
+
+let values = VecQuantity {
+    values: vec![1.0, 2.0],
+    unit: LengthUnit::meter.into(),
+};
+
+let centimeters = values
+    .try_convert(LengthUnit::centimeter.into())
+    .unwrap();
+
+assert_eq!(centimeters.values.as_slice(), &[100.0, 200.0]);
+```
+
+## Dynamic Quantity Enums
+
+`Quantities` can hold an arbitrary scalar quantity:
+
+```rust
+use runtime_units::{Length, Quantities, Units};
+use runtime_units::units::LengthUnit;
+
+let quantity = Quantities::Length(Length::meter(1.0));
+let converted = quantity
+    .try_convert(Units::Length(LengthUnit::centimeter))
+    .unwrap();
+
+assert_eq!(converted.value(), 100.0);
+```
+
+`UnitTypes` lists and parses units for each enabled quantity type:
+
+```rust
+use runtime_units::{UnitTypes, Units};
+use runtime_units::units::LengthUnit;
+
+assert!(UnitTypes::Length.units().contains(&"cm"));
+assert_eq!(
+    UnitTypes::Length.to_unit("centimeter").unwrap(),
+    Units::Length(LengthUnit::centimeter)
+);
+```
+
+## Serialization
+
+Enable `serde` to serialize units and quantities:
+
+```toml
+[dependencies]
+runtime_units = { version = "0.6.2", features = ["Length", "serde"] }
+serde_json = "1"
+```
+
+```rust
+use runtime_units::Length;
+
+let json = serde_json::to_string(&Length::centimeter(25.0)).unwrap();
+assert_eq!(json, r#"{"unit":"centimeter","value":25.0}"#);
+
+let parsed: Length = serde_json::from_str(r#"{"unit":"cm","value":25.0}"#).unwrap();
+assert_eq!(parsed, Length::centimeter(25.0));
+```
+
+Unit abbreviations, singular names, and plural names are accepted for
+deserialization where aliases are generated.
+
+## Temperature
+
+Temperature intervals and thermodynamic temperatures are available through the
+`TemperatureInterval` and `ThermodynamicTemperature` features. Be careful when
+mixing absolute temperatures and temperature intervals; they represent different
+physical concepts.
+
+## Performance
+
+Conversions are designed to be lightweight. Simple conversions are arithmetic on
+`f64` values and unit multipliers. For exact performance in your workload, use
+the included Criterion benchmarks or benchmark your own feature set.
+
+## API Stability
+
+The API is largely stable, but minor changes may occur before `1.0`.

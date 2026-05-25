@@ -96,7 +96,7 @@ macro_rules! impl_quantity_ops {
         
         impl PartialOrd for $quantity
         {
-            fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+            fn partial_cmp(&self, other: &Self) -> Option<core::cmp::Ordering> {
                 (self.value * self.definition().multiplier).partial_cmp(&(other.value * other.definition().multiplier))
             }        
         }
@@ -218,6 +218,7 @@ macro_rules! quantity {
     ) => {
         #[cfg(feature="utoipa")]
         use utoipa::{ToSchema, schema};
+        use alloc::format;
         use static_init::dynamic;
         use $crate::errors::RuntimeUnitError;
         use $crate::Quantity;
@@ -527,7 +528,7 @@ macro_rules! quantity {
                 {                
                     match value        
                     {
-                        crate::Quantities::$quantity(value) => Ok(value),         
+                        $crate::Quantities::$quantity(value) => Ok(value),         
                         _ => Err(RuntimeUnitError::IncompatibleUnitConversion(format!("Base mismatch: {:?} vs {}", value, stringify!($quantity))))
                     }
                 }
@@ -767,6 +768,7 @@ macro_rules! system {
         use $crate::errors::RuntimeUnitError;
         use $crate::Quantity;
         use $crate::units::*;
+        use alloc::{format, string::{String, ToString}, vec, vec::Vec};
         #[cfg(feature="utoipa")]
         use utoipa::{ToSchema, schema};
         use paste::paste;
@@ -847,6 +849,7 @@ macro_rules! system {
                 /// 
                 pub fn units(&self) -> &'static [&'static str]
                 {
+                    #[allow(unreachable_patterns)]
                     match self
                     {
                         
@@ -854,6 +857,7 @@ macro_rules! system {
                             #[cfg(any(feature = "" $quantity, feature="All"))]                      
                             UnitTypes::$quantity=>[<$quantity:snake>]::[<$quantity Unit>]::units(),
                         )+
+                        _ => unreachable!("UnitTypes has no enabled variants"),
                         
                     }
                 }       
@@ -862,6 +866,7 @@ macro_rules! system {
                 /// 
                 pub fn to_unit(&self, unit_str: &str) -> Result<$crate::Units, &'static str>
                 {
+                    #[allow(unreachable_patterns)]
                     match self
                     {
                         $(
@@ -874,6 +879,7 @@ macro_rules! system {
                                 }                                
                             }
                         )+
+                        _ => unreachable!("UnitTypes has no enabled variants"),
                     }
                 }
             }
@@ -899,18 +905,21 @@ macro_rules! system {
                 /// Get the `Units` enumeration associated with a given `Quantities` enumeration.
                 pub fn unit(&self) -> Units
                 {
+                    #[allow(unreachable_patterns)]
                     match self
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]                               
                             Quantities::$quantity(x)=> $crate::Units::from(x.unit),
                         )+
+                        _ => unreachable!("Quantities has no enabled variants"),
                     }
                 }
                 /// Try to convert to the unit specified by a given `Units` enumeration.
                 pub fn try_convert(&self, unit: Units) -> Result<Quantities, RuntimeUnitError>
                 {   
                     use $crate::traits::FixedQuantity;
+                    #[allow(unreachable_patterns)]
                     match self
                     {
                         $(
@@ -919,6 +928,7 @@ macro_rules! system {
                                 Ok(Quantities::$quantity(x.try_convert(unit)?))
                             },
                         )+
+                        _ => unreachable!("Quantities has no enabled variants"),
                     }
                 }
 
@@ -972,17 +982,19 @@ macro_rules! system {
             {
                 fn to_string(&self) -> String 
                 {
+                    #[allow(unreachable_patterns)]
                     match self
                     {
                         $(
                             #[cfg(any(feature = "" $quantity, feature="All"))]   
                             Quantities::$quantity(x) => format!("{} {}", x.value(), x.unit.abbreviation()),
                         )+
+                        _ => unreachable!("Quantities has no enabled variants"),
                     }                        
                 }
             }
 
-            impl std::str::FromStr for Quantities
+            impl core::str::FromStr for Quantities
             {
                 type Err = RuntimeUnitError;
 
@@ -1048,12 +1060,14 @@ macro_rules! system {
                 paste::paste!{
                     impl core::fmt::Display for Units{
                         fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+                            #[allow(unreachable_patterns)]
                             match self
                             {
                                 $(
                                     #[cfg(any(feature = "" $quantity, feature="All"))]  
                                     Units::$quantity(x) => write!(f, "{}", x.singular()),
                                 )+    
+                                _ => unreachable!("Units has no enabled variants"),
                             }
                            
                         }

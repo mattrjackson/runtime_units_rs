@@ -1,4 +1,5 @@
-use crate::{errors::RuntimeUnitError, units_base::{UnitBase, UnitDefinition}, Units};
+use crate::{errors::RuntimeUnitError, units_base::UnitDefinition, Units};
+use alloc::format;
 use core::ops::{Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign };
 
 
@@ -87,7 +88,7 @@ pub trait Unit where Self:Sized
         let definition = self.definition();
         if definition.is_convertible(unit)
         {
-            Ok(unit.multiplier() / definition.multiplier())
+            Ok(definition.multiplier() / unit.multiplier())
         }
         else
         {

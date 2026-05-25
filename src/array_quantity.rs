@@ -1,6 +1,7 @@
 use crate::{errors::RuntimeUnitError, units_base::UnitDefinition};
+use alloc::format;
 use core::ops::{AddAssign, Div, DivAssign, Mul, MulAssign, SubAssign };
-use std::ops::{Deref, DerefMut};
+use core::ops::{Deref, DerefMut};
 #[cfg(feature="serde")]
 use serde_with::serde_as;
 #[cfg_attr(feature="serde", cfg_eval::cfg_eval, serde_as)]
@@ -47,7 +48,8 @@ impl<const N: usize> crate::traits::ArbitraryQuantity for ArrayQuantity<N>
         for val in self.values.as_mut_slice().iter_mut()
         {
             *val *= factor;
-        }            
+        }
+        self.unit = unit;
     }
     
     fn try_convert(&self, unit: UnitDefinition) -> Result<Self, crate::errors::RuntimeUnitError> {
@@ -109,6 +111,7 @@ impl<const N: usize> Div<ArrayQuantity<N>> for ArrayQuantity<N>
         {  
            *val /= rhs;
         }
+        result.unit /= rhs.unit;
         result
     }
 }
@@ -126,6 +129,7 @@ impl<const N: usize> Mul<ArrayQuantity<N>> for ArrayQuantity<N>
         {  
            *val *= rhs;
         }
+        result.unit *= rhs.unit;
         result
     }
 }
@@ -162,6 +166,21 @@ impl<const N: usize> MulAssign<f64> for ArrayQuantity<N>
         }
     }
 }
+impl<const N: usize> MulAssign<ArrayQuantity<N>> for ArrayQuantity<N>
+{
+
+    fn mul_assign(&mut self, rhs: ArrayQuantity<N>) {            
+        if rhs.values.len() != self.values.len()
+        {
+            panic!("Slice dimensions do not match: {} != {}", rhs.values.len(), self.values.len());
+        }
+        for (val, &rhs) in self.values.as_mut_slice().iter_mut().zip(rhs.values.as_slice())
+        {  
+           *val *= rhs;
+        }
+        self.unit *= rhs.unit;
+    }
+}
 impl<const N: usize> DivAssign<ArrayQuantity<N>> for ArrayQuantity<N>
 {
 
@@ -174,6 +193,7 @@ impl<const N: usize> DivAssign<ArrayQuantity<N>> for ArrayQuantity<N>
         {  
            *val /= rhs;
         }
+        self.unit /= rhs.unit;
     }
 }
 impl<const N: usize> AddAssign<ArrayQuantity<N>> for ArrayQuantity<N>
@@ -206,5 +226,3 @@ impl<const N: usize> SubAssign<ArrayQuantity<N>> for ArrayQuantity<N>
         }
     }
 }
-
-

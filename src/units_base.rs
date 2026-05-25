@@ -1,5 +1,5 @@
-use core::{fmt::Display,  ops::{Div, DivAssign, Mul, MulAssign}};
-use std::ops::{Add, Neg, Sub};
+use alloc::{borrow::ToOwned, format, string::{String, ToString}, vec::Vec};
+use core::{fmt::Display, ops::{Add, Div, DivAssign, Mul, MulAssign, Neg, Sub}};
 use bitfield_struct::bitfield;
 
 use crate::errors::RuntimeUnitError;
@@ -23,7 +23,7 @@ impl Default for Rational8
 
 impl Display for Rational8
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         if self.is_fraction()
         {
             write!(f, "{}/{}", self.numerator(), self.denominator())
@@ -603,7 +603,7 @@ pub(crate) fn to_unit_base(value: (f64, f64, f64, f64, f64, f64, f64)) -> UnitBa
 
 impl Display for UnitDefinition
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(f, "{}", self.base)
     }
 }

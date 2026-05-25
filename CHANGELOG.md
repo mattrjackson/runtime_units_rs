@@ -10,6 +10,14 @@
 ### Fixed
 -->
 
+## [0.6.3] - 2026-05-25
+
+### Fixed
+Fixed arbitrary `VecQuantity` and `ArrayQuantity` conversions so converted values also update their stored unit.
+Fixed arbitrary `VecQuantity` and `ArrayQuantity` multiplication and division so result units reflect unit algebra instead of retaining the left-hand unit.
+Fixed `Unit::try_convert()` to return the conversion factor in the same direction as quantity conversions.
+Fixed no-default-feature and `no_std` builds by using `alloc`/`core` where appropriate and feature-gating tests that require specific quantities.
+
 ## [0.6.2] — 2025-07-25
 
 ### Security

@@ -1,4 +1,5 @@
 use core::fmt::Display;
+use alloc::string::String;
 
 #[derive(Clone, Debug)]
 pub enum RuntimeUnitError
